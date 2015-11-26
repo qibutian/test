@@ -5,7 +5,7 @@ import com.means.foods.R;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class MainAtivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
