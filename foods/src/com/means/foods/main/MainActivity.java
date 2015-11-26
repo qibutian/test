@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity {
 					imgI.setImageResource(R.drawable.icon_renmen_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));
-					titleT.setText("热门推荐");
+					titleT.setText("鐑棬鎺ㄨ崘");
 					break;
 
 				case 1:
@@ -81,7 +81,7 @@ public class MainActivity extends FragmentActivity {
 					imgI.setImageResource(R.drawable.icon_meishi_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));
-					titleT.setText("美食之旅");
+					titleT.setText("缇庨涔嬫梾");
 					break;
 
 				case 2:
@@ -89,7 +89,7 @@ public class MainActivity extends FragmentActivity {
 					imgI.setImageResource(R.drawable.icon_collect_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));
-					titleT.setText("我的收藏");
+					titleT.setText("鎴戠殑鏀惰棌");
 					break;
 
 				case 3:
@@ -97,7 +97,7 @@ public class MainActivity extends FragmentActivity {
 					imgI.setImageResource(R.drawable.icon_person_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));
-					titleT.setText("个人中心");
+					titleT.setText("涓汉涓績");
 					break;
 
 				default:
