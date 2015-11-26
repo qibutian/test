@@ -1,6 +1,5 @@
 package net.duohuo.dhroid.adapter;
 
-import net.duohuo.dhroid.reclcleadapter.RecyclerBaseAdapter.BaseViewHolder;
 import android.view.View;
 
 /**

@@ -1,12 +1,12 @@
 package net.duohuo.dhroid.activity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * activity 栈管理
@@ -48,7 +48,7 @@ public class ActivityTack {
 		ActivityManager activityManager = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
 		activityManager.restartPackage(context.getPackageName());
-		System.exit(0);
+//		System.exit(0);
 	}
 
 	/**
