@@ -39,6 +39,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initView() {
+		fm = getSupportFragmentManager();
 		tabV = (LinearLayout) findViewById(R.id.tab);
 		titleT = (TextView) findViewById(R.id.title);
 	}

@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res/com.means.foods"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/listview"
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/nothing"
-        android:cacheColorHint="#00000000"
-        android:clipToPadding="false"
-        android:divider="@color/nothing"
-        android:dividerHeight="1dp"
-        android:fadingEdge="none"
-        android:listSelector="@android:color/transparent" />
+        cube_ptr:ptr_duration_to_close="100"
+        cube_ptr:ptr_duration_to_close_header="1000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7" >
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/store_house_ptr_image_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:padding="10dp" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_remen" />
+        </LinearLayout>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+
+</RelativeLayout>
