@@ -61,22 +61,22 @@ public class HotIndexFragment extends FoodsListFragment {
 
 		initRefreshListView(mPtrFrame, loadMoreListViewContainer);
 
-//		loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-//			@Override
-//			public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-//				mPtrFrame.postDelayed(new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						adapter.setData(10);
-////						mPtrFrame.refreshComplete();
-//
-//						// load more
-//						loadMoreListViewContainer.loadMoreFinish(true, true);
-//					}
-//				}, 2000);
-//			}
-//		});
+		loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+			@Override
+			public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+				mPtrFrame.postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						adapter.setData(10);
+						mPtrFrame.refreshComplete();
+
+						// load more
+						loadMoreListViewContainer.loadMoreFinish(true, true);
+					}
+				}, 2000);
+			}
+		});
 
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
@@ -94,7 +94,7 @@ public class HotIndexFragment extends FoodsListFragment {
 			public boolean checkCanDoRefresh(PtrFrameLayout frame,
 					View content, View header) {
 				return PtrDefaultHandler.checkContentCanBePulledDown(frame,
-						content, header);
+						listV, header);
 			}
 		});
 		mPtrFrame.postDelayed(new Runnable() {

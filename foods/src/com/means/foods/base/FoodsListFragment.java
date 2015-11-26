@@ -24,9 +24,9 @@ public class FoodsListFragment extends Fragment {
 		mPtrFrame.setHeaderView(header);
 		mPtrFrame.setPinContent(false);
 
-//		loadMoreListViewContainer.useDefaultHeader();
-//		loadMoreListViewContainer.setAutoLoadMore(true);
-//		loadMoreListViewContainer.setShowLoadingForFirstPage(true);
+		loadMoreListViewContainer.useDefaultHeader();
+		loadMoreListViewContainer.setAutoLoadMore(true);
+		loadMoreListViewContainer.setShowLoadingForFirstPage(true);
 
 	}
 
