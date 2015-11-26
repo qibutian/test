@@ -12,5 +12,6 @@
     <color name="text_bb_grey">#bbbbbb</color>
     <color name="text_99_grey_light">#999999</color>
     <color name="line_color">#dddddd</color>
+    <color name="tab_index_bg">#eeeeee</color>
 
 </resources>
