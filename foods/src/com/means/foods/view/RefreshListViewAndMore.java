@@ -105,15 +105,15 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	public void removeHeadView() {
 		if (mheadV != null) {
-			mheadV.setVisibility(View.VISIBLE);
-			mheadV.setPadding(0, 0, 0, 0);
+			mheadV.setVisibility(View.GONE);
+			mheadV.setPadding(0, -mheadV.getHeight(), 0, 0);
 		}
 	}
 
 	public void showHeadView() {
 		if (mheadV != null) {
 			mheadV.setVisibility(View.VISIBLE);
-			mheadV.setPadding(0, -mheadV.getHeight(), 0, 0);
+			mheadV.setPadding(0, 0, 0, 0);
 		}
 	}
 
