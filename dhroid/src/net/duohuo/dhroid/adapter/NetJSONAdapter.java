@@ -464,13 +464,13 @@ public class NetJSONAdapter extends BeanAdapter<JSONObject> implements
             if (list.size() == 0 || list.size() < 10) {
                 if (dialoger != null) {
                     if (!response.isCache()) {
-                        if (pageNo > 1) {
-                            dialoger.showToastShort(mContext,
-                                    Const.netadapter_no_more);
-                        } else if (ignore > 0) {
-                            dialoger.showToastShort(mContext,
-                                    Const.netadapter_no_more);
-                        }
+//                        if (pageNo > 1) {
+//                            dialoger.showToastShort(mContext,
+//                                    Const.netadapter_no_more);
+//                        } else if (ignore > 0) {
+//                            dialoger.showToastShort(mContext,
+//                                    Const.netadapter_no_more);
+//                        }
                     }
                 }
                 hasMore = false;

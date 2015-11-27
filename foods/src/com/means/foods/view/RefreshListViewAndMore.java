@@ -44,11 +44,10 @@ public class RefreshListViewAndMore extends LinearLayout {
 	}
 
 	private void initView() {
-		contentV = LayoutInflater.from(mContext).inflate(
-				R.layout.include_refresh_listview, null);
-		this.addView(contentV);
-		listV = (ListView) contentV.findViewById(R.id.listview);
-		mPtrFrame = (PtrFrameLayout) contentV.findViewById(R.id.ptr_frame);
+		LayoutInflater.from(mContext).inflate(
+				R.layout.include_refresh_listview, this);
+		listV = (ListView) findViewById(R.id.listview);
+		mPtrFrame = (PtrFrameLayout) findViewById(R.id.ptr_frame);
 		loadMoreListViewContainer = (LoadMoreListViewContainer) contentV
 				.findViewById(R.id.load_more_list_view_container);
 		final StoreHouseHeader header = new StoreHouseHeader(mContext);
