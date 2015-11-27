@@ -37,6 +37,8 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	OnLoadSuccess onLoadSuccess;
 
+	View mheadV, mEmptyV;
+
 	public RefreshListViewAndMore(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.mContext = context;
@@ -97,8 +99,28 @@ public class RefreshListViewAndMore extends LinearLayout {
 		listV.setPadding(left, top, right, bottom);
 	}
 
-	public void addListViewHeadView(View headV) {
+	public void addHeadView(View headV) {
+		mheadV = headV;
 		listV.addHeaderView(headV);
+	}
+
+	public void removeHeadView() {
+		if (mheadV != null) {
+			mheadV.setVisibility(View.VISIBLE);
+			mheadV.setPadding(0, 0, 0, 0);
+		}
+	}
+
+	public void showHeadView() {
+		if (mheadV != null) {
+			mheadV.setVisibility(View.VISIBLE);
+			mheadV.setPadding(0, -mheadV.getHeight(), 0, 0);
+		}
+	}
+
+	public void setEmptyView(View empty) {
+		mEmptyV = empty;
+		mPtrFrame.addView(mEmptyV);
 	}
 
 	public void setAdapter(NetJSONAdapter adapter) {
@@ -114,8 +136,13 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 				if (onLoadSuccess != null && !response.isCache()
 						&& mAdapter.getPageNo() == 0) {
-					onLoadSuccess.loadSuccessOnFirst();
-					loadMoreListViewContainer.setShowLoadingForFirstPage(true);
+					if (mEmptyV != null) {
+						mEmptyV.setVisibility(mAdapter.getValues().size() != 0 ? View.VISIBLE
+								: View.GONE);
+					}
+					loadMoreListViewContainer
+							.setShowLoadingForFirstPage(mAdapter.getValues()
+									.size() != 0 ? true : false);
 				}
 
 				mPtrFrame.refreshComplete();
@@ -136,8 +163,6 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	public interface OnLoadSuccess {
 		void loadSuccess(Response response);
-
-		void loadSuccessOnFirst();
 	}
 
 }

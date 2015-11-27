@@ -61,6 +61,10 @@ public class HotIndexFragment extends FoodsListFragment {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
+		listV.addHeadView(LayoutInflater.from(getActivity()).inflate(
+				R.layout.test_head, null));
+		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
+				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_test);
 		UserLocation location = UserLocation.getInstance();
@@ -77,6 +81,16 @@ public class HotIndexFragment extends FoodsListFragment {
 		adapter.addparam("userId", "");
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
+
+		listV.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				listV.removeHeadView();
+				// TODO Auto-generated method stub
+
+			}
+		}, 5000);
 		// listV = (ListView) mainV.findViewById(R.id.listview);
 		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
 		// final LoadMoreListViewContainer loadMoreListViewContainer =
