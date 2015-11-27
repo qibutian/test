@@ -61,8 +61,11 @@ public class HotIndexFragment extends FoodsListFragment {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
+
+		// 添加头部
 		listV.addHeadView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.test_head, null));
+		// 设置空的emptyView
 		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
