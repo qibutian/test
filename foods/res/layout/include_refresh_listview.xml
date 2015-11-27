@@ -29,8 +29,6 @@
                 android:divider="@null"
                 android:fadingEdge="none"
                 android:listSelector="@android:color/transparent"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
                 android:scrollbarStyle="outsideOverlay" />
         </in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer>
     </in.srain.cube.views.ptr.PtrFrameLayout>

@@ -158,6 +158,7 @@ public abstract class BeanAdapter<T> extends BaseAdapter
         mNotifyOnChange = notifyOnChange;
     }
     
+    @Override
     public int getCount()
     {
         return mVaules.size();
@@ -186,6 +187,7 @@ public abstract class BeanAdapter<T> extends BaseAdapter
         return position + "";
     }
     
+    @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View view;

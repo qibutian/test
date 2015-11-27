@@ -12,7 +12,7 @@
     <string name="cube_ptr_minutes_ago">&#160;minutes ago</string>
     <string name="cube_ptr_hours_ago">&#160;hours ago</string>
     
-     <string name="cube_views_load_more_loading">加载中。。。</string>
+     <string name="cube_views_load_more_loading">加载中...</string>
       <string name="cube_views_load_more_loaded_empty">没有加载到数据</string>
       <string name="cube_views_load_more_loaded_no_more">已加载全部数据</string>
     <string name="cube_views_load_more_click_to_load_more">点击加载更多</string>

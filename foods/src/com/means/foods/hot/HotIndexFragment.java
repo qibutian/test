@@ -1,6 +1,8 @@
 package com.means.foods.hot;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.UserLocation;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -19,8 +21,10 @@ import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
+import com.means.foods.api.API2;
 import com.means.foods.base.FoodsListFragment;
 import com.means.foods.collect.CollectIndexFragment;
+import com.means.foods.view.RefreshListViewAndMore;
 
 public class HotIndexFragment extends FoodsListFragment {
 
@@ -32,7 +36,7 @@ public class HotIndexFragment extends FoodsListFragment {
 
 	TestAdapter adapter;
 
-	ListView listV;
+	RefreshListViewAndMore listV;
 
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
@@ -54,59 +58,79 @@ public class HotIndexFragment extends FoodsListFragment {
 	}
 
 	private void initView() {
-		listV = (ListView) mainV.findViewById(R.id.listview);
-		mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
-		final LoadMoreListViewContainer loadMoreListViewContainer = (LoadMoreListViewContainer) mainV
-				.findViewById(R.id.load_more_list_view_container);
 
-		initRefreshListView(mPtrFrame, loadMoreListViewContainer);
-
-		loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-			@Override
-			public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-				mPtrFrame.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						adapter.setData(10);
-						mPtrFrame.refreshComplete();
-
-						// load more
-						loadMoreListViewContainer.loadMoreFinish(true, true);
-					}
-				}, 2000);
-			}
-		});
-
-		mPtrFrame.setPtrHandler(new PtrHandler() {
-			@Override
-			public void onRefreshBegin(PtrFrameLayout frame) {
-				frame.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						adapter.refresh();
-						mPtrFrame.refreshComplete();
-					}
-				}, 1800);
-			}
-
-			@Override
-			public boolean checkCanDoRefresh(PtrFrameLayout frame,
-					View content, View header) {
-				return PtrDefaultHandler.checkContentCanBePulledDown(frame,
-						listV, header);
-			}
-		});
-		mPtrFrame.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				mPtrFrame.autoRefresh(true);
-			}
-		}, 150);
-
-		adapter = new TestAdapter(getActivity());
+		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
+		String url = API2.CWBaseurl + "activity/list?";
+		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
+				R.layout.item_test);
+		UserLocation location = UserLocation.getInstance();
+		adapter.fromWhat("data");
+		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
+		adapter.addparam("latitude", location.getLatitude());
+		adapter.addparam("longitude", location.getLongitude());
+		adapter.addparam("maxDistance", "5000000");
+		adapter.addparam("majorType", "");
+		adapter.addparam("pay", "");
+		adapter.addparam("gender", "");
+		adapter.addparam("transfer", "");
+		adapter.addparam("token", "");
+		adapter.addparam("userId", "");
+		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
+		// listV = (ListView) mainV.findViewById(R.id.listview);
+		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
+		// final LoadMoreListViewContainer loadMoreListViewContainer =
+		// (LoadMoreListViewContainer) mainV
+		// .findViewById(R.id.load_more_list_view_container);
+
+		// initRefreshListView(mPtrFrame, loadMoreListViewContainer);
+		//
+		// loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+		// @Override
+		// public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+		// mPtrFrame.postDelayed(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// adapter.setData(10);
+		// mPtrFrame.refreshComplete();
+		//
+		// // load more
+		// loadMoreListViewContainer.loadMoreFinish(true, true);
+		// }
+		// }, 2000);
+		// }
+		// });
+		//
+		// mPtrFrame.setPtrHandler(new PtrHandler() {
+		// @Override
+		// public void onRefreshBegin(PtrFrameLayout frame) {
+		// frame.postDelayed(new Runnable() {
+		// @Override
+		// public void run() {
+		// adapter.refresh();
+		// mPtrFrame.refreshComplete();
+		// }
+		// }, 1800);
+		// }
+		//
+		// @Override
+		// public boolean checkCanDoRefresh(PtrFrameLayout frame,
+		// View content, View header) {
+		// return PtrDefaultHandler.checkContentCanBePulledDown(frame,
+		// listV, header);
+		// }
+		// });
+		// mPtrFrame.postDelayed(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// mPtrFrame.autoRefresh(true);
+		// }
+		// }, 150);
+		//
+		// adapter = new TestAdapter(getActivity());
+		// listV.setAdapter(adapter);
 	}
 
 }

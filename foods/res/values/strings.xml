@@ -5,5 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="progress_doing">加载中...</string>
+    <string name="hot_title">热门推荐</string>
+    <string name="cate_title">美食之旅</string>
+    <string name="collect_title">我的收藏</string>
+    <string name="my_title">个人中心</string>
 
 </resources>

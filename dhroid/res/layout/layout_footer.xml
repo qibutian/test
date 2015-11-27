@@ -20,6 +20,7 @@
 		android:layout_centerVertical="true"
 		android:layout_toLeftOf="@id/footer_text_view"
 		android:layout_toStartOf="@id/footer_text_view" />
+	
 
 	<ImageView
 		android:id="@+id/footer_image_view"
