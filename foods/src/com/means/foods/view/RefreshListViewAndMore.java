@@ -50,8 +50,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 				R.layout.include_refresh_listview, this);
 		listV = (ListView) findViewById(R.id.listview);
 		mPtrFrame = (PtrFrameLayout) findViewById(R.id.ptr_frame);
-		loadMoreListViewContainer = (LoadMoreListViewContainer) contentV
-				.findViewById(R.id.load_more_list_view_container);
+		loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
 		final StoreHouseHeader header = new StoreHouseHeader(mContext);
 		header.setPadding(0, DhUtil.dip2px(mContext, 15), 0, 0);
 		header.initWithString("Foods");
