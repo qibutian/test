@@ -14,10 +14,9 @@
         <ScrollView
             android:id="@+id/scrollView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="185dp" >
+            android:layout_height="match_parent" >
+
+            <!-- android:layout_marginTop="185dp" -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -27,11 +26,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/restaurantdetails_bg"
                     android:gravity="center_horizontal"
+                    android:orientation="vertical"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:orientation="vertical" >
+                    android:paddingRight="20dp" >
 
                     <TextView
                         style="@style/text_66_blacklight_medium"
@@ -40,8 +41,8 @@
                     <View
                         android:layout_width="130dp"
                         android:layout_height="1.5px"
-                        android:layout_marginTop="15dp"
                         android:layout_marginBottom="3dp"
+                        android:layout_marginTop="15dp"
                         android:background="@color/text_brown" />
 
                     <View
@@ -49,35 +50,368 @@
                         android:layout_height="1.5px"
                         android:background="@color/text_brown" />
 
-                    <TextView style="@style/text_66_blacklight_small"
-                        android:textColor="@color/text_brown"
+                    <TextView
+                        style="@style/text_66_blacklight_small"
                         android:layout_marginTop="15dp"
-                        android:text="人均￥145" />
-                    
-                    <TextView style="@style/text_66_blacklight_small"
-                        android:textColor="@color/text_brown"
+                        android:text="人均￥145"
+                        android:textColor="@color/text_brown" />
+
+                    <TextView
+                        style="@style/text_66_blacklight_small"
                         android:layout_marginTop="10dp"
-                        android:text="精致套餐 摩登澳式" />
-                    
+                        android:text="精致套餐 摩登澳式"
+                        android:textColor="@color/text_brown" />
+
                     <View
                         android:layout_width="180dp"
                         android:layout_height="1.5px"
                         android:layout_marginTop="15dp"
                         android:background="@color/text_brown" />
 
-                    <TextView style="@style/text_66_blacklight_small"
+                    <TextView
+                        style="@style/text_66_blacklight_small"
                         android:layout_marginTop="15dp"
-                        android:text="60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本"
-                        />
-                    
-                    <TextView style="@style/text_66_blacklight_small"
+                        android:text="60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
+
+                    <TextView
+                        style="@style/text_66_blacklight_small"
                         android:layout_marginTop="15dp"
-                        android:text="Best fine dining in Melbourne	with un-precedented views."
-                        />
-                    
-                    <View style="@style/line_horizontal"
-                        android:layout_marginTop="20dp"/>
-                    
+                        android:text="Best fine dining in Melbourne	with un-precedented views." />
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/icon_location_grey" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                style="@style/text_66_blacklight_small"
+                                android:text="Best fine dining in Melbourne	with un-precedented views." />
+
+                            <TextView
+                                style="@style/text_66_blacklight_small"
+                                android:layout_marginTop="5dp"
+                                android:text="纽约市中心，纽约【曼哈顿】" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="15dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginRight="5dp"
+                            android:text="距市中心：" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:text="4.3km" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginRight="5dp"
+                            android:text="周边旅游：" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:text="墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginRight="5dp"
+                            android:text="公共交通：" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:text="King St./Collins St" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:text="营业时间丨Opening Hours" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="10dp"
+                            android:text="星期四-星期日：12:00 - 14:00;" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginTop="15dp"
+                            android:text="餐厅简介丨About The Restanrant" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_down" />
+
+                        <View style="@style/line_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginTop="15dp"
+                            android:text="特色推荐及菜单丨Recommended Items" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="120dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/btn_brown_fillet"
+                                android:gravity="center"
+                                android:orientation="horizontal" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="8dp"
+                                    android:src="@drawable/menu" />
+
+                                <TextView
+                                    style="@style/text_99_greylight_small"
+                                    android:text="查看菜单"
+                                    android:textColor="@color/text_brown" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_down" />
+
+                        <View style="@style/line_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginTop="15dp"
+                            android:text="主厨介绍丨About The Chef" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_down" />
+
+                        <View style="@style/line_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginTop="15dp"
+                            android:text="温馨提示丨Kindly Reminder" />
+
+                        <TextView
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="10dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/icon_down" />
+
+                        <View style="@style/line_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_99_greylight_small"
+                            android:layout_marginTop="15dp"
+                            android:text="地图丨Map" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/text_bb_grey" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/text_66_black_light"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/share" />
+
+                            <TextView
+                                style="@style/text_white_small"
+                                android:layout_marginTop="5dp"
+                                android:text="分享" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/dislike" />
+
+                            <TextView
+                                style="@style/text_white_small"
+                                android:layout_marginTop="5dp"
+                                android:text="喜欢" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/text_brown"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_white_medium"
+                            android:text="立即预定" />
+
+                        <TextView
+                            style="@style/text_white_small"
+                            android:layout_marginTop="5dp"
+                            android:text="BOOKING" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
