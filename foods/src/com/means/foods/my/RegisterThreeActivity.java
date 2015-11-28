@@ -1,22 +1,23 @@
 package com.means.foods.my;
 
-import android.os.Bundle;
-
 import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
 
-public class LoginActivity extends FoodsBaseActivity {
+import android.os.Bundle;
+
+public class RegisterThreeActivity extends FoodsBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_register_three);
 	}
 
 	@Override
 	public void initView() {
-		setTitle("登录");
+		setTitle("注册完成");
+
 	}
 
 }

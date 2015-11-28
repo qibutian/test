@@ -5,18 +5,19 @@ import android.os.Bundle;
 import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
 
-public class LoginActivity extends FoodsBaseActivity {
+public class RegisterOneActivity extends FoodsBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_register_one);
 	}
 
 	@Override
 	public void initView() {
-		setTitle("登录");
+		setTitle("注册1/3");
+
 	}
 
 }

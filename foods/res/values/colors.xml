@@ -4,7 +4,6 @@
     <color name="white">#FFFFFF</color>
     <color name="nothing">#00000000</color>
     <color name="black">#000000</color>
-    
     <color name="text_white">#FFFFFF</color>
     <color name="text_33_black">#333333</color>
     <color name="text_66_black_light">#666666</color>
@@ -15,7 +14,8 @@
     
     <color name="line_color">#dddddd</color>
     <color name="tab_index_bg">#eeeeee</color>
-    
     <color name="nav_bg">#F4F4F4</color>
+    <color name="yellow94">#F0bb9641</color>
+    <color name="black80">#cc333333</color>
 
 </resources>

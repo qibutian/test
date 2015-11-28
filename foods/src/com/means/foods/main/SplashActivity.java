@@ -1,22 +1,22 @@
-package com.means.foods.my;
-
-import android.os.Bundle;
+package com.means.foods.main;
 
 import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
 
-public class LoginActivity extends FoodsBaseActivity {
+import android.os.Bundle;
+
+public class SplashActivity extends FoodsBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_splash);
 	}
 
 	@Override
 	public void initView() {
-		setTitle("登录");
+		setTitle("食客");
 	}
 
 }
