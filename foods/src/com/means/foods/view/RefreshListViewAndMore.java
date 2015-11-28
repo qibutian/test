@@ -65,14 +65,18 @@ public class RefreshListViewAndMore extends LinearLayout {
 		loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
 			@Override
 			public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-				mAdapter.showNext();
+				if (mAdapter != null) {
+					mAdapter.showNext();
+				}
 			}
 		});
 
 		mPtrFrame.setPtrHandler(new PtrHandler() {
 			@Override
 			public void onRefreshBegin(PtrFrameLayout frame) {
-				mAdapter.refresh();
+				if (mAdapter != null) {
+					mAdapter.refresh();
+				}
 			}
 
 			@Override
@@ -88,7 +92,9 @@ public class RefreshListViewAndMore extends LinearLayout {
 			@Override
 			public void run() {
 				mPtrFrame.autoRefresh(true);
-				mAdapter.refresh();
+				if (mAdapter != null) {
+					mAdapter.refresh();
+				}
 			}
 		}, 150);
 
