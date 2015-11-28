@@ -19,6 +19,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +28,9 @@ import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API2;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.cate.ReservationsDetailsActivity;
+import com.means.foods.cate.RestaurantDetailsActivity;
+import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.main.SearchActivity;
 import com.means.foods.view.RefreshListViewAndMore;
@@ -39,17 +44,17 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 	PtrFrameLayout mPtrFrame;
 
-	TestAdapter adapter;
-
 	RefreshListViewAndMore listV;
 
-	LoadMoreListViewContainer contentListV;
+	LoadMoreListViewContainer loadMoreListV;
 
 	View headV;
 
 	LayoutInflater mLayoutInflater;
 
 	View bottomSearchV;
+
+	ListView contentListV;
 
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
@@ -80,7 +85,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 		// 添加头部
 		listV.addHeadView(headV);
 		// 设置空的emptyView
-		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
+		listV.setEmptyView(mLayoutInflater.inflate(
 				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_hot_list_index);
@@ -99,8 +104,9 @@ public class HotIndexFragment extends FoodsListFragment implements
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
 
-		contentListV = listV.getLoadMoreListViewContainer();
-		contentListV.setOnScrollListener(new OnScrollListener() {
+		loadMoreListV = listV.getLoadMoreListViewContainer();
+		contentListV = listV.getListView();
+		loadMoreListV.setOnScrollListener(new OnScrollListener() {
 
 			@Override
 			public void onScrollStateChanged(AbsListView arg0, int arg1) {
@@ -128,10 +134,21 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 		bottomSearchV.setOnClickListener(this);
 		headV.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Intent it = new Intent(getActivity(), SearchActivity.class);
+				startActivity(it);
+			}
+		});
+
+		contentListV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent it = new Intent(getActivity(),
+						ReservationsDetailsActivity.class);
 				startActivity(it);
 			}
 		});

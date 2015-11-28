@@ -113,6 +113,10 @@ public class RefreshListViewAndMore extends LinearLayout {
 		return loadMoreListViewContainer;
 	}
 
+	public ListView getListView() {
+		return listV;
+	}
+
 	public void removeHeadView() {
 		if (mheadV != null) {
 			mheadV.setVisibility(View.GONE);
