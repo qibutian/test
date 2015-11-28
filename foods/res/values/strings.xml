@@ -12,5 +12,6 @@
     <string name="title_activity_restaurant_list">RestaurantListActivity</string>
     <string name="title_activity_restaurant_details">RestaurantDetailsActivity</string>
     <string name="title_activity_reservations_details">ReservationsDetailsActivity</string>
+    <string name="title_activity_confirm_details">ConfirmDetailsActivity</string>
 
 </resources>
