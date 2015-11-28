@@ -9,5 +9,6 @@
     <string name="cate_title">美食之旅</string>
     <string name="collect_title">我的收藏</string>
     <string name="my_title">个人中心</string>
+    <string name="title_activity_restaurant_list">RestaurantListActivity</string>
 
 </resources>
