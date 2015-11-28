@@ -11,5 +11,6 @@
     <string name="my_title">个人中心</string>
     <string name="title_activity_restaurant_list">RestaurantListActivity</string>
     <string name="title_activity_restaurant_details">RestaurantDetailsActivity</string>
+    <string name="title_activity_reservations_details">ReservationsDetailsActivity</string>
 
 </resources>

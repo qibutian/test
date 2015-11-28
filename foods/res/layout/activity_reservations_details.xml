@@ -63,33 +63,49 @@
                         android:layout_height="1.5px"
                         android:background="@color/text_brown" />
 
-                    <TextView
-                        style="@style/text_66_blacklight_small"
+                    <LinearLayout 
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="人均￥145"
-                        android:textColor="@color/text_brown" />
-
-                    <TextView
+                        android:orientation="vertical"
+                        >
+                        <TextView
                         style="@style/text_66_blacklight_small"
-                        android:layout_marginTop="14dp"
-                        android:text="精致套餐 摩登澳式"
-                        android:textColor="@color/text_brown" />
-
-                    <View
-                        android:layout_width="180dp"
-                        android:layout_height="1.5px"
-                        android:layout_marginTop="12dp"
-                        android:background="@color/text_brown" />
-
-                    <TextView
+                        android:text="订单号：18505152201" />
+                        
+                        <TextView
                         style="@style/text_66_blacklight_small"
-                        android:layout_marginTop="12dp"
-                        android:text="60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
+                        android:layout_marginTop="3dp"
+                        android:text="2015年11月26日 19：30" />
+                        
+                    </LinearLayout>
 
-                    <TextView
-                        style="@style/text_66_blacklight_small"
+                    <LinearLayout 
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Best fine dining in Melbourne	with un-precedented views." />
+                        android:orientation="horizontal"
+                        >
+                        <Button android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_white"
+                        android:background="@drawable/btn_code_grey_n"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:text="取消订单"
+                        />
+                        <Button android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_white"
+                        android:background="@drawable/btn_brown_fill_fillet"
+                        android:layout_marginLeft="5dp"
+                        android:text="修改订单"
+                        android:layout_weight="1"
+                        />
+                        
+                    </LinearLayout>
 
                     <View
                         style="@style/line_horizontal"
