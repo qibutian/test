@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +39,14 @@ public class HotIndexFragment extends FoodsListFragment {
 
 	RefreshListViewAndMore listV;
 
+	ListView contentListV;
+
+	View headV;
+
+	LayoutInflater mLayoutInflater;
+
+	View bottomSearchV;
+
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
 			instance = new HotIndexFragment();
@@ -52,6 +61,7 @@ public class HotIndexFragment extends FoodsListFragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		mainV = inflater.inflate(R.layout.fragment_hot_index, null);
+		mLayoutInflater = inflater;
 		initView();
 		// TODO Auto-generated method stub
 		return mainV;
@@ -61,10 +71,10 @@ public class HotIndexFragment extends FoodsListFragment {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
-
+		headV = mLayoutInflater.inflate(R.layout.test_head, null);
+		bottomSearchV = mainV.findViewById(R.id.search);
 		// 添加头部
-		listV.addHeadView(LayoutInflater.from(getActivity()).inflate(
-				R.layout.test_head, null));
+		listV.addHeadView(headV);
 		// 设置空的emptyView
 		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_nomal_emptyview, null));
@@ -85,15 +95,32 @@ public class HotIndexFragment extends FoodsListFragment {
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
 
-		listV.postDelayed(new Runnable() {
+		contentListV = listV.getListView();
+		contentListV.setOnScrollListener(new OnScrollListener() {
 
 			@Override
-			public void run() {
-				listV.removeHeadView();
+			public void onScrollStateChanged(AbsListView arg0, int arg1) {
 				// TODO Auto-generated method stub
 
 			}
-		}, 5000);
+
+			@Override
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+
+				int[] location1 = new int[2];
+				headV.getLocationOnScreen(location1);
+				int y1 = location1[1];
+
+				if (y1 >= 0) {
+					bottomSearchV.setVisibility(View.GONE);
+					listV.showHeadView();
+				} else {
+					listV.removeHeadView();
+					bottomSearchV.setVisibility(View.VISIBLE);
+				}
+
+			}
+		});
 		// listV = (ListView) mainV.findViewById(R.id.listview);
 		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
 		// final LoadMoreListViewContainer loadMoreListViewContainer =
@@ -149,5 +176,4 @@ public class HotIndexFragment extends FoodsListFragment {
 		// adapter = new TestAdapter(getActivity());
 		// listV.setAdapter(adapter);
 	}
-
 }

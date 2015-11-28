@@ -103,6 +103,10 @@ public class RefreshListViewAndMore extends LinearLayout {
 		listV.addHeaderView(headV);
 	}
 
+	public ListView getListView() {
+		return listV;
+	}
+
 	public void removeHeadView() {
 		if (mheadV != null) {
 			mheadV.setVisibility(View.GONE);
