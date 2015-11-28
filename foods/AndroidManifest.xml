@@ -41,12 +41,14 @@
         <activity android:name=".main.SearchActivity" />
         <activity android:name=".main.SearchResultActivity" />
         <activity
-            android:name=".RestaurantListActivity"
+            android:name=".cate.RestaurantListActivity"
             android:label="@string/title_activity_restaurant_list" />
+        <activity android:name=".my.MyPersonal" />
+        <activity android:name=".my.MsgDetail" />
         <activity
-            android:name="com.means.foods.my.MyPersonal"/>
-        <activity
-            android:name="com.means.foods.my.MsgDetail"/>
+            android:name="com.means.foods.cate.RestaurantDetailsActivity"
+            android:label="@string/title_activity_restaurant_details" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,10 +1,18 @@
-package com.means.foods;
+package com.means.foods.cate;
+
+import com.means.foods.R;
+import com.means.foods.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * 餐厅列表
+ * @author dell
+ *
+ */
 public class RestaurantListActivity extends Activity {
 
 	@Override
