@@ -103,8 +103,8 @@ public class RefreshListViewAndMore extends LinearLayout {
 		listV.addHeaderView(headV);
 	}
 
-	public ListView getListView() {
-		return listV;
+	public LoadMoreListViewContainer getLoadMoreListViewContainer() {
+		return loadMoreListViewContainer;
 	}
 
 	public void removeHeadView() {
@@ -137,8 +137,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 					onLoadSuccess.loadSuccess(response);
 				}
 
-				if (onLoadSuccess != null && !response.isCache()
-						&& mAdapter.getPageNo() == 0) {
+				if (mAdapter.getPageNo() == 0) {
 					if (mEmptyV != null) {
 						mEmptyV.setVisibility(mAdapter.getValues().size() != 0 ? View.VISIBLE
 								: View.GONE);
@@ -150,7 +149,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 				mPtrFrame.refreshComplete();
 				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
-						.size() == 0 ? true : false, mAdapter.hasMore());
+						.size() == 0 ? false : true, mAdapter.hasMore());
 			}
 		});
 		listV.setAdapter(mAdapter);

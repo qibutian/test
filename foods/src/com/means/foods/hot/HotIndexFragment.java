@@ -43,7 +43,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 	RefreshListViewAndMore listV;
 
-	ListView contentListV;
+	LoadMoreListViewContainer contentListV;
 
 	View headV;
 
@@ -75,7 +75,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
-		headV = mLayoutInflater.inflate(R.layout.test_head, null);
+		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
 		bottomSearchV = mainV.findViewById(R.id.search);
 		// 添加头部
 		listV.addHeadView(headV);
@@ -99,7 +99,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
 
-		contentListV = listV.getListView();
+		contentListV = listV.getLoadMoreListViewContainer();
 		contentListV.setOnScrollListener(new OnScrollListener() {
 
 			@Override
