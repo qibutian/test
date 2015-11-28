@@ -148,7 +148,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent it = new Intent(getActivity(),
-						ReservationsDetailsActivity.class);
+						RestaurantDetailsActivity.class);
 				startActivity(it);
 			}
 		});
