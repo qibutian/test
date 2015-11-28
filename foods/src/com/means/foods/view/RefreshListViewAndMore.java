@@ -158,7 +158,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 				}
 
 				mPtrFrame.refreshComplete();
-				loadMoreListViewContainer.loadMoreFinish(true,
+				loadMoreListViewContainer.loadMoreFinish(false,
 						mAdapter.hasMore());
 			}
 		});
