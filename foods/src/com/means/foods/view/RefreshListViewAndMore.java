@@ -154,8 +154,8 @@ public class RefreshListViewAndMore extends LinearLayout {
 				}
 
 				mPtrFrame.refreshComplete();
-				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
-						.size() == 0 ? false : true, mAdapter.hasMore());
+				loadMoreListViewContainer.loadMoreFinish(true,
+						mAdapter.hasMore());
 			}
 		});
 		listV.setAdapter(mAdapter);
