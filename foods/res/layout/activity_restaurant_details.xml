@@ -96,7 +96,7 @@
                         android:layout_marginTop="12dp" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:orientation="horizontal" >
@@ -385,7 +385,7 @@
 
                 <TextView
                     style="@style/text_white_small"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:text="分享" />
             </LinearLayout>
 
@@ -403,7 +403,7 @@
 
                 <TextView
                     style="@style/text_white_small"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:text="喜欢" />
             </LinearLayout>
         </LinearLayout>
@@ -422,7 +422,7 @@
 
             <TextView
                 style="@style/text_white_small"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:text="BOOKING" />
         </LinearLayout>
     </LinearLayout>

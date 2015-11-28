@@ -105,14 +105,14 @@
                         android:layout_weight="1"
                         />
                         
-                    </LinearLayout>
+                    </LinearLayout> 
 
                     <View
                         style="@style/line_horizontal"
                         android:layout_marginTop="12dp" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:orientation="horizontal" >
@@ -132,88 +132,36 @@
                                 style="@style/text_66_blacklight_small"
                                 android:text="Best fine dining in Melbourne	with un-precedented views." />
 
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="12dp" />
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/icon_phone" />
+
+
                             <TextView
                                 style="@style/text_66_blacklight_small"
-                                android:layout_marginTop="5dp"
-                                android:text="纽约市中心，纽约【曼哈顿】" />
-                        </LinearLayout>
+                                android:text="4008209888" />
+
                     </LinearLayout>
 
                     <View
                         style="@style/line_horizontal"
                         android:layout_marginTop="12dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/text_99_greylight_small"
-                            android:layout_marginRight="5dp"
-                            android:text="距市中心：" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:text="4.3km" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/text_99_greylight_small"
-                            android:layout_marginRight="5dp"
-                            android:text="周边旅游：" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:text="墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            style="@style/text_99_greylight_small"
-                            android:layout_marginRight="5dp"
-                            android:text="公共交通：" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:text="King St./Collins St" />
-                    </LinearLayout>
-
-                    <View
-                        style="@style/line_horizontal"
-                        android:layout_marginTop="12dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/text_99_greylight_small"
-                            android:text="营业时间丨Opening Hours" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:layout_marginTop="7dp"
-                            android:text="星期四-星期日：12:00 - 14:00;" />
-                    </LinearLayout>
-
-                    <View
-                        style="@style/line_horizontal"
-                        android:layout_marginTop="12dp" />
+                    
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -223,7 +171,7 @@
 
                         <TextView
                             style="@style/text_99_greylight_smaller"
-                            android:text="餐厅简介丨About The Restanrant" />
+                            android:text="特色推荐丨Feature Recommend" />
 
                         <TextView
                             style="@style/text_66_blacklight_small"
@@ -241,88 +189,7 @@
 
                         <View style="@style/line_horizontal" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/text_99_greylight_smaller"
-                            android:text="特色推荐及菜单丨Recommended Items" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:layout_marginTop="7dp"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:gravity="center"
-                            android:orientation="horizontal" >
-
-                            <LinearLayout
-                                android:layout_width="120dp"
-                                android:layout_height="35dp"
-                                android:background="@drawable/btn_brown_fillet"
-                                android:gravity="center"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="8dp"
-                                    android:src="@drawable/menu" />
-
-                                <TextView
-                                    style="@style/text_99_greylight_small"
-                                    android:text="查看菜单"
-                                    android:textColor="@color/text_brown" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
-                            android:src="@drawable/icon_down" />
-
-                        <View style="@style/line_horizontal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            style="@style/text_99_greylight_smaller"
-                            android:text="主厨介绍丨About The Chef" />
-
-                        <TextView
-                            style="@style/text_66_blacklight_small"
-                            android:layout_marginTop="7dp"
-                            android:ellipsize="end"
-                            android:maxLines="3"
-                            android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
-                            android:src="@drawable/icon_down" />
-
-                        <View style="@style/line_horizontal" />
-                    </LinearLayout>
-
+                    
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -340,14 +207,8 @@
                             android:maxLines="3"
                             android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
-                            android:src="@drawable/icon_down" />
-
-                        <View style="@style/line_horizontal" />
+                        <View style="@style/line_horizontal" 
+                            android:layout_marginTop="7dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -382,18 +243,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.65"
             android:background="@color/text_66_black_light"
             android:gravity="center"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
-
+            android:orientation="vertical" >
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -401,33 +254,15 @@
 
                 <TextView
                     style="@style/text_white_small"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:text="分享" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/dislike" />
-
-                <TextView
-                    style="@style/text_white_small"
-                    android:layout_marginTop="5dp"
-                    android:text="喜欢" />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.25"
             android:background="@color/text_brown"
             android:gravity="center"
             android:orientation="vertical" >
@@ -438,7 +273,7 @@
 
             <TextView
                 style="@style/text_white_small"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:text="BOOKING" />
         </LinearLayout>
     </LinearLayout>

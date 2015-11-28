@@ -52,15 +52,16 @@
         <activity
             android:name=".cate.RestaurantDetailsActivity"
             android:label="@string/title_activity_restaurant_details" >
+            
+        </activity>
+        <activity
+            android:name="com.means.foods.cate.ReservationsDetailsActivity"
+            android:label="@string/title_activity_reservations_details" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.means.foods.cate.ReservationsDetailsActivity"
-            android:label="@string/title_activity_reservations_details" >
         </activity>
     </application>
 
