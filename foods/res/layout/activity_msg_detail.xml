@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_msg_title_bar" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp" >
+
+        <TextView
+            android:id="@+id/msg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wine&amp;WisKey餐厅预订状态"
+            android:textColor="@color/text_33_black"
+            android:textSize="@dimen/text_medium" />
+
+        <TextView
+            android:id="@+id/msg_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="2015-11-11  12:03"
+            android:textColor="@color/text_99_grey_light"
+            android:textSize="@dimen/text_small" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="15dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="4dp"
+            android:text="您预订的餐厅Wine&amp;WisKey已成功，请查看更多详情ASDASDADDAaaaaaAAAAAAAA"
+            android:textSize="@dimen/text_small"
+            android:textColor="@color/text_66_black_light" />
+    </LinearLayout>
+
+</LinearLayout>
