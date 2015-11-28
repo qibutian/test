@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 
 import com.means.foods.R;
@@ -35,7 +38,7 @@ public class CateIndexFragment extends FoodsListFragment {
 
 	LayoutInflater mLayoutInflater;
 
-	View bottomSearchV;
+	ListView contentListV;
 
 	public static CateIndexFragment getInstance() {
 		if (instance == null) {
@@ -59,8 +62,8 @@ public class CateIndexFragment extends FoodsListFragment {
 	private void initView() {
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
-		bottomSearchV = mainV.findViewById(R.id.search);
-		// 添加头部
+		contentListV = listV.getListView();
+
 		// 设置空的emptyView
 		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_nomal_emptyview, null));
@@ -81,6 +84,16 @@ public class CateIndexFragment extends FoodsListFragment {
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
 
+		contentListV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent it = new Intent(getActivity(),
+						RestaurantListActivity.class);
+				startActivity(it);
+			}
+		});
 	}
 
 }

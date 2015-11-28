@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".main.SplashActivity"
+            android:name=".cate.RestaurantDetailsActivity"
             android:label="@string/app_name" >
         </activity>
         <activity android:name=".main.SearchActivity" />
@@ -40,6 +40,7 @@
             android:label="@string/title_activity_restaurant_list" />
         <activity android:name=".my.MyPersonal" />
         <activity android:name=".my.MsgDetail" />
+        <activity android:name=".cate.ReservationsDetailsActivity" />
         <activity
             android:name=".my.RegisterOneActivity"
             android:launchMode="singleTask" />
@@ -49,13 +50,7 @@
         <activity
             android:name=".my.LoginActivity"
             android:launchMode="singleTask" />
-        <activity
-            android:name=".cate.RestaurantDetailsActivity"
-            android:label="@string/title_activity_restaurant_details" >
-        </activity>
-        <activity
-            android:name=".cate.ReservationsDetailsActivity"
-            android:label="@string/title_activity_reservations_details" >
+        <activity android:name=".main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

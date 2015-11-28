@@ -113,6 +113,10 @@ public class RefreshListViewAndMore extends LinearLayout {
 		return loadMoreListViewContainer;
 	}
 
+	public ListView getListView() {
+		return listV;
+	}
+
 	public void removeHeadView() {
 		if (mheadV != null) {
 			mheadV.setVisibility(View.GONE);
@@ -154,7 +158,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 				}
 
 				mPtrFrame.refreshComplete();
-				loadMoreListViewContainer.loadMoreFinish(true,
+				loadMoreListViewContainer.loadMoreFinish(false,
 						mAdapter.hasMore());
 			}
 		});
