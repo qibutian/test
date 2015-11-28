@@ -83,7 +83,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
-				R.layout.item_test);
+				R.layout.item_hot_list_index);
 		UserLocation location = UserLocation.getInstance();
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
@@ -127,6 +127,14 @@ public class HotIndexFragment extends FoodsListFragment implements
 		});
 
 		bottomSearchV.setOnClickListener(this);
+		headV.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(getActivity(), SearchActivity.class);
+				startActivity(it);
+			}
+		});
 		// listV = (ListView) mainV.findViewById(R.id.listview);
 		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
 		// final LoadMoreListViewContainer loadMoreListViewContainer =

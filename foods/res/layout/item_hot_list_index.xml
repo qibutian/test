@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/mode_catebg" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/like" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <TextView
+            style="@style/text_white_medium"
+            android:text="Wine  Whiskey" />
+
+        <TextView
+            style="@style/text_white_small"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/icon_location"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Wine  WhiskeyWine  WhiskeyWine  WhiskeyWine  WhiskeyWine  WhiskeyWine  Whiskey" />
+    </LinearLayout>
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
