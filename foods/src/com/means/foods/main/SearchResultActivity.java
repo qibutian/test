@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import com.means.foods.base.FoodsBaseActivity;
 
-public class SearchResultActivity extends FoodsBaseActivity{
-	
+public class SearchResultActivity extends FoodsBaseActivity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -14,8 +14,7 @@ public class SearchResultActivity extends FoodsBaseActivity{
 
 	@Override
 	public void initView() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

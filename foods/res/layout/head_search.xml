@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#BBBBBB"
     android:orientation="vertical" >
-    
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="38dp"
+        android:layout_margin="7dp"
+        android:background="@drawable/search_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="14dp" >
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:scaleType="center"
+            android:src="@drawable/icon_remen_search" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/nothing"
+            android:hint="输入餐厅的名称..."
+            android:textColor="@color/text_66_black_light"
+            android:textColorHint="@color/text_bb_grey"
+            android:textSize="@dimen/text_medium" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,11 +6,11 @@ import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.Instance.InstanceScope;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
-import net.duohuo.dhroid.net.cache.DaoHelper;
 import android.app.Application;
 import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.means.foods.db.DaoHelper;
 import com.means.foods.view.NomalDialog;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -51,7 +51,7 @@ public class FoodsApplication extends Application implements
 		Const.response_total = "totalRows";
 		Const.response_data = "data";
 		Const.netadapter_step_default = 10;
-		Const.DATABASE_VERSION = 16;
+		Const.DATABASE_VERSION = 18;
 		Const.response_success = "result";
 		Const.response_msg = "errmsg";
 		Const.response_result_status = "0";

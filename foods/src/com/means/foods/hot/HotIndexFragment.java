@@ -10,10 +10,12 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import in.srain.cube.views.ptr.loadmore.LoadMoreContainer;
 import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -25,9 +27,11 @@ import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API2;
 import com.means.foods.base.FoodsListFragment;
 import com.means.foods.collect.CollectIndexFragment;
+import com.means.foods.main.SearchActivity;
 import com.means.foods.view.RefreshListViewAndMore;
 
-public class HotIndexFragment extends FoodsListFragment {
+public class HotIndexFragment extends FoodsListFragment implements
+		OnClickListener {
 
 	static HotIndexFragment instance;
 
@@ -121,6 +125,8 @@ public class HotIndexFragment extends FoodsListFragment {
 
 			}
 		});
+
+		bottomSearchV.setOnClickListener(this);
 		// listV = (ListView) mainV.findViewById(R.id.listview);
 		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
 		// final LoadMoreListViewContainer loadMoreListViewContainer =
@@ -175,5 +181,18 @@ public class HotIndexFragment extends FoodsListFragment {
 		//
 		// adapter = new TestAdapter(getActivity());
 		// listV.setAdapter(adapter);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.search:
+			Intent it = new Intent(getActivity(), SearchActivity.class);
+			startActivity(it);
+			break;
+
+		default:
+			break;
+		}
 	}
 }

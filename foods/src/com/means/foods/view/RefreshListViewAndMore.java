@@ -47,7 +47,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	private void initView() {
 		LayoutInflater.from(mContext).inflate(
-				R.layout.include_refresh_listview, this);
+				R.layout.include_refresh_listview_base, this);
 		listV = (ListView) findViewById(R.id.listview);
 		mPtrFrame = (PtrFrameLayout) findViewById(R.id.ptr_frame);
 		loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
