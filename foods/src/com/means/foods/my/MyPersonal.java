@@ -15,7 +15,6 @@ public class MyPersonal extends FoodsBaseActivity{
 
 	@Override
 	public void initView() {
-		// TODO Auto-generated method stub
 		
 	}
 
