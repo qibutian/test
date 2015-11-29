@@ -61,6 +61,12 @@
             android:name="com.means.foods.cate.ConfirmDetailsActivity"
             android:label="@string/title_activity_confirm_details" >
         </activity>
+        <activity
+            android:name="com.means.foods.my.ReviseNameActivity">
+        </activity>
+        <activity
+            android:name="com.means.foods.my.RevisePhoneActivity">
+        </activity>
     </application>
 
 </manifest>
