@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/register_bg" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/icon_logo_text" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="28dp"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/input_bg"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="11dp" >
+
+                    <EditText
+                        android:id="@+id/code"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:background="@color/nothing"
+                        android:hint="请输入验证码"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_66_black_light"
+                        android:textColorHint="@color/text_99_grey_light" />
+                    
+                    <Button 
+                        android:id="@+id/get_code"
+                        android:layout_width="80dp"
+                        android:layout_height="28dp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_66_black_light"
+                        android:text="获取验证码"
+                        android:background="@drawable/btn_code_grey_n"
+                        />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_yellow_fill_n"
+                    android:text="下一步，设置密码"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_big" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

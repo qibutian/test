@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nav_bg"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/reservations_background"
+        android:orientation="vertical" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:layout_height="wrap_content"
+                android:text="2015年8月25日"
+                android:textColor="@color/text_66_black_light"
+                android:textSize="@dimen/text_small" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.7"
+                android:layout_height="wrap_content"
+                android:text="预付定金¥100"
+                android:textColor="@color/text_66_black_light"
+                android:textSize="@dimen/text_small" />
+            <LinearLayout 
+               android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                 android:background="@color/text_yellow"
+                 android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="正在处理"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_small" />
+            </LinearLayout>
+
+            
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Parm Battery Park"
+            android:textColor="@color/text_33_black"
+            android:textSize="@dimen/text_big" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="订单号： 185245552341"
+            android:textColor="@color/text_66_black_light"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="2016年01月21日   12：00~14：00  2人"
+            android:textColor="@color/text_66_black_light"
+            android:textSize="@dimen/text_small" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp" >
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/reservat_oval"
+                android:text="取消"
+                android:textColor="@color/text_yellow"
+                android:textSize="@dimen/text_small" />
+
+            <Button
+                android:id="@+id/share"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_toLeftOf="@+id/cancel"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/reservat_oval"
+                android:text="分享"
+                android:textColor="@color/text_yellow"
+                android:textSize="@dimen/text_small" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

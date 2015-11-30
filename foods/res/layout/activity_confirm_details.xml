@@ -1,0 +1,402 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:id="@+id/titlebar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/include_title_bar" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footerbar"
+        android:layout_below="@+id/titlebar" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/mode_catebg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/text_white_small"
+                            android:layout_marginBottom="17dp"
+                            android:text="Best fine dining in Melbourne	with in Melbourne	with " />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/icon_location_grey" />
+
+                        <TextView
+                            style="@style/text_white_small"
+                            android:text="Best fine dining in Melbourne	with" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_top" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="2015年"
+                        android:textColor="@color/text_brown"
+                        android:textSize="@dimen/text_big" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_down" />
+                </LinearLayout>
+
+                <View style="@style/line_vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_top" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="11月"
+                        android:textColor="@color/text_brown"
+                        android:textSize="@dimen/text_big" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_down" />
+                </LinearLayout>
+
+                <View style="@style/line_vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_top" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="28日"
+                        android:textColor="@color/text_brown"
+                        android:textSize="@dimen/text_big" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_brown_down" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/text_33_black_medium"
+                android:layout_marginBottom="22dp"
+                android:layout_marginTop="22dp"
+                android:text="星期五 Friday" />
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_title_back" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/text_33_black_big"
+                        android:text="1"
+                        android:textColor="@color/text_brown" />
+
+                    <TextView
+                        style="@style/text_66_blacklight_small"
+                        android:layout_marginTop="11dp"
+                        android:text="人 People" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_brown_right" />
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_title_back" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/text_33_black_big"
+                        android:text="12:00 - 13:00"
+                        android:textColor="@color/text_brown" />
+
+                    <TextView
+                        style="@style/text_66_blacklight_small"
+                        android:layout_marginTop="11dp"
+                        android:text="到店时间 Time" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_brown_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@color/nav_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="17dp" >
+
+                <TextView
+                    style="@style/text_66_blacklight_medium"
+                    android:layout_marginRight="13dp"
+                    android:text="预付款" />
+
+                <TextView
+                    style="@style/text_66_blacklight_medium"
+                    android:text="￥0"
+                    android:textColor="@color/text_brown" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@color/nav_bg" />
+
+            <EditText
+                style="@style/text_66_blacklight_medium"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:background="@color/nothing"
+                android:hint="请输入您的手机号码"
+                android:inputType="number" />
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <EditText
+                    style="@style/text_66_blacklight_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@color/nothing"
+                    android:hint="请输入您的姓名" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/register_check_s"
+                        android:button="@null" />
+
+                    <TextView
+                        style="@style/text_99_greylight_medium"
+                        android:layout_marginLeft="6dp"
+                        android:text="先生" />
+
+                    <RadioButton
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/register_check_s"
+                        android:button="@null"
+                        android:checked="true" />
+
+                    <TextView
+                        style="@style/text_99_greylight_medium"
+                        android:layout_marginLeft="6dp"
+                        android:text="女士" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp" />
+
+            <TextView
+                style="@style/text_99_greylight_small"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="17dp"
+                android:text="向餐厅发出您的需求 丨 Requirement" />
+
+            <EditText
+                style="@style/text_99_greylight_small"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/btn_grey_fillet"
+                android:gravity="top"
+                android:padding="10dp"
+                android:layout_marginBottom="30dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footerbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/text_brown"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/text_white_medium"
+            android:text="确认" />
+
+        <TextView
+            style="@style/text_white_small"
+            android:layout_marginTop="3dp"
+            android:text="BOOKING" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -10,12 +10,17 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import in.srain.cube.views.ptr.loadmore.LoadMoreContainer;
 import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,10 +28,15 @@ import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API2;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.cate.ReservationsDetailsActivity;
+import com.means.foods.cate.RestaurantDetailsActivity;
+import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.collect.CollectIndexFragment;
+import com.means.foods.main.SearchActivity;
 import com.means.foods.view.RefreshListViewAndMore;
 
-public class HotIndexFragment extends FoodsListFragment {
+public class HotIndexFragment extends FoodsListFragment implements
+		OnClickListener {
 
 	static HotIndexFragment instance;
 
@@ -34,9 +44,17 @@ public class HotIndexFragment extends FoodsListFragment {
 
 	PtrFrameLayout mPtrFrame;
 
-	TestAdapter adapter;
-
 	RefreshListViewAndMore listV;
+
+	LoadMoreListViewContainer loadMoreListV;
+
+	View headV;
+
+	LayoutInflater mLayoutInflater;
+
+	View bottomSearchV;
+
+	ListView contentListV;
 
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
@@ -52,6 +70,7 @@ public class HotIndexFragment extends FoodsListFragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		mainV = inflater.inflate(R.layout.fragment_hot_index, null);
+		mLayoutInflater = inflater;
 		initView();
 		// TODO Auto-generated method stub
 		return mainV;
@@ -61,8 +80,15 @@ public class HotIndexFragment extends FoodsListFragment {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API2.CWBaseurl + "activity/list?";
+		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
+		bottomSearchV = mainV.findViewById(R.id.search);
+		// 添加头部
+		listV.addHeadView(headV);
+		// 设置空的emptyView
+		listV.setEmptyView(mLayoutInflater.inflate(
+				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
-				R.layout.item_test);
+				R.layout.item_hot_list_index);
 		UserLocation location = UserLocation.getInstance();
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
@@ -77,6 +103,55 @@ public class HotIndexFragment extends FoodsListFragment {
 		adapter.addparam("userId", "");
 		adapter.addField("activityId", R.id.text);
 		listV.setAdapter(adapter);
+
+		loadMoreListV = listV.getLoadMoreListViewContainer();
+		contentListV = listV.getListView();
+		loadMoreListV.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView arg0, int arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+
+				int[] location1 = new int[2];
+				headV.getLocationOnScreen(location1);
+				int y1 = location1[1];
+
+				if (y1 >= 0) {
+					bottomSearchV.setVisibility(View.GONE);
+					listV.showHeadView();
+				} else {
+					listV.removeHeadView();
+					bottomSearchV.setVisibility(View.VISIBLE);
+				}
+
+			}
+		});
+
+		bottomSearchV.setOnClickListener(this);
+		headV.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(getActivity(), SearchActivity.class);
+				startActivity(it);
+			}
+		});
+
+		contentListV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent it = new Intent(getActivity(),
+						RestaurantDetailsActivity.class);
+				startActivity(it);
+			}
+		});
 		// listV = (ListView) mainV.findViewById(R.id.listview);
 		// mPtrFrame = (PtrFrameLayout) mainV.findViewById(R.id.ptr_frame);
 		// final LoadMoreListViewContainer loadMoreListViewContainer =
@@ -133,4 +208,16 @@ public class HotIndexFragment extends FoodsListFragment {
 		// listV.setAdapter(adapter);
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.search:
+			Intent it = new Intent(getActivity(), SearchActivity.class);
+			startActivity(it);
+			break;
+
+		default:
+			break;
+		}
+	}
 }

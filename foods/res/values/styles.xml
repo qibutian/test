@@ -15,6 +15,13 @@
           <item name="android:windowNoTitle">true</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="text_white_biger">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/text_biger</item>
+    </style>
 
     <style name="text_white_big">
         <item name="android:layout_width">wrap_content</item>
@@ -141,10 +148,23 @@
         <item name="android:textColor">@color/text_99_grey_light</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
+    
+    <style name="text_99_greylight_smaller">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_99_grey_light</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
 
     <style name="line_horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1.5px</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+    
+    <style name="line_vertical">
+        <item name="android:layout_width">1.5px</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/line_color</item>
     </style>
 
