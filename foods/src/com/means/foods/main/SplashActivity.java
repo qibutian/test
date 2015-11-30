@@ -5,7 +5,7 @@ import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
 import com.means.foods.my.LoginActivity;
-import com.means.foods.my.MyPersonal;
+import com.means.foods.my.EditinfoActivity;
 import com.means.foods.my.RegisterOneActivity;
 
 import de.greenrobot.event.EventBus;

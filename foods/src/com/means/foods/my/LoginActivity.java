@@ -33,7 +33,7 @@ public class LoginActivity extends FoodsBaseActivity {
 			public void onClick(View arg0) {
 				Intent it = new Intent(self, MainActivity.class);
 				startActivity(it);
-				finish();
+				finishWithoutAnim();
 				// 登录成功后发送事件,关闭之前的页面
 				EventBus.getDefault().post(new LoginEB());
 			}
@@ -61,7 +61,7 @@ public class LoginActivity extends FoodsBaseActivity {
 	}
 
 	public void onEventMainThread(RegisterEB registerEb) {
-		finish();
+		finishWithoutAnim();
 	}
 
 }

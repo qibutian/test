@@ -165,9 +165,9 @@
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="1.5px"
+                    android:layout_height="2px"
                     android:layout_above="@id/tab"
-                    android:background="@color/line_color" />
+                    android:background="@color/text_yellow" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

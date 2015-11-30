@@ -4,23 +4,18 @@ import android.os.Bundle;
 
 import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
-/**
- * 消息详情
- * @author Administrator
- *
- */
-public class MsgDetail extends FoodsBaseActivity{
+
+public class ReviseEmailActivity extends FoodsBaseActivity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_msg_detail);
+		setContentView(R.layout.activity_revise_email);
 	}
 
 	@Override
 	public void initView() {
-		// TODO Auto-generated method stub
-		
+		setTitle("修改邮箱");
 	}
-
 }

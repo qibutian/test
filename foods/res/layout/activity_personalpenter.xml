@@ -17,6 +17,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/photo_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" >
@@ -51,10 +52,10 @@
                     android:src="@drawable/icon_person" />
             </RelativeLayout>
 
-            <View
-                style="@style/line_horizontal" />
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/nickname_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" >
@@ -69,7 +70,7 @@
                     android:textSize="@dimen/text_medium" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/nick_icon"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_alignParentRight="true"
@@ -83,19 +84,18 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toLeftOf="@+id/nick_icon"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
                     android:text="HAN123"
                     android:textColor="@color/text_33_black"
-                    android:textSize="@dimen/text_big" />
+                    android:textSize="@dimen/text_medium" />
             </RelativeLayout>
 
-        <View
-                style="@style/line_horizontal" />
-
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/name_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" >
@@ -110,7 +110,7 @@
                     android:textSize="@dimen/text_medium" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/name_icon"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_alignParentRight="true"
@@ -124,19 +124,18 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toLeftOf="@+id/name_icon"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
                     android:text="韩梅梅"
                     android:textColor="@color/text_33_black"
-                    android:textSize="@dimen/text_big" />
+                    android:textSize="@dimen/text_medium" />
             </RelativeLayout>
 
-         <View
-                style="@style/line_horizontal" />
-
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/sex_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" >
@@ -151,7 +150,7 @@
                     android:textSize="@dimen/text_medium" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/sex_icon"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_alignParentRight="true"
@@ -165,19 +164,18 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toLeftOf="@+id/sex_icon"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
                     android:text="女"
                     android:textColor="@color/text_33_black"
-                    android:textSize="@dimen/text_big" />
+                    android:textSize="@dimen/text_medium" />
             </RelativeLayout>
 
-          <View
-                style="@style/line_horizontal" />
-
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/phone_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" >
@@ -192,7 +190,7 @@
                     android:textSize="@dimen/text_medium" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/phone_icon"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_alignParentRight="true"
@@ -204,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toLeftOf="@+id/phone_icon"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp" >
@@ -217,7 +215,7 @@
                         android:layout_marginRight="10dp"
                         android:text="13939393939"
                         android:textColor="@color/text_33_black"
-                        android:textSize="@dimen/text_big" />
+                        android:textSize="@dimen/text_medium" />
 
                     <TextView
                         android:id="@+id/phone_binding"
@@ -231,11 +229,10 @@
                 </LinearLayout>
             </RelativeLayout>
 
-           <View
-                style="@style/line_horizontal" />
-
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/email_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -251,7 +248,7 @@
                     android:textSize="@dimen/text_medium" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/email_icon"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_alignParentRight="true"
@@ -264,19 +261,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toLeftOf="@+id/email_icon"
                     android:paddingBottom="18dp"
                     android:paddingTop="18dp"
                     android:text="wan*******88@126.com"
                     android:textColor="@color/text_33_black"
-                    android:textSize="@dimen/text_big" />
+                    android:textSize="@dimen/text_medium" />
             </RelativeLayout>
 
-          <View
-                style="@style/line_horizontal" />
-
+            <View style="@style/line_horizontal" />
 
             <RelativeLayout
+                android:id="@+id/password_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -287,8 +283,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="14dp"
-                    android:paddingBottom="18dp"
-                    android:paddingTop="18dp"
+                    android:paddingBottom="22dp"
+                    android:paddingTop="22dp"
                     android:text="修改密码"
                     android:textColor="@color/text_66_black_light"
                     android:textSize="@dimen/text_medium" />
@@ -304,11 +300,11 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/text_yellow"
+                android:layout_height="50dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="45dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/btn_yellow_fill_n"
                 android:gravity="center"
                 android:text="退出登录"
                 android:textColor="@color/white"

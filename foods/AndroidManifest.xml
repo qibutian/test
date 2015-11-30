@@ -38,8 +38,8 @@
         <activity
             android:name=".cate.RestaurantListActivity"
             android:label="@string/title_activity_restaurant_list" />
-        <activity android:name=".my.MyPersonal" />
-        <activity android:name=".my.MsgDetail" />
+        <activity android:name=".my.EditinfoActivity" />
+        <activity android:name=".my.MsgDetailActivity" />
         <activity android:name=".cate.ReservationsDetailsActivity" />
         <activity
             android:name=".my.RegisterOneActivity"
@@ -58,14 +58,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.means.foods.cate.ConfirmDetailsActivity"
-            android:label="@string/title_activity_confirm_details" >
+            android:name=".cate.ConfirmDetailsActivity" >
         </activity>
         <activity
-            android:name="com.means.foods.my.ReviseNameActivity">
+            android:name=".my.ReviseNameActivity">
         </activity>
         <activity
-            android:name="com.means.foods.my.RevisePhoneActivity">
+            android:name=".my.RevisePhoneActivity">
+        </activity>
+         <activity
+            android:name=".my.MsgListActivity">
+        </activity>
+        
+         <activity
+            android:name=".my.MyReservationsListActivity">
+        </activity>
+        
+         <activity
+            android:name=".my.ReviseEmailActivity">
+        </activity>
+        
+         <activity
+            android:name=".my.RevisePswdActivity">
         </activity>
     </application>
 
