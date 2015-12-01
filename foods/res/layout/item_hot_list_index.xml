@@ -5,12 +5,13 @@
     android:orientation="vertical" >
 
     <ImageView
+        android:id="@+id/pic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/mode_catebg" />
+        android:scaleType="centerCrop" />
 
     <ImageView
+        android:id="@+id/collect"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentRight="true"
@@ -26,10 +27,12 @@
         android:padding="20dp" >
 
         <TextView
+            android:id="@+id/name"
             style="@style/text_white_medium"
             android:text="Wine  Whiskey" />
 
         <TextView
+            android:id="@+id/des"
             style="@style/text_white_small"
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/icon_location"

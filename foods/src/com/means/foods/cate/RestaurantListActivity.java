@@ -1,37 +1,34 @@
 package com.means.foods.cate;
 
-import org.json.JSONObject;
-
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.util.UserLocation;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.means.foods.R;
-import com.means.foods.R.layout;
-import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.main.SearchActivity;
 import com.means.foods.view.RefreshListViewAndMore;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 /**
  * 餐厅列表
@@ -92,10 +89,20 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
+				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
 				ImageView collectI = (ImageView) itemV
 						.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
+				if(jsa!=null&&jsa.length()!=0) {
+					try {
+						ViewUtil.bindNetImage((ImageView) itemV.findViewById(R.id.pic), jsa.get(0).toString(),
+								"default");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				return o;
 			}
 		});
@@ -135,6 +142,8 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			@Override
 			public void onClick(View arg0) {
 				Intent it = new Intent(self, SearchActivity.class);
+				it.putExtra("type", 1);
+				it.putExtra("cityId", cityId);
 				startActivity(it);
 			}
 		});

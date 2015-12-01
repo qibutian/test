@@ -97,8 +97,12 @@ public class RefreshListViewAndMore extends LinearLayout {
 					mAdapter.refresh();
 				}
 			}
-		}, 150);
+		}, 400);
 
+	}
+
+	public void refresh() {
+		mPtrFrame.autoRefresh(true);
 	}
 
 	public void setListViewPadding(int left, int top, int right, int bottom) {
@@ -148,7 +152,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 					onLoadSuccess.loadSuccess(response);
 				}
 
-				if (mAdapter.getPageNo() == 0) {
+				if (mAdapter.getPageNo() == 1) {
 					if (mEmptyV != null) {
 						mEmptyV.setVisibility(mAdapter.getValues().size() != 0 ? View.VISIBLE
 								: View.GONE);
@@ -157,13 +161,43 @@ public class RefreshListViewAndMore extends LinearLayout {
 							.setShowLoadingForFirstPage(mAdapter.getValues()
 									.size() != 0 ? true : false);
 				}
+				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
+						.size() != 0 ? false : true, mAdapter.hasMore());
 
 				mPtrFrame.refreshComplete();
-				loadMoreListViewContainer.loadMoreFinish(false,
-						mAdapter.hasMore());
 			}
 		});
 		listV.setAdapter(mAdapter);
+	}
+	
+	
+	public void setAdapterNoBindListView(NetJSONAdapter adapter) {
+		mAdapter = adapter;
+		mAdapter.setOnLoadSuccess(new LoadSuccessCallBack() {
+
+			@Override
+			public void callBack(Response response) {
+
+				if (onLoadSuccess != null) {
+					onLoadSuccess.loadSuccess(response);
+				}
+
+				if (mAdapter.getPageNo() == 1) {
+					if (mEmptyV != null) {
+						mEmptyV.setVisibility(mAdapter.getValues().size() != 0 ? View.VISIBLE
+								: View.GONE);
+					}
+					loadMoreListViewContainer
+							.setShowLoadingForFirstPage(mAdapter.getValues()
+									.size() != 0 ? true : false);
+				}
+				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
+						.size() != 0 ? false : true, mAdapter.hasMore());
+
+				mPtrFrame.refreshComplete();
+			}
+		});
+//		listV.setAdapter(mAdapter);
 	}
 
 	public OnLoadSuccess getOnLoadSuccess() {

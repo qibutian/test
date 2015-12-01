@@ -1,8 +1,15 @@
 package com.means.foods.hot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.UserLocation;
+import net.duohuo.dhroid.util.ViewUtil;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -21,6 +28,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +36,7 @@ import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
 import com.means.foods.cate.RestaurantDetailsActivity;
 import com.means.foods.cate.RestaurantListActivity;
@@ -79,7 +88,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 	private void initView() {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
-		String url = API.CWBaseurl + "activity/list?";
+		String url = API.restaurantList;
 		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
 		bottomSearchV = mainV.findViewById(R.id.search);
 		// 添加头部
@@ -89,19 +98,34 @@ public class HotIndexFragment extends FoodsListFragment implements
 				R.layout.list_nomal_emptyview, null));
 		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_hot_list_index);
-		UserLocation location = UserLocation.getInstance();
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-		adapter.addparam("latitude", location.getLatitude());
-		adapter.addparam("longitude", location.getLongitude());
-		adapter.addparam("maxDistance", "5000000");
-		adapter.addparam("majorType", "");
-		adapter.addparam("pay", "");
-		adapter.addparam("gender", "");
-		adapter.addparam("transfer", "");
-		adapter.addparam("token", "");
-		adapter.addparam("userId", "");
-		adapter.addField("activityId", R.id.text);
+		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.addField("name", R.id.name);
+		adapter.addField(new FieldMap("tips", R.id.des) {
+
+			@Override
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+				JSONObject json = (JSONObject) jo;
+				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
+				ImageView collectI = (ImageView) itemV
+						.findViewById(R.id.collect);
+				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
+						: R.drawable.like);
+				if (jsa != null && jsa.length() != 0) {
+					try {
+						ViewUtil.bindNetImage((ImageView) itemV
+								.findViewById(R.id.pic), jsa.get(0).toString(),
+								"default");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				String des = JSONUtil.getString(json, "city_name")+"  |  人均 $"+JSONUtil.getString(json, "mean_money");
+				return des;
+			}
+		});
 		listV.setAdapter(adapter);
 
 		loadMoreListV = listV.getLoadMoreListViewContainer();

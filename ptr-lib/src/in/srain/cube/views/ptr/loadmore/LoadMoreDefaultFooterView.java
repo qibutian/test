@@ -51,6 +51,7 @@ public class LoadMoreDefaultFooterView extends RelativeLayout implements
 			setVisibility(VISIBLE);
 			progress.setVisibility(View.GONE);
 			if (empty) {
+				setVisibility(GONE);
 				mTextView.setText(R.string.cube_views_load_more_loaded_empty);
 			} else {
 				mTextView.setText(R.string.cube_views_load_more_loaded_no_more);
