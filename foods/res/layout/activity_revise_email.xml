@@ -26,15 +26,18 @@
             android:textSize="@dimen/text_medium" />
 
         <ImageView
+            android:id="@+id/clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
+            android:visibility="invisible"
             android:src="@drawable/revise_close" />
     </RelativeLayout>
 
     <TextView
+        android:visibility="gone"
         style="@style/text_66_blacklight_small"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="9dp"

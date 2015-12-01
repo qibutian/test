@@ -1,5 +1,8 @@
 package com.means.foods.my;
 
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +29,18 @@ public class LoginActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		setTitle("登录");
+		
+//		 DhNet net = new DhNet("http://www.foodies.im/wap.php?g=Wap&c=Login&a=loginApi");
+//    	 net.addParam("phone", "13852286536");
+//    	 net.addParam("password", "123");
+//    	 net.doPostInDialog(new NetTask(self) {
+//			
+//			@Override
+//			public void doInUI(Response response, Integer transfer) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 
 		findViewById(R.id.login).setOnClickListener(new OnClickListener() {
 

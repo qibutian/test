@@ -51,18 +51,25 @@ public class ReviseHeadDialog extends BaseAlertDialog {
 			}
 		});
 
+		//拍照
 		camera_layout.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				if(null!=mlistener){
+					mlistener.onResult(0);
+				}
 				dismiss();
 			}
 		});
-
+		//相册	
 		gallery_layout.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				if(null!=mlistener){
+					mlistener.onResult(1);
+				}
 				dismiss();
 			}
 		});
@@ -71,6 +78,9 @@ public class ReviseHeadDialog extends BaseAlertDialog {
 
 			@Override
 			public void onClick(View v) {
+				if(null!=mlistener){
+					mlistener.onResult(-1);
+				}
 				dismiss();
 			}
 		});

@@ -38,7 +38,9 @@
         <activity
             android:name=".cate.RestaurantListActivity"
             android:label="@string/title_activity_restaurant_list" />
-        <activity android:name=".my.EditinfoActivity" />
+        <activity android:name=".my.EditinfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity android:name=".my.MsgDetailActivity" />
         <activity android:name=".cate.ReservationsDetailsActivity" />
         <activity

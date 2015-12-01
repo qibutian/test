@@ -26,15 +26,19 @@
             android:text="韩梅梅" />
         
         <ImageView 
+             android:id="@+id/clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/revise_close"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
     </RelativeLayout>
     
     <TextView 
+        android:id="@+id/tishi"
+        android:visibility="gone"
         style="@style/text_66_blacklight_small"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="9dp"

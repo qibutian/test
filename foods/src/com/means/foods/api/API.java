@@ -35,5 +35,11 @@ public class API {
 
 	// 餐厅详情
 	public static String restaurantDetail = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=shopDetailApi";
+	
+	//编辑头像
+	public static String editAvatar = "http://www.foodies.im/wap.php?g=Wap&c=My&a=uploadAvatar";
+	
+	//编辑性别
+	public static String editSex = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editSex";
 
 }

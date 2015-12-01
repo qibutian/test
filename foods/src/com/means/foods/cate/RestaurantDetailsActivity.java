@@ -1,5 +1,7 @@
 package com.means.foods.cate;
 
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 /**
  * 餐厅详情
@@ -32,6 +35,10 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	// 餐厅id
 	String store_id;
+	/**
+	 * percapitaT人均，
+	 */
+	TextView percapitaT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 
 				if (response.isSuccess()) {
-
+					JSONObject jo=response.jSONFromData();
 				}
 
 			}

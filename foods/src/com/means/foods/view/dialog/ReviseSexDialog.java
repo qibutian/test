@@ -44,6 +44,9 @@ public class ReviseSexDialog extends BaseAlertDialog {
 
 			@Override
 			public void onClick(View v) {
+				if (null!=mlistener) {
+					mlistener.onResult("-1");
+				}
 				dismiss();
 			}
 		});
@@ -52,6 +55,10 @@ public class ReviseSexDialog extends BaseAlertDialog {
 
 			@Override
 			public void onClick(View v) {
+				if (null!=mlistener) {
+					mlistener.onResult("man");
+				}
+				
 				dismiss();
 			}
 		});
@@ -60,6 +67,9 @@ public class ReviseSexDialog extends BaseAlertDialog {
 
 			@Override
 			public void onClick(View v) {
+				if (null!=mlistener) {
+					mlistener.onResult("woman");
+				}
 				dismiss();
 			}
 		});
@@ -67,14 +77,14 @@ public class ReviseSexDialog extends BaseAlertDialog {
 	}
 
 	public interface OnSexResultListener {
-		void onResult(int result);
+		void onResult(String sex);
 	}
 
 	public OnSexResultListener getOnSexResultListener() {
 		return mlistener;
 	}
 
-	public void OnSexResultListener(OnSexResultListener mlistener) {
+	public void setOnSexResultListener(OnSexResultListener mlistener) {
 		this.mlistener = mlistener;
 	}
 
