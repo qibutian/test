@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
+
 /**
- * 修改绑定手机号	
+ * 修改绑定手机号
+ * 
  * @author Administrator
- *
+ * 
  */
 public class RevisePhoneActivity extends FoodsBaseActivity {
 
@@ -17,10 +19,8 @@ public class RevisePhoneActivity extends FoodsBaseActivity {
 		setContentView(R.layout.activity_revise_phone);
 	}
 
-
 	@Override
 	public void initView() {
-		// TODO Auto-generated method stub
-		
+		setTitle("修改手机号");
 	}
 }

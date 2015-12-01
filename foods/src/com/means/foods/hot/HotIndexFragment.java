@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
-import com.means.foods.api.API2;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
 import com.means.foods.cate.ReservationsDetailsActivity;
 import com.means.foods.cate.RestaurantDetailsActivity;
@@ -79,7 +79,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 	private void initView() {
 
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
-		String url = API2.CWBaseurl + "activity/list?";
+		String url = API.CWBaseurl + "activity/list?";
 		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
 		bottomSearchV = mainV.findViewById(R.id.search);
 		// 添加头部

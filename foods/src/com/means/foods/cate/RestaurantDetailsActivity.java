@@ -1,8 +1,14 @@
 package com.means.foods.cate;
 
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
 import com.means.foods.R;
 import com.means.foods.R.layout;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.User;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,6 +30,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	// 立即预定按钮
 	View reservedV;
 
+	// 餐厅id
+	String store_id;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,9 +41,29 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	@Override
 	public void initView() {
+		store_id = getIntent().getStringExtra("store_id");
 		setTitle("餐厅详情");
 		reservedV = findViewById(R.id.reserved);
 		reservedV.setOnClickListener(this);
+
+		initData();
+	}
+
+	private void initData() {
+		DhNet net = new DhNet(API.restaurantDetail);
+		net.addParam("store_id", store_id);
+		net.addParam("uid", User.getInstance().getUid());
+		net.doGet(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+
+				if (response.isSuccess()) {
+
+				}
+
+			}
+		});
 	}
 
 	@Override

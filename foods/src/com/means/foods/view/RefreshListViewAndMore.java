@@ -52,7 +52,8 @@ public class RefreshListViewAndMore extends LinearLayout {
 		mPtrFrame = (PtrFrameLayout) findViewById(R.id.ptr_frame);
 		loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
 		final StoreHouseHeader header = new StoreHouseHeader(mContext);
-		header.setPadding(0, DhUtil.dip2px(mContext, 15), 0, 0);
+		header.setPadding(0, DhUtil.dip2px(mContext, 15), 0,
+				DhUtil.dip2px(mContext, 10));
 		header.initWithString("Foods");
 		header.setTextColor(getResources().getColor(R.color.text_yellow));
 		mPtrFrame.addPtrUIHandler(header);

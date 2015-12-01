@@ -24,9 +24,9 @@ public class FoodsValueFix implements ValueFix {
 
 		imageOptions = new HashMap<String, DisplayImageOptions>();
 		optionsDefault = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.color.text_hui999999)
-				.showImageOnFail(R.color.text_hui999999)
-				.showImageForEmptyUri(R.color.text_hui999999)
+				.showImageOnLoading(R.color.line_color)
+				.showImageOnFail(R.color.line_color)
+				.showImageForEmptyUri(R.color.line_color)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.resetViewBeforeLoading(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();

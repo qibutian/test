@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -29,6 +31,8 @@ public class SearchActivity extends FoodsBaseActivity {
 	View headV;
 	EditText contentE;
 
+	PSAdapter adapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,7 +42,11 @@ public class SearchActivity extends FoodsBaseActivity {
 
 	@Override
 	public void initView() {
-		setTitle("热门搜索");
+		if (getIntent().getIntExtra("type", 0) == 0) {
+			setTitle("热门搜索");
+		} else {
+			setTitle("餐厅搜索");
+		}
 		listV = (ListView) findViewById(R.id.listview);
 		headV = LayoutInflater.from(self).inflate(R.layout.head_search, null);
 		contentE = (EditText) headV.findViewById(R.id.content);
@@ -53,14 +61,31 @@ public class SearchActivity extends FoodsBaseActivity {
 						}
 						Intent it = new Intent(self, SearchResultActivity.class);
 						it.putExtra("keyword", content);
+						it.putExtra("cityId",
+								getIntent().getStringExtra("cityId"));
+						it.putExtra("type", getIntent().getIntExtra("type", 0));
 						startActivity(it);
 						saveSearch(content);
 					}
 				});
 		listV.addHeaderView(headV);
-		PSAdapter adapter = new PSAdapter(self, R.layout.item_search);
+		adapter = new PSAdapter(self, R.layout.item_search);
 		adapter.addField("name", R.id.name);
 		listV.setAdapter(adapter);
+		listV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				SearchHistory history = (SearchHistory) adapter
+						.getTItem(position-1);
+				Intent it = new Intent(self, SearchResultActivity.class);
+				it.putExtra("keyword", history.getName());
+				it.putExtra("cityId", getIntent().getStringExtra("cityId"));
+				it.putExtra("type", getIntent().getIntExtra("type", 0));
+				startActivity(it);
+			}
+		});
 
 		OrmLiteSqliteOpenHelper daoHelper = IocContainer.getShare().get(
 				OrmLiteSqliteOpenHelper.class);

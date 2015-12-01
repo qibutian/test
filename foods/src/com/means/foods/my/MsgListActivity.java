@@ -13,7 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
-import com.means.foods.api.API2;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.view.RefreshListViewAndMore;
@@ -41,7 +41,7 @@ public class MsgListActivity extends FoodsBaseActivity {
 	public void initView() {
 		setTitle("消息列表");
 		listV = (RefreshListViewAndMore) findViewById(R.id.my_listview);
-		String url = API2.CWBaseurl + "activity/list?";
+		String url = API.CWBaseurl + "activity/list?";
 		contentListV = listV.getListView();
 
 		// 设置空的emptyView

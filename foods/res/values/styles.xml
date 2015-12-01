@@ -167,5 +167,11 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/line_color</item>
     </style>
+    
+    
+      <style name="Dialog_Fullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/black60</item>
+    </style>
 
 </resources>

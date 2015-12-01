@@ -23,7 +23,7 @@ public class EditinfoActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		setTitle("编辑资料");
-		findViewById(R.id.phone_edit).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.photo_edit).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

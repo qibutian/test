@@ -47,16 +47,16 @@ public class FoodsApplication extends Application implements
 		// Thread.setDefaultUncaughtExceptionHandler(this);
 		instance = this;
 		Const.netadapter_page_no = "page";
-		Const.netadapter_step = "step";
+		Const.netadapter_step = "pageNums";
 		Const.response_total = "totalRows";
 		Const.response_data = "data";
 		Const.netadapter_step_default = 10;
 		Const.DATABASE_VERSION = 18;
-		Const.response_success = "result";
+		Const.response_success = "status";
 		Const.response_msg = "errmsg";
-		Const.response_result_status = "0";
+		Const.response_result_status = "1";
 		Const.netadapter_no_more = "";
-		Const.postType = 2;
+//		Const.postType = 2;
 		IocContainer.getShare().initApplication(this);
 		IocContainer.getShare().bind(FoodsValueFix.class).to(ValueFix.class)
 				.scope(InstanceScope.SCOPE_SINGLETON);
