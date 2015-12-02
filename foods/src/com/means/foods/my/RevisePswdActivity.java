@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.view.Utils;
@@ -51,7 +52,6 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 		clear = (ImageView) findViewById(R.id.clear);
 		right_text = (TextView) findViewById(R.id.right_text);
 		right_text.setText("保存");
-		right_text.setVisibility(View.VISIBLE);
 		right_text.setOnClickListener(this);
 		clear.setOnClickListener(this);
 		pswd.addTextChangedListener(new TextWatcher() {
@@ -71,6 +71,11 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
+				if (start > 0) {
+					right_text.setVisibility(View.VISIBLE);
+				}else{
+					right_text.setVisibility(View.GONE);
+				}
 			}
 
 			@Override
@@ -88,7 +93,7 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.right_text:
 			if (isModify()) {
-				if (TextUtils.isEmpty(oldPwd)) {
+				if (TextUtils.isEmpty(pswd.getText().toString())) {
 					showToast("请输入密码");
 					return;
 				}
@@ -134,10 +139,9 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 	}
 
 	public void setContent() {
-		DhNet netName = new DhNet(
-				"http://www.foodies.im/wap.php?g=Wap&c=My&a=editPassword");
-		netName.addParam("uid", "13852286536 ");
-		netName.addParam("oldPwd", "123");
+		DhNet netName = new DhNet(API.editPwd);
+		netName.addParam("uid", "667 ");
+		netName.addParam("oldPwd", myIntent.getStringExtra("oldPwd"));
 		netName.addParam("newPwd", pswd.getText().toString());
 		netName.addParam("newPwd2", pswd.getText().toString());
 		netName.doPostInDialog(new NetTask(self) {
@@ -146,11 +150,8 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
-					// Intent intent = getIntent();
-					// intent.putExtra("name", pswd.getText().toString());
-					// setResult(self.RESULT_OK, intent);
+					 showToast("密码修改成功");
 					finish();
-					// JSONObject jo = response.jSONFromData();
 				}
 			}
 		});

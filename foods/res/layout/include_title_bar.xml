@@ -65,7 +65,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:paddingRight="12dp"
-            android:textColor="@color/text_white"
+            android:textColor="@color/text_33_black"
             android:textSize="@dimen/text_medium"
             android:visibility="gone" />
 

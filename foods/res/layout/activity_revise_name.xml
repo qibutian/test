@@ -39,7 +39,7 @@
     <TextView 
         android:id="@+id/tishi"
         android:visibility="gone"
-        style="@style/text_66_blacklight_small"
+        style="@style/text_66_blacklight_smaller"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="9dp"
         android:text="限制4-12个字符，可由中英文字符、数字、“-”、“—” 组成"/>
