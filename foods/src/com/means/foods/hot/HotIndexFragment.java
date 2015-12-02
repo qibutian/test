@@ -115,7 +115,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
-				System.out.println("热门详情" + json);
+//				System.out.println("热门详情" + json);
 				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
 				collectI = (ImageView) itemV.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike

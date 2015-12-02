@@ -31,8 +31,10 @@ public class FoodsUtils {
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
 					flag = true;
+					System.out.println("收藏请求"+response.isSuccess());
 				}else {
 					flag = false;
+					System.out.println("取消收藏请求"+response.isSuccess());
 				}
 			}
 		});
