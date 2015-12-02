@@ -57,11 +57,11 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 		tishi = (TextView) findViewById(R.id.tishi);
 		start = myIntent.getStringExtra("start");
 		if ("1".equals(start)) {
-			setTitle("修改姓名");
-			tishi.setVisibility(View.GONE);
-		} else {
 			setTitle("修改昵称");
 			tishi.setVisibility(View.VISIBLE);
+		} else {
+			setTitle("修改姓名");
+			tishi.setVisibility(View.GONE);
 		}
 		backV = findViewById(R.id.backLayout);
 
@@ -115,7 +115,7 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 	}
 
 	public void setContent() {
-		if ("1".equals(start)) {// 修改姓名
+		if ("2".equals(start)) {// 修改姓名
 			DhNet netName = new DhNet(API.editName);
 			netName.addParam("uid", "667 ");
 			netName.addParam("token", "202cb962ac59075b964b07152d234b70");
