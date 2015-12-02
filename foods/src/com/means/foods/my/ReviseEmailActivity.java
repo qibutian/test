@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 
@@ -51,7 +52,6 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 		clear = (ImageView) findViewById(R.id.clear);
 		right_text = (TextView) findViewById(R.id.right_text);
 		right_text.setText("保存");
-		right_text.setVisibility(View.VISIBLE);
 		newemail.setText(myIntent.getStringExtra("email"));
 		if (!"".equals(myIntent.getStringExtra("email"))) {
 			clear.setVisibility(View.VISIBLE);
@@ -95,7 +95,11 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
+				if (start > 0) {
+					right_text.setVisibility(View.VISIBLE);
+				}else{
+					right_text.setVisibility(View.GONE);
+				}
 			}
 
 			@Override
@@ -108,9 +112,9 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 
 	public void setContent() {
 		DhNet net = new DhNet(
-				"http://www.foodies.im/wap.php?g=Wap&c=My&a=editEmail");
-		net.addParam("uid", "13852286536 ");
-		net.addParam("token", "123");
+				API.editEmail);
+		net.addParam("uid", "667 ");
+		net.addParam("token", "202cb962ac59075b964b07152d234b70");
 		net.addParam("email", newemail.getText().toString());
 		net.doPostInDialog(new NetTask(self) {
 
@@ -121,6 +125,7 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 					Intent intent = getIntent();
                     intent.putExtra("email", newemail.getText().toString());
                     setResult(self.RESULT_OK, intent);
+                    showToast("邮箱修改成功");
 					finish();
 					// JSONObject jo = response.jSONFromData();
 				}

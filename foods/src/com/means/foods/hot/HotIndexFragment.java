@@ -6,7 +6,10 @@ import org.json.JSONObject;
 
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.UserLocation;
 import net.duohuo.dhroid.util.ViewUtil;
@@ -65,6 +68,10 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 	ListView contentListV;
 
+	ImageView collectI;
+
+	NetJSONAdapter adapter;
+
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
 			instance = new HotIndexFragment();
@@ -96,7 +103,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 		// 设置空的emptyView
 		listV.setEmptyView(mLayoutInflater.inflate(
 				R.layout.list_nomal_emptyview, null));
-		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
+		adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_hot_list_index);
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
@@ -107,11 +114,12 @@ public class HotIndexFragment extends FoodsListFragment implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
+				System.out.println("热门详情"+json);
 				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
-				ImageView collectI = (ImageView) itemV
-						.findViewById(R.id.collect);
+				collectI = (ImageView) itemV.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
+				System.out.println("收藏的状态"+JSONUtil.getInt(json, "is_collect"));
 				if (jsa != null && jsa.length() != 0) {
 					try {
 						ViewUtil.bindNetImage((ImageView) itemV
@@ -122,7 +130,9 @@ public class HotIndexFragment extends FoodsListFragment implements
 						e.printStackTrace();
 					}
 				}
-				String des = JSONUtil.getString(json, "city_name")+"  |  人均 $"+JSONUtil.getString(json, "mean_money");
+				collectI.setOnClickListener(new MycollOnClick(json));
+				String des = JSONUtil.getString(json, "city_name")
+						+ "  |  人均 $" + JSONUtil.getString(json, "mean_money");
 				return des;
 			}
 		});
@@ -230,6 +240,68 @@ public class HotIndexFragment extends FoodsListFragment implements
 		//
 		// adapter = new TestAdapter(getActivity());
 		// listV.setAdapter(adapter);
+	}
+
+	public class MycollOnClick implements View.OnClickListener {
+		JSONObject json;
+
+		public MycollOnClick(JSONObject json) {
+			this.json = json;
+		}
+
+		@Override
+		public void onClick(View arg0) {
+			int collectTyp = JSONUtil.getInt(json, "is_collect");
+			switch (arg0.getId()) {
+			case R.id.collect:
+				if (collectTyp == 0) {
+					DhNet net = new DhNet(API.Collect);
+					net.addParam("uid", "667");
+					 net.addParam("token", "202cb962ac59075b964b07152d234b70");
+					net.addParam("store_id", JSONUtil.getString(json, "store_id"));
+					System.out.println("store_id"+JSONUtil.getString(json, "store_id"));
+					net.doPostInDialog(new NetTask(getActivity()) {
+						@Override
+						public void doInUI(Response response, Integer transfer) {
+
+							// TODO Auto-generated method stub
+							if (response.isSuccess()) {
+								System.out.println("收藏接口返回"
+										+ response.isSuccess());
+								adapter.refresh();
+								adapter.notifyDataSetChanged();
+								Toast.makeText(getActivity(), "收藏成功",
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				} else if (collectTyp == 1) {
+					DhNet net = new DhNet(API.Unsubscribe);
+					net.addParam("uid", "667");
+					 net.addParam("token", "202cb962ac59075b964b07152d234b70");
+					net.addParam("store_id", JSONUtil.getString(json, "store_id"));
+					net.doPostInDialog(new NetTask(getActivity()) {
+						@Override
+						public void doInUI(Response response, Integer transfer) {
+							// TODO Auto-generated method stub
+							if (response.isSuccess()) {
+								System.out.println("取消收藏接口返回"
+										+ response.isSuccess());
+								adapter.refresh();
+								Toast.makeText(getActivity(), "取消收藏",
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				}
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
 	}
 
 	@Override

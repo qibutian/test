@@ -20,8 +20,10 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 
@@ -31,7 +33,8 @@ import com.means.foods.bean.User;
  * @author Administrator
  * 
  */
-public class ReviseNameActivity extends FoodsBaseActivity implements OnClickListener{
+public class ReviseNameActivity extends FoodsBaseActivity implements
+		OnClickListener {
 	EditText newnickname;
 	ImageView clear;
 	Intent myIntent;
@@ -40,6 +43,7 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 	View backV;
 	TextView tishi;
 	String start;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,22 +54,21 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 	public void initView() {
 		user = User.getInstance();
 		myIntent = getIntent();
-		 tishi = (TextView) findViewById(R.id.tishi);
-		 start = myIntent.getStringExtra("start");
+		tishi = (TextView) findViewById(R.id.tishi);
+		start = myIntent.getStringExtra("start");
 		if ("1".equals(start)) {
 			setTitle("修改姓名");
 			tishi.setVisibility(View.GONE);
-		}else{
+		} else {
 			setTitle("修改昵称");
 			tishi.setVisibility(View.VISIBLE);
 		}
 		backV = findViewById(R.id.backLayout);
-		
+
 		newnickname = (EditText) findViewById(R.id.Newnickname);
 		clear = (ImageView) findViewById(R.id.clear);
 		right_text = (TextView) findViewById(R.id.right_text);
 		right_text.setText("保存");
-		right_text.setVisibility(View.VISIBLE);
 		newnickname.setText(myIntent.getStringExtra("name"));
 		if (!"".equals(myIntent.getStringExtra("email"))) {
 			clear.setVisibility(View.VISIBLE);
@@ -75,20 +78,7 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 
 				@Override
 				public void onClick(View arg0) {
-//					if (isModify()) {
-//						if (isEmail(newnickname.getText().toString())) {
-//							setContent();
-
-//						} else {
-//							if (newnickname.getText().toString().isEmpty()) {
-//								finish();
-//							} else {
-//								showToast("邮箱格式不正确");
-//							}
-//						}
-//					} else {
-						finish();
-//					}
+					finish();
 				}
 			});
 		}
@@ -109,7 +99,11 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
+				if (start > 0) {
+					right_text.setVisibility(View.VISIBLE);
+				}else{
+					right_text.setVisibility(View.GONE);
+				}
 			}
 
 			@Override
@@ -119,12 +113,12 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 		});
 		clear.setOnClickListener(this);
 	}
+
 	public void setContent() {
-		if ("1".equals(start)) {//修改姓名
-			DhNet netName = new DhNet(
-					"http://www.foodies.im/wap.php?g=Wap&c=My&a=editTruename");
-			netName.addParam("uid", "13852286536 ");
-			netName.addParam("token", "123");
+		if ("1".equals(start)) {// 修改姓名
+			DhNet netName = new DhNet(API.editName);
+			netName.addParam("uid", "667 ");
+			netName.addParam("token", "202cb962ac59075b964b07152d234b70");
 			netName.addParam("truename", newnickname.getText().toString());
 			netName.doPostInDialog(new NetTask(self) {
 
@@ -133,19 +127,21 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 					// TODO Auto-generated method stub
 					if (response.isSuccess()) {
 						Intent intent = getIntent();
-	                    intent.putExtra("name", newnickname.getText().toString());
-	                    setResult(self.RESULT_OK, intent);
+						intent.putExtra("name", newnickname.getText()
+								.toString());
+						setResult(self.RESULT_OK, intent);
+						 showToast("姓名修改成功");
 						finish();
 						// JSONObject jo = response.jSONFromData();
 					}
 				}
 			});
-		}else{//修改昵称
-			if (newnickname.getText().toString().length()>4&&newnickname.getText().toString().length()<13) {
-				DhNet net = new DhNet(
-						"http://www.foodies.im/wap.php?g=Wap&c=My&a=editNickname");
-				net.addParam("uid", "13852286536 ");
-				net.addParam("token", "123");
+		} else {// 修改昵称
+			if (newnickname.getText().toString().length() > 4
+					&& newnickname.getText().toString().length() < 13) {
+				DhNet net = new DhNet(API.editNickName);
+				net.addParam("uid", "667 ");
+				net.addParam("token", "202cb962ac59075b964b07152d234b70");
 				net.addParam("nickname", newnickname.getText().toString());
 				net.doPostInDialog(new NetTask(self) {
 
@@ -154,32 +150,39 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 						// TODO Auto-generated method stub
 						if (response.isSuccess()) {
 							Intent intent = getIntent();
-		                    intent.putExtra("nickname", newnickname.getText().toString());
-		                    setResult(self.RESULT_OK, intent);
+							intent.putExtra("nickname", newnickname.getText()
+									.toString());
+							setResult(self.RESULT_OK, intent);
+							 showToast("昵称修改成功");
 							finish();
 							// JSONObject jo = response.jSONFromData();
 						}
 					}
 				});
-			}else{
+			} else {
 				showToast("昵称不正确，请按提示填写~");
 			}
-			
+
 		}
-	
+
 	}
+
 	/**
 	 * 禁止特殊字符
+	 * 
 	 * @param str
 	 * @return
 	 * @throws PatternSyntaxException
 	 */
-	public static String StringFilter(String str)throws PatternSyntaxException{ 
-		 String regEx = "[/\\:*?<>|\"\n\t]"; //要过滤掉的字符
-		 Pattern p = Pattern.compile(regEx); 
-		 Matcher m = p.matcher(str); 
-		 return m.replaceAll("").trim(); 
-		 }
+	public  boolean StringFilter(String str)  {
+		String regEx = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]"; // 要过滤掉的字符
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(str);
+		if(m.find()){
+            return false;
+        }
+		return true;
+	}
 
 	/**
 	 * 判断资料是否有改动
@@ -200,24 +203,13 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//			if (isModify()) {
-//				if (isEmail(newnickname.getText().toString())) {
-//					setContent();
-//				} else {
-//					if (newnickname.getText().toString().isEmpty()) {
-//						finish();
-//					} else {
-//						showToast("邮箱格式不正确");
-//					}
-//				}
-//			} else {
-				finish();
-//			}
+			finish();
 
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -227,16 +219,11 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 			break;
 		case R.id.right_text:
 			if (isModify()) {
-//				if (isEmail(newnickname.getText().toString())) {
-					setContent();
-//
-//				} else {
-//					if (newnickname.getText().toString().isEmpty()) {
-//						finish();
-//					} else {
-//						showToast("邮箱格式不正确");
-//					}
-//				}
+				if (!StringFilter(newnickname.getText().toString())) {
+					showToast("姓名不允许输入特殊符号！");
+					return;
+				}
+				setContent();
 			} else {
 				finish();
 			}
@@ -247,5 +234,5 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 		}
 
 	}
-	
+
 }

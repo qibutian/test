@@ -35,11 +35,23 @@ public class API {
 
 	// 餐厅详情
 	public static String restaurantDetail = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=shopDetailApi";
-	
-	//编辑头像
+
+	// 编辑头像
 	public static String editAvatar = "http://www.foodies.im/wap.php?g=Wap&c=My&a=uploadAvatar";
-	
-	//编辑性别
+
+	// 编辑性别
 	public static String editSex = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editSex";
+	// 收藏
+	public static String Collect = "http://www.foodies.im/wap.php?g=Wap&c=Collect&a=addCollectApi";
+	// 取消收藏
+	public static String Unsubscribe = "http://www.foodies.im/wap.php?g=Wap&c=Collect&a=cancelCollectApi";
+	// 修改email
+	public static String editEmail = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editEmail";
+	// 修改姓名
+	public static String editName = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editTruename";
+	// 修改昵称
+	public static String editNickName = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editNickname";
+	// 修改密码
+	public static String editPwd = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editPassword";
 
 }
