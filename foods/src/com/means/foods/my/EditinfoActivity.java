@@ -33,12 +33,14 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	// 图片缓存根目录
 	private File mCacheDir;
 	private String mPhotoPath;
-
+	public static final int EMAIL = 3;
+	public static final int NAME = 4;
+	public static final int NICKNAME = 5;
 	RoundImageView headI;
 
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
-	
-	TextView sexT;
+
+	TextView sexT,mailbox,name,nickname;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,11 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		sexR = (RelativeLayout) findViewById(R.id.sex_edit);
 		emailR = (RelativeLayout) findViewById(R.id.email_edit);
 		passwordR = (RelativeLayout) findViewById(R.id.password_edit);
-		
+
 		sexT = (TextView) findViewById(R.id.sex);
+		mailbox = (TextView) findViewById(R.id.mailbox);
+		name = (TextView) findViewById(R.id.name);
+		nickname = (TextView) findViewById(R.id.nickname);
 
 		photoR.setOnClickListener(this);
 		nicknameR.setOnClickListener(this);
@@ -71,7 +76,6 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		sexR.setOnClickListener(this);
 		emailR.setOnClickListener(this);
 		passwordR.setOnClickListener(this);
-
 
 	}
 
@@ -94,6 +98,15 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
 				headI.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
 				uploadHead(mPhotoPath);
+				break;
+			case EMAIL:
+				mailbox.setText(data.getStringExtra("email"));
+				break;
+			case NAME:
+				name.setText(data.getStringExtra("name"));
+				break;
+			case NICKNAME:
+				nickname.setText(data.getStringExtra("nickname"));
 				break;
 
 			}
@@ -122,7 +135,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 	@Override
 	public void onClick(View v) {
-		
+
 		Intent it;
 
 		switch (v.getId()) {
@@ -158,11 +171,17 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.nickname_edit:
 			it = new Intent(self, ReviseNameActivity.class);
+			it.putExtra("name", "哎呦喂");
+			it.putExtra("start", "2");
 			startActivity(it);
+
 			break;
 		case R.id.name_edit:
 			it = new Intent(self, ReviseNameActivity.class);
+			it.putExtra("name", "王碩");
+			it.putExtra("start", "1");
 			startActivity(it);
+
 			break;
 		case R.id.phone_edit:
 			it = new Intent(self, RevisePhoneActivity.class);
@@ -171,23 +190,25 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		case R.id.sex_edit:
 			ReviseSexDialog sexdialog = new ReviseSexDialog(self);
 			sexdialog.setOnSexResultListener(new OnSexResultListener() {
-				
+
 				@Override
 				public void onResult(String sex) {
-					if("man".equals(sex)){
+					if ("man".equals(sex)) {
 						editSex("0");
-					}else if("woman".equals(sex)){
+					} else if ("woman".equals(sex)) {
 						editSex("1");
 					}
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 			sexdialog.show();
 			break;
 		case R.id.email_edit:
 			it = new Intent(self, ReviseEmailActivity.class);
+			it.putExtra("email", "wangshuo3088@126.com");
 			startActivity(it);
+
 			break;
 		case R.id.password_edit:
 			it = new Intent(self, RevisePswdActivity.class);
@@ -199,18 +220,19 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		}
 		// TODO Auto-generated method stub
 	}
-	private void editSex(final String sex){
+
+	private void editSex(final String sex) {
 		DhNet net = new DhNet(API.editSex);
 		net.addParam("uid", "667");
 		net.addParam("token", "202cb962ac59075b964b07152d234b70");
 		net.addParam("sex", sex);
 		net.doPostInDialog(new NetTask(self) {
-			
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				hidenProgressDialog();
 				if (response.isSuccess()) {
-					sexT.setText("0".equals(sex)? "男":"女");
+					sexT.setText("0".equals(sex) ? "男" : "女");
 					showToast("更换性别成功");
 				}
 			}

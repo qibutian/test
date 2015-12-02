@@ -61,20 +61,20 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 
 				@Override
 				public void onClick(View arg0) {
-					if (isModify()) {
-						if (isEmail(newemail.getText().toString())) {
-							setContent();
-
-						} else {
-							if (newemail.getText().toString().isEmpty()) {
-								finish();
-							} else {
-								showToast("邮箱格式不正确");
-							}
-						}
-					} else {
+//					if (isModify()) {
+//						if (isEmail(newemail.getText().toString())) {
+//							setContent();
+//
+//						} else {
+//							if (newemail.getText().toString().isEmpty()) {
+//								finish();
+//							} else {
+//								showToast("邮箱格式不正确");
+//							}
+//						}
+//					} else {
 						finish();
-					}
+//					}
 				}
 			});
 		}
@@ -111,13 +111,16 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 				"http://www.foodies.im/wap.php?g=Wap&c=My&a=editEmail");
 		net.addParam("uid", "13852286536 ");
 		net.addParam("token", "123");
-		net.addParam("token", newemail.getText().toString());
+		net.addParam("email", newemail.getText().toString());
 		net.doPostInDialog(new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
+					Intent intent = getIntent();
+                    intent.putExtra("email", newemail.getText().toString());
+                    setResult(self.RESULT_OK, intent);
 					finish();
 					// JSONObject jo = response.jSONFromData();
 				}
@@ -153,19 +156,19 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			if (isModify()) {
-				if (isEmail(newemail.getText().toString())) {
-					setContent();
-				} else {
-					if (newemail.getText().toString().isEmpty()) {
+//			if (isModify()) {
+//				if (isEmail(newemail.getText().toString())) {
+//					setContent();
+//				} else {
+//					if (newemail.getText().toString().isEmpty()) {
 						finish();
-					} else {
-						showToast("邮箱格式不正确");
-					}
-				}
-			} else {
-				finish();
-			}
+//					} else {
+//						showToast("邮箱格式不正确");
+//					}
+//				}
+//			} else {
+//				finish();
+//			}
 
 			return true;
 		}

@@ -75,9 +75,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 
 				@Override
 				public void onClick(View arg0) {
-					if (isModify()) {
+//					if (isModify()) {
 //						if (isEmail(newnickname.getText().toString())) {
-							setContent();
+//							setContent();
 
 //						} else {
 //							if (newnickname.getText().toString().isEmpty()) {
@@ -86,9 +86,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 //								showToast("邮箱格式不正确");
 //							}
 //						}
-					} else {
+//					} else {
 						finish();
-					}
+//					}
 				}
 			});
 		}
@@ -132,6 +132,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 				public void doInUI(Response response, Integer transfer) {
 					// TODO Auto-generated method stub
 					if (response.isSuccess()) {
+						Intent intent = getIntent();
+	                    intent.putExtra("name", newnickname.getText().toString());
+	                    setResult(self.RESULT_OK, intent);
 						finish();
 						// JSONObject jo = response.jSONFromData();
 					}
@@ -150,6 +153,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 					public void doInUI(Response response, Integer transfer) {
 						// TODO Auto-generated method stub
 						if (response.isSuccess()) {
+							Intent intent = getIntent();
+		                    intent.putExtra("nickname", newnickname.getText().toString());
+		                    setResult(self.RESULT_OK, intent);
 							finish();
 							// JSONObject jo = response.jSONFromData();
 						}
@@ -194,9 +200,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			if (isModify()) {
+//			if (isModify()) {
 //				if (isEmail(newnickname.getText().toString())) {
-					setContent();
+//					setContent();
 //				} else {
 //					if (newnickname.getText().toString().isEmpty()) {
 //						finish();
@@ -204,9 +210,9 @@ public class ReviseNameActivity extends FoodsBaseActivity implements OnClickList
 //						showToast("邮箱格式不正确");
 //					}
 //				}
-			} else {
+//			} else {
 				finish();
-			}
+//			}
 
 			return true;
 		}
