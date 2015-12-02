@@ -1,33 +1,42 @@
 package com.means.foods.my;
 
+import org.json.JSONObject;
+
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
+import net.duohuo.dhroid.util.ViewUtil;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 import com.means.foods.R;
 import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
-import com.means.foods.cate.ReservationsDetailsActivity;
-import com.means.foods.cate.RestaurantListActivity;
+import com.means.foods.bean.User;
 import com.means.foods.view.RefreshListViewAndMore;
+import com.means.foods.view.RoundImageView;
 
 public class MyIndexFragment extends FoodsListFragment implements
 		OnClickListener {
 
 	static MyIndexFragment instance;
+	
+	User user;
 
 	View mainV;
 
@@ -48,6 +57,9 @@ public class MyIndexFragment extends FoodsListFragment implements
 
 	// 消息中心
 	ImageView msgI;
+	
+	RoundImageView headI;
+	TextView nicknameT;
 
 	public static MyIndexFragment getInstance() {
 		if (instance == null) {
@@ -70,6 +82,8 @@ public class MyIndexFragment extends FoodsListFragment implements
 	}
 
 	private void initView() {
+		user = User.getInstance();
+		
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		String url = API.CWBaseurl + "activity/list?";
 		contentListV = listV.getListView();
@@ -103,11 +117,32 @@ public class MyIndexFragment extends FoodsListFragment implements
 				startActivity(it);
 			}
 		});
-
+		headI = (RoundImageView) headV.findViewById(R.id.head);
+		nicknameT = (TextView) headV.findViewById(R.id.nickname);
+		
 		editB = (Button) headV.findViewById(R.id.edit);
 		editB.setOnClickListener(this);
 		msgI = (ImageView) headV.findViewById(R.id.msg);
 		msgI.setOnClickListener(this);
+		getMyDetails();
+		
+	}
+	
+	private void getMyDetails(){
+		DhNet verifyNet = new DhNet(API.myInfo);
+		verifyNet.addParam("uid", user.getUid());
+		verifyNet.addParam("token", user.getToken());
+        verifyNet.doGetInDialog(new NetTask(getActivity()) {
+			
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
+					ViewUtil.bindView(nicknameT,JSONUtil.getString(jo, "nickname"));
+				}
+			}
+		});
 	}
 
 	@Override

@@ -3,11 +3,15 @@ package com.means.foods.my;
 import java.io.File;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,6 +25,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.User;
 import com.means.foods.view.RoundImageView;
 import com.means.foods.view.dialog.ReviseHeadDialog;
 import com.means.foods.view.dialog.ReviseHeadDialog.OnHeadResultListener;
@@ -30,6 +35,7 @@ import com.means.foods.view.dialog.ReviseSexDialog.OnSexResultListener;
 public class EditinfoActivity extends FoodsBaseActivity implements
 		View.OnClickListener {
 
+	User user;
 	// 图片缓存根目录
 	private File mCacheDir;
 	private String mPhotoPath;
@@ -40,7 +46,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
 
-	TextView sexT,mailbox,name,nickname;
+	TextView sexT,mailboxT,nameT,nicknameT,phoneT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 	@Override
 	public void initView() {
+		user = User.getInstance();
 		setTitle("编辑资料");
 		headI = (RoundImageView) findViewById(R.id.head);
 		photoR = (RelativeLayout) findViewById(R.id.photo_edit);
@@ -65,9 +72,10 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		passwordR = (RelativeLayout) findViewById(R.id.password_edit);
 
 		sexT = (TextView) findViewById(R.id.sex);
-		mailbox = (TextView) findViewById(R.id.mailbox);
-		name = (TextView) findViewById(R.id.name);
-		nickname = (TextView) findViewById(R.id.nickname);
+		mailboxT = (TextView) findViewById(R.id.mailbox);
+		nameT = (TextView) findViewById(R.id.name);
+		nicknameT = (TextView) findViewById(R.id.nickname);
+		phoneT = (TextView) findViewById(R.id.phone);
 
 		photoR.setOnClickListener(this);
 		nicknameR.setOnClickListener(this);
@@ -77,6 +85,28 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		emailR.setOnClickListener(this);
 		passwordR.setOnClickListener(this);
 
+		getMyDetails();
+	}
+	
+	private void getMyDetails(){
+		DhNet verifyNet = new DhNet(API.myInfo);
+		verifyNet.addParam("uid", user.getUid());
+		verifyNet.addParam("token", user.getToken());
+        verifyNet.doGetInDialog(new NetTask(self) {
+			
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
+					ViewUtil.bindView(nicknameT,JSONUtil.getString(jo, "nickname"));
+					ViewUtil.bindView(nameT,JSONUtil.getString(jo, "truename"));
+					ViewUtil.bindView(phoneT,JSONUtil.getString(jo, "phone"));
+					ViewUtil.bindView(mailboxT,JSONUtil.getString(jo, "email"));
+					ViewUtil.bindView(sexT,"1".equals(JSONUtil.getString(jo, "nickname")) ? "男" : "女");
+				}
+			}
+		});
 	}
 
 	@Override
@@ -100,13 +130,13 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				uploadHead(mPhotoPath);
 				break;
 			case EMAIL:
-				mailbox.setText(data.getStringExtra("email"));
+				mailboxT.setText(data.getStringExtra("email"));
 				break;
 			case NAME:
-				name.setText(data.getStringExtra("name"));
+				nameT.setText(data.getStringExtra("name"));
 				break;
 			case NICKNAME:
-				nickname.setText(data.getStringExtra("nickname"));
+				nicknameT.setText(data.getStringExtra("nickname"));
 				break;
 
 			}
@@ -121,7 +151,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		DhNet net = new DhNet(API.editAvatar);
 		net.addParam("uid", "667");
 		net.addParam("token", "202cb962ac59075b964b07152d234b70");
-		net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self) {
+		net.upload("imgFile", new File(path), new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
@@ -171,13 +201,13 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.nickname_edit:
 			it = new Intent(self, ReviseNameActivity.class);
-			it.putExtra("name", "哎呦喂");
+			it.putExtra("name", nicknameT.getText().toString());
 			it.putExtra("start", "1");
 			startActivity(it);
 			break;
 		case R.id.name_edit:
 			it = new Intent(self, ReviseNameActivity.class);
-			it.putExtra("name", "王碩");
+			it.putExtra("name", nameT.getText().toString());
 			it.putExtra("start", "2");
 			startActivity(it);
 
@@ -193,9 +223,9 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				@Override
 				public void onResult(String sex) {
 					if ("man".equals(sex)) {
-						editSex("2");
-					} else if ("woman".equals(sex)) {
 						editSex("1");
+					} else if ("woman".equals(sex)) {
+						editSex("2");
 					}
 					// TODO Auto-generated method stub
 
@@ -205,7 +235,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.email_edit:
 			it = new Intent(self, ReviseEmailActivity.class);
-			it.putExtra("email", "wangshuo3088@126.com");
+			it.putExtra("email", mailboxT.getText().toString());
 			startActivityForResult(it, EMAIL);
 
 			break;
@@ -223,8 +253,8 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 	private void editSex(final String sex) {
 		DhNet net = new DhNet(API.editSex);
-		net.addParam("uid", "667");
-		net.addParam("token", "202cb962ac59075b964b07152d234b70");
+		net.addParam("uid", user.getUid());
+		net.addParam("token", user.getToken());
 		net.addParam("sex", sex);
 		net.doPostInDialog(new NetTask(self) {
 

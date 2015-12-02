@@ -41,5 +41,8 @@ public class API {
 	
 	//编辑性别
 	public static String editSex = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editSex";
+	
+	//个人信息
+	public static String myInfo = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myInfoApi";
 
 }

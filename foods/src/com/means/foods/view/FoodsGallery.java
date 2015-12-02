@@ -7,9 +7,9 @@ import android.view.MotionEvent;
 import android.widget.Gallery;
 
 
-public class CarPlayGallery extends Gallery {
+public class FoodsGallery extends Gallery {
 
-	public CarPlayGallery(Context context, AttributeSet attrs) {
+	public FoodsGallery(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 

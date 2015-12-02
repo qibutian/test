@@ -47,8 +47,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/icon"
-                    android:paddingBottom="18dp"
-                    android:paddingTop="18dp"
                     android:src="@drawable/icon_person" />
             </RelativeLayout>
 

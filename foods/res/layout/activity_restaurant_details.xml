@@ -24,11 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <ImageView
+            <com.means.foods.view.FoodsGallery
+                android:id="@+id/viewer"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mode_catebg" />
+                android:layout_height="200dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +86,7 @@
                     <TextView
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
-                        android:text="60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
+                        android:text="/没取到/60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
 
                     <TextView
                         android:id="@+id/reason"

@@ -1,27 +1,26 @@
 package com.means.foods.cate;
 
-import org.json.JSONObject;
-
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
-import com.means.foods.R;
-import com.means.foods.R.layout;
-import com.means.foods.api.API;
-import com.means.foods.base.FoodsBaseActivity;
-import com.means.foods.bean.User;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.means.foods.R;
+import com.means.foods.adapter.BigImageAdapter;
+import com.means.foods.api.API;
+import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.User;
+import com.means.foods.view.FoodsGallery;
 
 /**
  * 餐厅详情
@@ -57,6 +56,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	 */
 	TextView mean_moneyT,cuisineT,nameT,reasonT,addressT,distanceT,travelT,trafficrouteT,hoursT,txt_infoT,featureT,chefT,tipsT;
 
+	FoodsGallery mViewPager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,6 +82,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		chefT = (TextView) findViewById(R.id.chef);
 		tipsT = (TextView) findViewById(R.id.tips);
 		
+		mViewPager = (FoodsGallery) findViewById(R.id.viewer);
 		reservedV = findViewById(R.id.reserved);
 		
 		reservedV.setOnClickListener(this);
@@ -91,8 +92,10 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	private void initData() {
 		DhNet net = new DhNet(API.restaurantDetail);
-		net.addParam("store_id", store_id);
+		net.addParam("store_id", "62");
 		net.addParam("uid", User.getInstance().getUid());
+//		net.addParam("store_id", store_id);
+//		net.addParam("uid", User.getInstance().getUid());
 		net.doGet(new NetTask(self) {
 
 			@Override
@@ -113,7 +116,11 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					ViewUtil.bindView(featureT, JSONUtil.getString(jo, "feature"));
 					ViewUtil.bindView(chefT, JSONUtil.getString(jo, "chef"));
 					ViewUtil.bindView(tipsT, JSONUtil.getString(jo, "tips"));
-					
+					JSONArray jsc = JSONUtil.getJSONArray(jo, "all_pic");
+					 if (jsc != null) {
+	                        BigImageAdapter adapter = new BigImageAdapter(self, jsc);
+	                        mViewPager.setAdapter(adapter);
+	                    }
 				}
 
 			}

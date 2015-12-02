@@ -33,9 +33,9 @@ public class FoodsValueFix implements ValueFix {
 		imageOptions.put("default", optionsDefault);
 
 		headOptions = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.color.text_hui999999)
-				.showImageForEmptyUri(R.color.text_hui999999)
-				.showImageOnFail(R.color.text_hui999999).cacheInMemory(true)
+				.showImageOnLoading(R.drawable.icon_person)
+				.showImageForEmptyUri(R.drawable.icon_person)
+				.showImageOnFail(R.drawable.icon_person).cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true).build();
 		imageOptions.put("head", headOptions);
 

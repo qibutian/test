@@ -6,12 +6,13 @@ public class User {
 
 	public static User getInstance() {
 		if (instance == null) {
-			return new User();
+			return instance=new User();
 		}
 		return instance;
 	}
 
 	public String uid = "";
+	public String token = "";
 
 	public String getUid() {
 		return uid;
@@ -19,6 +20,14 @@ public class User {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
