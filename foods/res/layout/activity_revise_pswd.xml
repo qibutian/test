@@ -22,10 +22,13 @@
             android:inputType="textPassword"
             android:paddingLeft="14dp"
             android:singleLine="true"
+            android:hint="请输入新密码"
             android:textColor="@color/text_66_black_light"
             android:textSize="@dimen/text_medium" />
 
         <ImageView
+            android:id="@+id/clear"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -35,6 +38,7 @@
     </RelativeLayout>
 
     <TextView
+        android:visibility="invisible"
         style="@style/text_66_blacklight_small"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="9dp"

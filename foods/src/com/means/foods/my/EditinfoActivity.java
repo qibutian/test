@@ -174,7 +174,6 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			it.putExtra("name", "哎呦喂");
 			it.putExtra("start", "1");
 			startActivity(it);
-
 			break;
 		case R.id.name_edit:
 			it = new Intent(self, ReviseNameActivity.class);
@@ -207,11 +206,12 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		case R.id.email_edit:
 			it = new Intent(self, ReviseEmailActivity.class);
 			it.putExtra("email", "wangshuo3088@126.com");
-			startActivity(it);
+			startActivityForResult(it, EMAIL);
 
 			break;
 		case R.id.password_edit:
 			it = new Intent(self, RevisePswdActivity.class);
+			it.putExtra("oldPwd", "123");
 			startActivity(it);
 			break;
 
