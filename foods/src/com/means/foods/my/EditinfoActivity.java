@@ -172,14 +172,14 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		case R.id.nickname_edit:
 			it = new Intent(self, ReviseNameActivity.class);
 			it.putExtra("name", "哎呦喂");
-			it.putExtra("start", "2");
+			it.putExtra("start", "1");
 			startActivity(it);
 
 			break;
 		case R.id.name_edit:
 			it = new Intent(self, ReviseNameActivity.class);
 			it.putExtra("name", "王碩");
-			it.putExtra("start", "1");
+			it.putExtra("start", "2");
 			startActivity(it);
 
 			break;
@@ -194,7 +194,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				@Override
 				public void onResult(String sex) {
 					if ("man".equals(sex)) {
-						editSex("0");
+						editSex("2");
 					} else if ("woman".equals(sex)) {
 						editSex("1");
 					}
@@ -232,7 +232,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				hidenProgressDialog();
 				if (response.isSuccess()) {
-					sexT.setText("0".equals(sex) ? "男" : "女");
+					sexT.setText("1".equals(sex) ? "男" : "女");
 					showToast("更换性别成功");
 				}
 			}

@@ -48,6 +48,7 @@
                     android:paddingRight="15dp" >
 
                     <TextView
+                        android:id="@+id/name"
                         style="@style/text_66_blacklight_medium"
                         android:text="Parm Battery pary" />
 
@@ -64,14 +65,14 @@
                         android:background="@color/text_brown" />
 
                     <TextView
-                        android:id="@+id/percapita"
+                        android:id="@+id/mean_money"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
                         android:text="人均￥145"
                         android:textColor="@color/text_brown" />
 
                     <TextView
-                        
+                        android:id="@+id/cuisine"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="14dp"
                         android:text="精致套餐 摩登澳式"
@@ -89,6 +90,7 @@
                         android:text="60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
 
                     <TextView
+                        android:id="@+id/reason"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
                         android:text="Best fine dining in Melbourne	with un-precedented views." />
@@ -115,6 +117,7 @@
                             android:orientation="vertical" >
 
                             <TextView
+                                android:id="@+id/address"
                                 style="@style/text_66_blacklight_small"
                                 android:text="Best fine dining in Melbourne	with un-precedented views." />
 
@@ -141,6 +144,7 @@
                             android:text="距市中心：" />
 
                         <TextView
+                            android:id="@+id/distance"
                             style="@style/text_66_blacklight_small"
                             android:text="4.3km" />
                     </LinearLayout>
@@ -157,6 +161,7 @@
                             android:text="周边旅游：" />
 
                         <TextView
+                            android:id="@+id/travel"
                             style="@style/text_66_blacklight_small"
                             android:text="墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆墨尔本水族馆" />
                     </LinearLayout>
@@ -173,6 +178,7 @@
                             android:text="公共交通：" />
 
                         <TextView
+                            android:id="@+id/trafficroute"
                             style="@style/text_66_blacklight_small"
                             android:text="King St./Collins St" />
                     </LinearLayout>
@@ -192,6 +198,7 @@
                             android:text="营业时间丨Opening Hours" />
 
                         <TextView
+                            android:id="@+id/hours"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:text="星期四-星期日：12:00 - 14:00;" />
@@ -212,6 +219,7 @@
                             android:text="餐厅简介丨About The Restanrant" />
 
                         <TextView
+                            android:id="@+id/txt_info"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"
@@ -239,6 +247,7 @@
                             android:text="特色推荐及菜单丨Recommended Items" />
 
                         <TextView
+                            android:id="@+id/feature"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"
@@ -293,6 +302,7 @@
                             android:text="主厨介绍丨About The Chef" />
 
                         <TextView
+                            android:id="@+id/chef"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"
@@ -320,6 +330,7 @@
                             android:text="温馨提示丨Kindly Reminder" />
 
                         <TextView
+                            android:id="@+id/tips"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"

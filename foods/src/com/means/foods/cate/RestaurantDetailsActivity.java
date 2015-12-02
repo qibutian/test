@@ -3,8 +3,10 @@ package com.means.foods.cate;
 import org.json.JSONObject;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import com.means.foods.R;
 import com.means.foods.R.layout;
@@ -36,9 +38,24 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	// 餐厅id
 	String store_id;
 	/**
-	 * percapitaT人均，
+	 * 	cuisine 人均下面的介绍
+	 *	is_collect 是否收藏
+	 *	name 名称
+	 *	mean_money 人均
+	 *	all_pic 轮播图
+	 *	reason 介绍（地址上面）
+	 *	address 地址
+	 *	distance 距市中心
+	 *	travel 周边
+	 *	trafficroute 交通
+	 *	hours 营业时间
+	 *	txt_info 简介
+	 *	feature 特色
+	 *	chef 主厨介绍
+	 *	tips 温馨提示
+	 *	long/lat 经纬
 	 */
-	TextView percapitaT;
+	TextView mean_moneyT,cuisineT,nameT,reasonT,addressT,distanceT,travelT,trafficrouteT,hoursT,txt_infoT,featureT,chefT,tipsT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +67,23 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	public void initView() {
 		store_id = getIntent().getStringExtra("store_id");
 		setTitle("餐厅详情");
+		
+		mean_moneyT = (TextView) findViewById(R.id.mean_money);
+		cuisineT = (TextView) findViewById(R.id.cuisine);
+		nameT = (TextView) findViewById(R.id.name);
+		reasonT = (TextView) findViewById(R.id.reason);
+		addressT = (TextView) findViewById(R.id.address);
+		distanceT = (TextView) findViewById(R.id.distance);
+		travelT = (TextView) findViewById(R.id.travel);
+		trafficrouteT = (TextView) findViewById(R.id.trafficroute);
+		hoursT = (TextView) findViewById(R.id.hours);
+		txt_infoT = (TextView) findViewById(R.id.txt_info);
+		featureT = (TextView) findViewById(R.id.feature);
+		chefT = (TextView) findViewById(R.id.chef);
+		tipsT = (TextView) findViewById(R.id.tips);
+		
 		reservedV = findViewById(R.id.reserved);
+		
 		reservedV.setOnClickListener(this);
 
 		initData();
@@ -67,6 +100,20 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 				if (response.isSuccess()) {
 					JSONObject jo=response.jSONFromData();
+					ViewUtil.bindView(mean_moneyT, "人均￥"+JSONUtil.getString(jo, "mean_money"));
+					ViewUtil.bindView(cuisineT, JSONUtil.getString(jo, "cuisine"));
+					ViewUtil.bindView(nameT, JSONUtil.getString(jo, "name"));
+					ViewUtil.bindView(reasonT, JSONUtil.getString(jo, "reason"));
+					ViewUtil.bindView(addressT, JSONUtil.getString(jo, "address"));
+					ViewUtil.bindView(distanceT, JSONUtil.getString(jo, "distance"));
+					ViewUtil.bindView(travelT, JSONUtil.getString(jo, "travel"));
+					ViewUtil.bindView(trafficrouteT, JSONUtil.getString(jo, "trafficroute"));
+					ViewUtil.bindView(hoursT, JSONUtil.getString(jo, "hours"));
+					ViewUtil.bindView(txt_infoT, JSONUtil.getString(jo, "txt_info"));
+					ViewUtil.bindView(featureT, JSONUtil.getString(jo, "feature"));
+					ViewUtil.bindView(chefT, JSONUtil.getString(jo, "chef"));
+					ViewUtil.bindView(tipsT, JSONUtil.getString(jo, "tips"));
+					
 				}
 
 			}
