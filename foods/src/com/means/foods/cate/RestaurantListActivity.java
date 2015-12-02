@@ -22,12 +22,15 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.hot.HotIndexFragment.MycollOnClick;
 import com.means.foods.main.SearchActivity;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 
 /**
@@ -56,7 +59,7 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 	String cityId;
 
 	NetJSONAdapter adapter;
-
+	boolean isShowCollect;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -103,6 +106,8 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 						e.printStackTrace();
 					}
 				}
+				isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true : false;
+				collectI.setOnClickListener(new MycollOnClick(json));
 				return o;
 			}
 		});
@@ -160,6 +165,48 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			}
 		});
 	}
+	public class MycollOnClick implements View.OnClickListener {
+		JSONObject json;
+
+		public MycollOnClick(JSONObject json) {
+			this.json = json;
+		}
+
+		@Override
+		public void onClick(View arg0) {
+			int collectTyp = JSONUtil.getInt(json, "is_collect");
+			switch (arg0.getId()) {
+			case R.id.collect:
+				if (!isShowCollect) {
+					boolean iscollect = FoodsUtils.collect(self,
+							JSONUtil.getString(json, "store_id"), isShowCollect);
+					if (iscollect) {
+						
+						isShowCollect = !isShowCollect;
+						// adapter.notifyDataSetChanged();
+						Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT).show();
+						adapter.refresh();
+					}
+
+				} else if (isShowCollect) {
+					boolean iscollect = FoodsUtils.collect(self,
+							JSONUtil.getString(json, "store_id"), isShowCollect);
+					if (iscollect) {
+						isShowCollect = !isShowCollect;
+						Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT).show();
+						adapter.refresh();
+					}
+				}
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
+	}
+
 
 	@Override
 	public void onClick(View v) {

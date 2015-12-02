@@ -45,6 +45,7 @@ import com.means.foods.cate.RestaurantDetailsActivity;
 import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.main.SearchActivity;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 
 public class HotIndexFragment extends FoodsListFragment implements
@@ -71,7 +72,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 	ImageView collectI;
 
 	NetJSONAdapter adapter;
-
+	boolean isShowCollect;
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
 			instance = new HotIndexFragment();
@@ -131,6 +132,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 						e.printStackTrace();
 					}
 				}
+				isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true : false;
 				collectI.setOnClickListener(new MycollOnClick(json));
 				String des = JSONUtil.getString(json, "city_name")
 						+ "  |  人均 $" + JSONUtil.getString(json, "mean_money");
@@ -255,50 +257,25 @@ public class HotIndexFragment extends FoodsListFragment implements
 			int collectTyp = JSONUtil.getInt(json, "is_collect");
 			switch (arg0.getId()) {
 			case R.id.collect:
-				if (collectTyp == 0) {
-					DhNet net = new DhNet(API.Collect);
-					net.addParam("uid", "667");
-					net.addParam("token", "202cb962ac59075b964b07152d234b70");
-					net.addParam("store_id",
-							JSONUtil.getString(json, "store_id"));
-					System.out.println("store_id"
-							+ JSONUtil.getString(json, "store_id"));
-					net.doPostInDialog(new NetTask(getActivity()) {
-						@Override
-						public void doInUI(Response response, Integer transfer) {
+				if (!isShowCollect) {
+					boolean iscollect = FoodsUtils.collect(getActivity(),
+							JSONUtil.getString(json, "store_id"), isShowCollect);
+					if (iscollect) {
+						
+						isShowCollect = !isShowCollect;
+						// adapter.notifyDataSetChanged();
+						Toast.makeText(getActivity(), "收藏成功", Toast.LENGTH_SHORT).show();
+						adapter.refresh();
+					}
 
-							// TODO Auto-generated method stub
-							if (response.isSuccess()) {
-								System.out.println("收藏接口返回"
-										+ response.isSuccess());
-								adapter.refresh();
-								adapter.notifyDataSetChanged();
-								collectI.setImageResource(R.drawable.like);
-								Toast.makeText(getActivity(), "收藏成功",
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
-				} else if (collectTyp == 1) {
-					DhNet net = new DhNet(API.Unsubscribe);
-					net.addParam("uid", "667");
-					net.addParam("token", "202cb962ac59075b964b07152d234b70");
-					net.addParam("store_id",
-							JSONUtil.getString(json, "store_id"));
-					net.doPostInDialog(new NetTask(getActivity()) {
-						@Override
-						public void doInUI(Response response, Integer transfer) {
-							// TODO Auto-generated method stub
-							if (response.isSuccess()) {
-								System.out.println("取消收藏接口返回"
-										+ response.isSuccess());
-								adapter.refresh();
-								collectI.setImageResource(R.drawable.unlike);
-								Toast.makeText(getActivity(), "取消收藏",
-										Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
+				} else if (isShowCollect) {
+					boolean iscollect = FoodsUtils.collect(getActivity(),
+							JSONUtil.getString(json, "store_id"), isShowCollect);
+					if (iscollect) {
+						isShowCollect = !isShowCollect;
+						Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
+						adapter.refresh();
+					}
 				}
 				break;
 
