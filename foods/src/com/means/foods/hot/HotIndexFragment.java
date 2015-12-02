@@ -114,12 +114,13 @@ public class HotIndexFragment extends FoodsListFragment implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
-				System.out.println("热门详情"+json);
+				System.out.println("热门详情" + json);
 				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
 				collectI = (ImageView) itemV.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
-				System.out.println("收藏的状态"+JSONUtil.getInt(json, "is_collect"));
+				System.out.println("收藏的状态"
+						+ JSONUtil.getInt(json, "is_collect"));
 				if (jsa != null && jsa.length() != 0) {
 					try {
 						ViewUtil.bindNetImage((ImageView) itemV
@@ -257,9 +258,11 @@ public class HotIndexFragment extends FoodsListFragment implements
 				if (collectTyp == 0) {
 					DhNet net = new DhNet(API.Collect);
 					net.addParam("uid", "667");
-					 net.addParam("token", "202cb962ac59075b964b07152d234b70");
-					net.addParam("store_id", JSONUtil.getString(json, "store_id"));
-					System.out.println("store_id"+JSONUtil.getString(json, "store_id"));
+					net.addParam("token", "202cb962ac59075b964b07152d234b70");
+					net.addParam("store_id",
+							JSONUtil.getString(json, "store_id"));
+					System.out.println("store_id"
+							+ JSONUtil.getString(json, "store_id"));
 					net.doPostInDialog(new NetTask(getActivity()) {
 						@Override
 						public void doInUI(Response response, Integer transfer) {
@@ -270,6 +273,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 										+ response.isSuccess());
 								adapter.refresh();
 								adapter.notifyDataSetChanged();
+								collectI.setImageResource(R.drawable.like);
 								Toast.makeText(getActivity(), "收藏成功",
 										Toast.LENGTH_SHORT).show();
 							}
@@ -278,8 +282,9 @@ public class HotIndexFragment extends FoodsListFragment implements
 				} else if (collectTyp == 1) {
 					DhNet net = new DhNet(API.Unsubscribe);
 					net.addParam("uid", "667");
-					 net.addParam("token", "202cb962ac59075b964b07152d234b70");
-					net.addParam("store_id", JSONUtil.getString(json, "store_id"));
+					net.addParam("token", "202cb962ac59075b964b07152d234b70");
+					net.addParam("store_id",
+							JSONUtil.getString(json, "store_id"));
 					net.doPostInDialog(new NetTask(getActivity()) {
 						@Override
 						public void doInUI(Response response, Integer transfer) {
@@ -288,6 +293,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 								System.out.println("取消收藏接口返回"
 										+ response.isSuccess());
 								adapter.refresh();
+								collectI.setImageResource(R.drawable.unlike);
 								Toast.makeText(getActivity(), "取消收藏",
 										Toast.LENGTH_SHORT).show();
 							}
