@@ -69,8 +69,10 @@
             android:name=".my.RevisePhoneActivity">
         </activity>
          <activity
+             
             android:name=".my.MsgListActivity">
         </activity>
+        
         
          <activity
             android:name=".my.MyReservationsListActivity">
