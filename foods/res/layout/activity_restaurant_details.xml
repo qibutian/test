@@ -226,6 +226,7 @@
                             android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
 
                         <ImageView
+                            android:id="@+id/info_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"
@@ -281,6 +282,7 @@
                         </LinearLayout>
 
                         <ImageView
+                            android:id="@+id/feature_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"
@@ -309,6 +311,7 @@
                             android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
 
                         <ImageView
+                            android:id="@+id/chef_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"
@@ -337,6 +340,7 @@
                             android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
 
                         <ImageView
+                            android:id="@+id/tips_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="7dp"

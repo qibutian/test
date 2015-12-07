@@ -46,7 +46,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
 
-	TextView sexT,mailboxT,nameT,nicknameT,phoneT;
+	TextView sexT, mailboxT, nameT, nicknameT, phoneT;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,23 +87,26 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 
 		getMyDetails();
 	}
-	
-	private void getMyDetails(){
+
+	private void getMyDetails() {
 		DhNet verifyNet = new DhNet(API.myInfo);
 		verifyNet.addParam("uid", user.getUid());
 		verifyNet.addParam("token", user.getToken());
-        verifyNet.doGetInDialog(new NetTask(self) {
-			
+		verifyNet.doGetInDialog(new NetTask(self) {
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
-					ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
-					ViewUtil.bindView(nicknameT,JSONUtil.getString(jo, "nickname"));
-					ViewUtil.bindView(nameT,JSONUtil.getString(jo, "truename"));
-					ViewUtil.bindView(phoneT,JSONUtil.getString(jo, "phone"));
-					ViewUtil.bindView(mailboxT,JSONUtil.getString(jo, "email"));
-					ViewUtil.bindView(sexT,"1".equals(JSONUtil.getString(jo, "nickname")) ? "男" : "女");
+					ViewUtil.bindNetImage(headI,
+							JSONUtil.getString(jo, "avatar"), "head");
+					ViewUtil.bindView(nicknameT,
+							JSONUtil.getString(jo, "nickname"));
+					ViewUtil.bindView(nameT, JSONUtil.getString(jo, "truename"));
+					ViewUtil.bindView(phoneT, JSONUtil.getString(jo, "phone"));
+					ViewUtil.bindView(mailboxT, JSONUtil.getString(jo, "email"));
+					ViewUtil.bindView(sexT, "1".equals(JSONUtil.getString(jo,
+							"sex")) ? "男" : "女");
 				}
 			}
 		});
@@ -147,17 +150,21 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	private void uploadHead(String path) {
 
 		// Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
-
+		System.out.println("1111111111");
 		DhNet net = new DhNet(API.editAvatar);
-		net.addParam("uid", "667");
-		net.addParam("token", "202cb962ac59075b964b07152d234b70");
+		net.addParam("uid", user.getUid());
+		net.addParam("token", user.getToken());
 		net.upload("imgFile", new File(path), new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				hidenProgressDialog();
-				if (response.isSuccess()) {
+				if (response.isSuccess()
+						&& Integer.parseInt(response.getBundle("proccess")
+								.toString()) == 100) {
 					showToast("更换头像成功");
+				} else {
+					System.out.println("333333");
 				}
 			}
 		});
