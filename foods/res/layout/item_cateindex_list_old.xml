@@ -5,10 +5,10 @@
     android:orientation="vertical" >
 
     <ImageView
+        android:id="@+id/pic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/mode_catebg" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,25 +19,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1.7"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_weight="1.7" >
-            
-            <ImageView android:layout_width="40dp"
-                android:layout_height="40dp"/>
-           
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/index_oval"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="3dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/index_oval"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/letter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_66_black_light"
+                        android:textSize="@dimen/text_medium" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" 
+            android:layout_weight="1"
             android:orientation="vertical" >
-            
-            <TextView style="@style/text_white_big"
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/text_white_big"
+                android:layout_marginTop="5dp"
                 android:text="纽约·New York"
-               	android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:textStyle="bold" />
 
             <View
                 style="@style/line_horizontal"
@@ -45,25 +68,28 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp" />
 
-            <TextView style="@style/text_white_medium"
-                android:text="纽约·New York"/>
-            <TextView style="@style/text_white_medium"
-                android:text="纽约·New York"
-                android:layout_marginTop="12dp"/>
-            <TextView style="@style/text_white_medium"
-                android:text="纽约·New York"/>
-            
+            <TextView
+                android:id="@+id/count"
+                style="@style/text_white_medium" />
+
+            <TextView
+                android:id="@+id/des"
+                style="@style/text_white_medium"
+                android:layout_marginTop="12dp"
+                android:maxLines="2" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1.7"
             android:gravity="center"
-            android:layout_weight="1.7" 
             android:orientation="horizontal" >
-            <ImageView android:layout_width="25dp"
+
+            <ImageView
+                android:layout_width="25dp"
                 android:layout_height="30dp"
-                android:src="@drawable/icon_right"/>
+                android:src="@drawable/icon_right" />
         </LinearLayout>
     </LinearLayout>
 

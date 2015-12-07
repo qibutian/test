@@ -1,31 +1,24 @@
 package com.means.foods.cate;
 
-import org.json.JSONObject;
-
 import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.util.UserLocation;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.AbsListView.OnScrollListener;
 
 import com.means.foods.R;
-import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
-import com.means.foods.main.SearchActivity;
 import com.means.foods.view.RefreshListViewAndMore;
 
 public class CateIndexFragment extends FoodsListFragment {
@@ -71,7 +64,7 @@ public class CateIndexFragment extends FoodsListFragment {
 		// 设置空的emptyView
 		listV.setEmptyView(LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_nomal_emptyview, null));
-		 adapter = new NetJSONAdapter(url, getActivity(),
+		adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_cateindex_list);
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
@@ -89,8 +82,8 @@ public class CateIndexFragment extends FoodsListFragment {
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				JSONObject jo = adapter.getTItem(position);
 				Intent it = new Intent(getActivity(),
 						RestaurantListActivity.class);

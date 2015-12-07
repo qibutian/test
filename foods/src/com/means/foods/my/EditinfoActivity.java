@@ -6,6 +6,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
@@ -154,20 +155,29 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		DhNet net = new DhNet(API.editAvatar);
 		net.addParam("uid", user.getUid());
 		net.addParam("token", user.getToken());
-		net.upload("imgFile", new File(path), new NetTask(self) {
+		net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
-				hidenProgressDialog();
-				if (response.isSuccess()
-						&& Integer.parseInt(response.getBundle("proccess")
-								.toString()) == 100) {
+				if (response.isSuccess()) {
 					showToast("更换头像成功");
-				} else {
-					System.out.println("333333");
 				}
 			}
 		});
+		// net.upload("imgFile", new File(path), new NetTask(self) {
+		//
+		// @Override
+		// public void doInUI(Response response, Integer transfer) {
+		// hidenProgressDialog();
+		// if (response.isSuccess()
+		// && Integer.parseInt(response.getBundle("proccess")
+		// .toString()) == 100) {
+		// showToast("更换头像成功");
+		// } else {
+		// System.out.println("333333");
+		// }
+		// }
+		// });
 	}
 
 	@Override

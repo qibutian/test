@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.means.foods.R;
-import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.cate.RestaurantListActivity;
@@ -22,7 +21,6 @@ public class MsgListActivity extends FoodsBaseActivity {
 
 	PtrFrameLayout mPtrFrame;
 
-	TestAdapter adapter;
 
 	RefreshListViewAndMore listV;
 

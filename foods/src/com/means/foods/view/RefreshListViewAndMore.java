@@ -16,10 +16,12 @@ import com.means.foods.R;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class RefreshListViewAndMore extends LinearLayout {
 
@@ -39,6 +41,8 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	View mheadV, mEmptyV;
 
+	LinearLayout emptyLayout;
+
 	public RefreshListViewAndMore(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.mContext = context;
@@ -48,6 +52,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 	private void initView() {
 		LayoutInflater.from(mContext).inflate(
 				R.layout.include_refresh_listview_base, this);
+		emptyLayout = (LinearLayout) findViewById(R.id.empty_layout);
 		listV = (ListView) findViewById(R.id.listview);
 		mPtrFrame = (PtrFrameLayout) findViewById(R.id.ptr_frame);
 		loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
@@ -138,7 +143,9 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 	public void setEmptyView(View empty) {
 		mEmptyV = empty;
-		mPtrFrame.addView(mEmptyV);
+		if (mEmptyV != null) {
+			emptyLayout.addView(mEmptyV);
+		}
 	}
 
 	public void setAdapter(NetJSONAdapter adapter) {
@@ -154,8 +161,9 @@ public class RefreshListViewAndMore extends LinearLayout {
 
 				if (mAdapter.getPageNo() == 1) {
 					if (mEmptyV != null) {
-						mEmptyV.setVisibility(mAdapter.getValues().size() != 0 ? View.VISIBLE
-								: View.GONE);
+						emptyLayout
+								.setVisibility(mAdapter.getValues().size() == 0 ? View.VISIBLE
+										: View.GONE);
 					}
 					loadMoreListViewContainer
 							.setShowLoadingForFirstPage(mAdapter.getValues()
@@ -169,8 +177,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 		});
 		listV.setAdapter(mAdapter);
 	}
-	
-	
+
 	public void setAdapterNoBindListView(NetJSONAdapter adapter) {
 		mAdapter = adapter;
 		mAdapter.setOnLoadSuccess(new LoadSuccessCallBack() {
@@ -197,7 +204,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 				mPtrFrame.refreshComplete();
 			}
 		});
-//		listV.setAdapter(mAdapter);
+		// listV.setAdapter(mAdapter);
 	}
 
 	public OnLoadSuccess getOnLoadSuccess() {

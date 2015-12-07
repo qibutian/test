@@ -4,72 +4,110 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/mode_catebg" />
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mode_catebg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/white_fillet"
+                    android:gravity="center"
+                    android:padding="4dp" >
+
+                    <com.means.foods.view.RoundImageView
+                        android:id="@+id/head"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Mari Sheibley"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_big" />
+
+                <Button
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:background="@drawable/button_edit_bg"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="编辑个人资料"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/msg"
+                android:layout_width="19dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/remind" />
+        </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/empty_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/white_fillet"
-                android:gravity="center"
-                android:padding="4dp" >
-
-                <com.means.foods.view.RoundImageView
-                    android:id="@+id/head"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="8dp"
-                android:text="Mari Sheibley"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/text_big" />
+                android:layout_marginTop="30dp"
+                android:text="如果您预订了餐厅"
+                android:textColor="@color/text_66_black_light"
+                android:textSize="@dimen/text_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="您将会在这里看到餐厅预订状态"
+                android:textColor="@color/text_66_black_light"
+                android:textSize="@dimen/text_medium" />
 
             <Button
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:background="@drawable/button_edit_bg"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="编辑个人资料"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_brown_normal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="开始探索"
                 android:textColor="@color/text_white"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_medium" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/msg"
-            android:layout_width="19dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/remind" />
-    </RelativeLayout>
-
-    <include
-        android:id="@+id/empty_view"
-        layout="@layout/list_index_empty"
-        android:visibility="gone" />
+    </LinearLayout>
 
 </LinearLayout>

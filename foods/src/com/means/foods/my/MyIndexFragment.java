@@ -24,25 +24,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.means.foods.R;
-import com.means.foods.adapter.TestAdapter;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
 import com.means.foods.bean.User;
 import com.means.foods.view.RefreshListViewAndMore;
 import com.means.foods.view.RoundImageView;
+import com.means.foods.view.RefreshListViewAndMore.OnLoadSuccess;
 
 public class MyIndexFragment extends FoodsListFragment implements
-		OnClickListener {
+		OnClickListener, OnLoadSuccess {
 
 	static MyIndexFragment instance;
-	
+
 	User user;
 
 	View mainV;
 
 	PtrFrameLayout mPtrFrame;
-
-	TestAdapter adapter;
 
 	RefreshListViewAndMore listV;
 
@@ -57,9 +55,11 @@ public class MyIndexFragment extends FoodsListFragment implements
 
 	// 消息中心
 	ImageView msgI;
-	
+
 	RoundImageView headI;
 	TextView nicknameT;
+
+	NetJSONAdapter adapter;
 
 	public static MyIndexFragment getInstance() {
 		if (instance == null) {
@@ -83,28 +83,19 @@ public class MyIndexFragment extends FoodsListFragment implements
 
 	private void initView() {
 		user = User.getInstance();
-		
+
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
-		String url = API.CWBaseurl + "activity/list?";
+		listV.setOnLoadSuccess(this);
+		String url = API.orderList;
 		contentListV = listV.getListView();
 		headV = mLayoutInflater.inflate(R.layout.head_my_index, null);
 		listV.addHeadView(headV);
 		// 璁剧疆绌虹殑emptyView
-		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
+		adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_index_listview);
-		UserLocation location = UserLocation.getInstance();
 		adapter.fromWhat("data");
-		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-		adapter.addparam("latitude", location.getLatitude());
-		adapter.addparam("longitude", location.getLongitude());
-		adapter.addparam("maxDistance", "5000000");
-		adapter.addparam("majorType", "");
-		adapter.addparam("pay", "");
-		adapter.addparam("gender", "");
-		adapter.addparam("transfer", "");
-		adapter.addparam("token", "");
-		adapter.addparam("userId", "");
-		adapter.addField("activityId", R.id.text);
+		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.addparam("token", User.getInstance().getToken());
 		listV.setAdapter(adapter);
 
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
@@ -119,27 +110,29 @@ public class MyIndexFragment extends FoodsListFragment implements
 		});
 		headI = (RoundImageView) headV.findViewById(R.id.head);
 		nicknameT = (TextView) headV.findViewById(R.id.nickname);
-		
+
 		editB = (Button) headV.findViewById(R.id.edit);
 		editB.setOnClickListener(this);
 		msgI = (ImageView) headV.findViewById(R.id.msg);
 		msgI.setOnClickListener(this);
 		getMyDetails();
-		
+
 	}
-	
-	private void getMyDetails(){
+
+	private void getMyDetails() {
 		DhNet verifyNet = new DhNet(API.myInfo);
 		verifyNet.addParam("uid", user.getUid());
 		verifyNet.addParam("token", user.getToken());
-        verifyNet.doGetInDialog(new NetTask(getActivity()) {
-			
+		verifyNet.doGetInDialog(new NetTask(getActivity()) {
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
-					ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
-					ViewUtil.bindView(nicknameT,JSONUtil.getString(jo, "nickname"));
+					ViewUtil.bindNetImage(headI,
+							JSONUtil.getString(jo, "avatar"), "head");
+					ViewUtil.bindView(nicknameT,
+							JSONUtil.getString(jo, "nickname"));
 				}
 			}
 		});
@@ -162,5 +155,11 @@ public class MyIndexFragment extends FoodsListFragment implements
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void loadSuccess(Response response) {
+		headV.findViewById(R.id.empty_view).setVisibility(
+				adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
 	}
 }

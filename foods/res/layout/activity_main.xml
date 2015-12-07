@@ -50,7 +50,8 @@
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginBottom="54dp" >
+                android:layout_marginBottom="54dp"
+                android:background="@color/nav_bg" >
             </FrameLayout>
 
             <RelativeLayout

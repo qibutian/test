@@ -41,8 +41,8 @@ public class API {
 
 	// 编辑性别
 	public static String editSex = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editSex";
-	
-	//个人信息
+
+	// 个人信息
 	public static String myInfo = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myInfoApi";
 	// 收藏
 	public static String Collect = "http://www.foodies.im/wap.php?g=Wap&c=Collect&a=addCollectApi";
@@ -56,5 +56,10 @@ public class API {
 	public static String editNickName = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editNickname";
 	// 修改密码
 	public static String editPwd = "http://www.foodies.im/wap.php?g=Wap&c=My&a=editPassword";
+	// 我的收藏
+	public static String collectList = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myCollectAPI";
+
+	// 我的订单
+	public static String orderList = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myOrderAPI";
 
 }
