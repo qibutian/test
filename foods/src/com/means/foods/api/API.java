@@ -61,5 +61,8 @@ public class API {
 
 	// 我的订单
 	public static String orderList = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myOrderAPI";
+	
+	//添加订单
+	public static String addOrder = "http://www.foodies.im/wap.php?g=Wap&c=My&a=saveOrderApi";
 
 }

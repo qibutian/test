@@ -110,7 +110,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	private void initData() {
 		DhNet net = new DhNet(API.restaurantDetail);
-		net.addParam("store_id", "62");
+		net.addParam("store_id", store_id);
 		net.addParam("uid", User.getInstance().getUid());
 		// net.addParam("store_id", store_id);
 		// net.addParam("uid", User.getInstance().getUid());
@@ -217,6 +217,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		switch (v.getId()) {
 		case R.id.reserved:
 			it = new Intent(self, ConfirmDetailsActivity.class);
+			it.putExtra("store_id", store_id);
 			startActivity(it);
 			break;
 		case R.id.info_fold:
