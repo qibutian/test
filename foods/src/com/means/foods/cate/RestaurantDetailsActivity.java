@@ -7,6 +7,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.utils.FoodsUtils;
+import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.FoodsGallery;
 
 /**
@@ -34,7 +36,7 @@ import com.means.foods.view.FoodsGallery;
  * 
  */
 public class RestaurantDetailsActivity extends FoodsBaseActivity implements
-		OnClickListener{
+		OnClickListener {
 
 	// 立即预定按钮
 	View reservedV;
@@ -51,14 +53,15 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	LinearLayout like_layout;
 	FoodsGallery mViewPager;
 	ImageView list_img;
-	
-	//收缩icon: 简介,特色,主厨介绍,温馨提示
-	ImageView info_foldI,feature_foldI,chef_foldI,tips_foldI;
-	
-	//是否收藏
+
+	// 收缩icon: 简介,特色,主厨介绍,温馨提示
+	ImageView info_foldI, feature_foldI, chef_foldI, tips_foldI;
+
+	// 是否收藏
 	boolean isShowCollect;
-	
-	Fold info_fold,feature_fold,chef_fold,tips_fold;
+
+	Fold info_fold, feature_fold, chef_fold, tips_fold;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -88,23 +91,23 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		list_img.setImageResource(R.drawable.icon_collect);
 		mViewPager = (FoodsGallery) findViewById(R.id.viewer);
 		reservedV = findViewById(R.id.reserved);
-		
+
 		info_foldI = (ImageView) findViewById(R.id.info_fold);
 		feature_foldI = (ImageView) findViewById(R.id.feature_fold);
 		chef_foldI = (ImageView) findViewById(R.id.chef_fold);
 		tips_foldI = (ImageView) findViewById(R.id.tips_fold);
-		
-		info_fold = new Fold(txt_infoT,info_foldI,false);
-		feature_fold = new Fold(featureT,feature_foldI,false);
-		chef_fold = new Fold(chefT,chef_foldI,false);
-		tips_fold = new Fold(tipsT,tips_foldI,false);
+
+		info_fold = new Fold(txt_infoT, info_foldI, false);
+		feature_fold = new Fold(featureT, feature_foldI, false);
+		chef_fold = new Fold(chefT, chef_foldI, false);
+		tips_fold = new Fold(tipsT, tips_foldI, false);
 
 		reservedV.setOnClickListener(this);
 		info_foldI.setOnClickListener(this);
 		feature_foldI.setOnClickListener(this);
 		chef_foldI.setOnClickListener(this);
 		tips_foldI.setOnClickListener(this);
-		
+
 		initData();
 	}
 
@@ -141,24 +144,29 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 							JSONUtil.getString(jo, "feature"));
 					ViewUtil.bindView(chefT, JSONUtil.getString(jo, "chef"));
 					ViewUtil.bindView(tipsT, JSONUtil.getString(jo, "tips"));
+					ViewUtil.bindView(findViewById(R.id.cuisine),
+							JSONUtil.getString(jo, "cuisine"));
 					like_layout.setOnClickListener(new MycollOnClick(jo));
 					JSONArray jsc = JSONUtil.getJSONArray(jo, "all_pic");
-					isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ? true : false;
-//					System.out.println("收藏状态"+JSONUtil.getInt(jo, "is_collect"));
-					
-//					//判断简介为三行以内则不显示
-//                    ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
-//                    vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//                        @Override
-//                        public boolean onPreDraw() {
-//                        	
-//                            if (txt_infoT.getLineCount() < 3) {
-//                            	info_foldI.setVisibility(View.GONE);
-//                            }
-//                            return true;
-//                        }
-//                    });
-                    
+					isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ? true
+							: false;
+					// System.out.println("收藏状态"+JSONUtil.getInt(jo,
+					// "is_collect"));
+
+					// //判断简介为三行以内则不显示
+					// ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
+					// vto.addOnPreDrawListener(new
+					// ViewTreeObserver.OnPreDrawListener() {
+					// @Override
+					// public boolean onPreDraw() {
+					//
+					// if (txt_infoT.getLineCount() < 3) {
+					// info_foldI.setVisibility(View.GONE);
+					// }
+					// return true;
+					// }
+					// });
+
 					if (jsc != null) {
 						BigImageAdapter adapter = new BigImageAdapter(self, jsc);
 						mViewPager.setAdapter(adapter);
@@ -169,7 +177,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		});
 	}
 
-
 	public class MycollOnClick implements View.OnClickListener {
 		JSONObject json;
 
@@ -179,28 +186,38 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 		@Override
 		public void onClick(View arg0) {
-			int collectTyp = JSONUtil.getInt(json, "is_collect");
+			final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
+					: false;
 			switch (arg0.getId()) {
 			case R.id.like_layout:
-				if (!isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(self,
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						isShowCollect = !isShowCollect;
-						// adapter.notifyDataSetChanged();
-						list_img.setImageResource(R.drawable.icon_collect_f);
-						Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT).show();
-					}
+				FoodsUtils utils = new FoodsUtils();
+				utils.collect(self, JSONUtil.getString(json, "store_id"),
+						isShowCollect);
+				utils.setOnCallBack(new OnCallBack() {
 
-				} else if (isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(self,
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						isShowCollect = !isShowCollect;
-						list_img.setImageResource(R.drawable.icon_collect);
-						Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT).show();
+					@Override
+					public void callBack(Response response) {
+						if (response.isSuccess()) {
+							if (isShowCollect) {
+								Toast.makeText(self, "取消收藏成功",
+										Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
+										.show();
+							}
+						}
 					}
+				});
+
+				// adapter.notifyDataSetChanged();
+				try {
+					json.put("is_collect",
+							JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+
 				break;
 
 			default:
@@ -208,7 +225,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			}
 
 		}
-
 	}
 
 	@Override
@@ -238,47 +254,46 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			break;
 		}
 	}
-	
-	 /**
-     * 活动内容展开收缩
-     */
-    private void textFold(Fold fold) {
-    	if(null==fold.getFoldView()||null==fold.getFoldImg()){
-    		return;
-    	}
-    	TextView tv=fold.getFoldView();
-    	ImageView img = fold.getFoldImg();
-        if (fold.isFlag()) {
-        	tv.setEllipsize(TextUtils.TruncateAt.END);//收缩
-        	tv.setMaxLines(3);
-        	img.setImageResource(R.drawable.icon_down);
-            fold.setFlag(false);
-        } else {
-        	tv.setEllipsize(null); // 展开
-        	tv.setMaxLines(100);
-        	img.setImageResource(R.drawable.icon_brown_top);
-            fold.setFlag(true);
-        }
-    }
-    
-    /**
-     * 下拉箭头 进行扩展收缩类
-     * foldId : 控件id
-     * foldImg : 点击按钮
-     * flag : true 扩展 flase 收缩
-     * @author Administrator
-     *
-     */
-    private class Fold{
-    	TextView foldView; 
-    	boolean flag=false;
-    	ImageView foldImg;
-    	Fold(TextView foldView,ImageView foldImg,boolean flag){
-    		this.foldView = foldView;
-    		this.flag = flag;
-    		this.foldImg = foldImg;
-    	}
-    	
+
+	/**
+	 * 活动内容展开收缩
+	 */
+	private void textFold(Fold fold) {
+		if (null == fold.getFoldView() || null == fold.getFoldImg()) {
+			return;
+		}
+		TextView tv = fold.getFoldView();
+		ImageView img = fold.getFoldImg();
+		if (fold.isFlag()) {
+			tv.setEllipsize(TextUtils.TruncateAt.END);// 收缩
+			tv.setMaxLines(3);
+			img.setImageResource(R.drawable.icon_down);
+			fold.setFlag(false);
+		} else {
+			tv.setEllipsize(null); // 展开
+			tv.setMaxLines(100);
+			img.setImageResource(R.drawable.icon_brown_top);
+			fold.setFlag(true);
+		}
+	}
+
+	/**
+	 * 下拉箭头 进行扩展收缩类 foldId : 控件id foldImg : 点击按钮 flag : true 扩展 flase 收缩
+	 * 
+	 * @author Administrator
+	 * 
+	 */
+	private class Fold {
+		TextView foldView;
+		boolean flag = false;
+		ImageView foldImg;
+
+		Fold(TextView foldView, ImageView foldImg, boolean flag) {
+			this.foldView = foldView;
+			this.flag = flag;
+			this.foldImg = foldImg;
+		}
+
 		public ImageView getFoldImg() {
 			return foldImg;
 		}
@@ -298,10 +313,11 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		public boolean isFlag() {
 			return flag;
 		}
+
 		public void setFlag(boolean flag) {
 			this.flag = flag;
 		}
-    	
-    }
+
+	}
 
 }

@@ -5,6 +5,7 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
@@ -31,6 +32,7 @@ import com.means.foods.bean.User;
 import com.means.foods.hot.HotIndexFragment.MycollOnClick;
 import com.means.foods.main.SearchActivity;
 import com.means.foods.utils.FoodsUtils;
+import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.RefreshListViewAndMore;
 
 /**
@@ -60,6 +62,7 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 
 	NetJSONAdapter adapter;
 	boolean isShowCollect;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -97,16 +100,18 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 						.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
-				if(jsa!=null&&jsa.length()!=0) {
+				if (jsa != null && jsa.length() != 0) {
 					try {
-						ViewUtil.bindNetImage((ImageView) itemV.findViewById(R.id.pic), jsa.get(0).toString(),
+						ViewUtil.bindNetImage((ImageView) itemV
+								.findViewById(R.id.pic), jsa.get(0).toString(),
 								"default");
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true : false;
+				isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
+						: false;
 				collectI.setOnClickListener(new MycollOnClick(json));
 				return o;
 			}
@@ -158,13 +163,14 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				JSONObject jo = adapter.getTItem(position);
+				JSONObject jo = adapter.getTItem(position-1);
 				Intent it = new Intent(self, RestaurantDetailsActivity.class);
 				it.putExtra("store_id", JSONUtil.getString(jo, "store_id"));
 				startActivity(it);
 			}
 		});
 	}
+
 	public class MycollOnClick implements View.OnClickListener {
 		JSONObject json;
 
@@ -174,29 +180,39 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 
 		@Override
 		public void onClick(View arg0) {
-			int collectTyp = JSONUtil.getInt(json, "is_collect");
+			final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
+					: false;
 			switch (arg0.getId()) {
 			case R.id.collect:
-				if (!isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(self,
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						
-						isShowCollect = !isShowCollect;
-						// adapter.notifyDataSetChanged();
-						Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT).show();
-						adapter.refresh();
-					}
+				FoodsUtils utils = new FoodsUtils();
+				utils.collect(self, JSONUtil.getString(json, "store_id"),
+						isShowCollect);
+				utils.setOnCallBack(new OnCallBack() {
 
-				} else if (isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(self,
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						isShowCollect = !isShowCollect;
-						Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT).show();
-						adapter.refresh();
+					@Override
+					public void callBack(Response response) {
+						if (response.isSuccess()) {
+							if (isShowCollect) {
+								Toast.makeText(self, "取消收藏成功",
+										Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
+										.show();
+							}
+						}
 					}
+				});
+
+				// adapter.notifyDataSetChanged();
+				try {
+					json.put("is_collect",
+							JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+				adapter.notifyDataSetChanged();
+
 				break;
 
 			default:
@@ -206,7 +222,6 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 		}
 
 	}
-
 
 	@Override
 	public void onClick(View v) {

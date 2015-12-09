@@ -38,14 +38,15 @@ public class CollectIndexFragment extends FoodsListFragment {
 
 	PtrFrameLayout mPtrFrame;
 
-
 	RefreshListViewAndMore listV;
 
 	LayoutInflater mLayoutInflater;
 
 	ListView contentListV;
-	
+
 	View emptyView;
+
+	NetJSONAdapter adapter;
 
 	public static CollectIndexFragment getInstance() {
 		if (instance == null) {
@@ -71,10 +72,10 @@ public class CollectIndexFragment extends FoodsListFragment {
 		String url = API.collectList;
 		contentListV = listV.getListView();
 		// 设置空的emptyView
-		emptyView  = LayoutInflater.from(getActivity()).inflate(
+		emptyView = LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_collect_empty, null);
 		listV.setEmptyView(emptyView);
-		NetJSONAdapter adapter = new NetJSONAdapter(url, getActivity(),
+		adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_cateindex_list_old);
 		adapter.fromWhat("data");
 		adapter.addparam("uid", User.getInstance().getUid());
@@ -117,22 +118,32 @@ public class CollectIndexFragment extends FoodsListFragment {
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Intent it = new Intent(getActivity(),
-						RestaurantListActivity.class);
-				startActivity(it);
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				JSONObject jo = adapter.getTItem(position);
+				try {
+					JSONArray jsa = jo.getJSONArray("data");
+					JSONObject dataJo = jsa.getJSONObject(0);
+					Intent it = new Intent(getActivity(),
+							RestaurantListActivity.class);
+					it.putExtra("cityId", JSONUtil.getString(dataJo, "city_id"));
+					startActivity(it);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
-		
-		emptyView.findViewById(R.id.explore).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-		
+
+		emptyView.findViewById(R.id.explore).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+					}
+				});
+
 	}
 
 }
