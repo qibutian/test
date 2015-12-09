@@ -1,59 +1,66 @@
 package com.means.foods.main;
 
-import com.means.foods.R;
-import com.means.foods.base.FoodsBaseActivity;
-import com.means.foods.bean.LoginEB;
-import com.means.foods.bean.RegisterEB;
-import com.means.foods.my.LoginActivity;
-import com.means.foods.my.EditinfoActivity;
-import com.means.foods.my.RegisterOneActivity;
-
-import de.greenrobot.event.EventBus;
-
+import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.os.Handler;
+import android.text.TextUtils;
 
+import com.means.foods.R;
+import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.utils.FoodsPerference;
+
+/**
+ * 欢迎页
+ * 
+ * @author Administrator
+ * 
+ */
 public class SplashActivity extends FoodsBaseActivity {
+	FoodsPerference per;
+
+	private final Handler mHandler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		EventBus.getDefault().register(this);
 	}
 
 	@Override
 	public void initView() {
-		setTitle("食客");
+		// TODO Auto-generated method stub
+		per = IocContainer.getShare().get(FoodsPerference.class);
+		per.load();
+		if (per.isFirst == 0) {
+			first();
+		} else {
+			notFirst();
+		}
+	}
 
-		findViewById(R.id.login).setOnClickListener(new OnClickListener() {
-
+	private void first() {
+		mHandler.postDelayed(new Runnable() {
 			@Override
-			public void onClick(View arg0) {
-				Intent it = new Intent(self, LoginActivity.class);
-				startActivity(it);
+			public void run() {
+				Intent intent = new Intent(self, GuidanceActivity.class);
+				startActivity(intent);
+				per.isFirst = 1;
+				per.commit();
+				finishWithoutAnim();
 			}
-		});
+		}, 2000);
+	}
 
-		findViewById(R.id.register).setOnClickListener(new OnClickListener() {
-
+	private void notFirst() {
+		mHandler.postDelayed(new Runnable() {
 			@Override
-			public void onClick(View arg0) {
-				Intent it = new Intent(self, RegisterOneActivity.class);
-				startActivity(it);
+			public void run() {
+				Intent intent = new Intent(self, ReadyActivity.class);
+				startActivity(intent);
+				finishWithoutAnim();
 			}
-		});
-	}
+		}, 2000);
 
-	public void onEventMainThread(LoginEB loginEb) {
-		finish();
 	}
-
-	public void onEventMainThread(RegisterEB registerEb) {
-		finish();
-	}
-
 }

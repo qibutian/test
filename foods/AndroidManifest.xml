@@ -38,7 +38,8 @@
         <activity
             android:name=".cate.RestaurantListActivity"
             android:label="@string/title_activity_restaurant_list" />
-        <activity android:name=".my.EditinfoActivity"
+        <activity
+            android:name=".my.EditinfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".my.MsgDetailActivity" />
@@ -59,31 +60,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".cate.ConfirmDetailsActivity" >
+        <activity android:name=".cate.ConfirmDetailsActivity" >
+        </activity>
+        <activity android:name=".my.ReviseNameActivity" >
+        </activity>
+        <activity android:name=".my.RevisePhoneActivity" >
+        </activity>
+        <activity android:name=".my.MsgListActivity" >
+        </activity>
+        <activity android:name=".my.MyReservationsListActivity" >
+        </activity>
+        <activity android:name=".my.ReviseEmailActivity" >
+        </activity>
+        <activity android:name=".my.RevisePswdActivity" >
         </activity>
         <activity
-            android:name=".my.ReviseNameActivity">
+            android:name=".main.GuidanceActivity" >
         </activity>
         <activity
-            android:name=".my.RevisePhoneActivity">
-        </activity>
-         <activity
-             
-            android:name=".my.MsgListActivity">
-        </activity>
-        
-        
-         <activity
-            android:name=".my.MyReservationsListActivity">
-        </activity>
-        
-         <activity
-            android:name=".my.ReviseEmailActivity">
-        </activity>
-        
-         <activity
-            android:name=".my.RevisePswdActivity">
+            android:name="com.means.foods.main.ReadyActivity" >
         </activity>
     </application>
 

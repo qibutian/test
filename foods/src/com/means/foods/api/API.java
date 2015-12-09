@@ -27,6 +27,9 @@ public class API {
 				token);
 	}
 
+	//登录
+	public static String login = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=loginApi";
+	
 	// 餐厅列表
 	public static String restaurantList = "http://www.foodies.im/wap.php?g=Wap&c=Meal_list&a=merchantListApi";
 
