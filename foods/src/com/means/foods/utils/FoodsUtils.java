@@ -14,237 +14,246 @@ import com.means.foods.api.API;
 import com.means.foods.bean.User;
 
 public class FoodsUtils {
-	static boolean flag;
-	public static boolean collect(Context context,String store_id,boolean is_collect){
+
+	OnCallBack onCallBack;
+
+	public void collect(Context context, String store_id, boolean is_collect) {
 		DhNet net;
 		String url;
-		if(!is_collect){
-			url =API.Collect;
-		}else{
+		if (!is_collect) {
+			url = API.Collect;
+		} else {
 			url = API.Unsubscribe;
 		}
 		net = new DhNet(url);
-		net.addParam("uid",User.getInstance().uid);
+		net.addParam("uid", User.getInstance().uid);
 		net.addParam("token", User.getInstance().token);
-		net.addParam("store_id",store_id);
+		net.addParam("store_id", store_id);
 		net.doPostInDialog(new NetTask(context) {
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
-				if (response.isSuccess()) {
-					flag = true;
-					System.out.println("收藏请求"+response.isSuccess());
-				}else {
-					flag = false;
-					System.out.println("取消收藏请求"+response.isSuccess());
+				if (onCallBack != null) {
+					onCallBack.callBack(response);
 				}
 			}
 		});
-		return flag;
-		
+
 	}
-	
-	
-	public static String getPYIndexStr(String strChinese, boolean bUpCase){
 
-	       try{
+	public OnCallBack getOnCallBack() {
+		return onCallBack;
+	}
 
-	           StringBuffer buffer = new StringBuffer();
+	public void setOnCallBack(OnCallBack onCallBack) {
+		this.onCallBack = onCallBack;
+	}
 
-	           byte b[] = strChinese.getBytes("GBK");//把中文转化成byte数组
+	public interface OnCallBack {
+		void callBack(Response response);
+	}
 
-	           for(int i = 0; i < b.length; i++){
+	public static String getPYIndexStr(String strChinese, boolean bUpCase) {
 
-	               if((b[i] & 255) > 128){
+		try {
 
-	                   int char1 = b[i++] & 255;
+			StringBuffer buffer = new StringBuffer();
 
-	                   char1 <<= 8;//左移运算符用“<<”表示，是将运算符左边的对象，向左移动运算符右边指定的位数，并且在低位补零。其实，向左移n位，就相当于乘上2的n次方
+			byte b[] = strChinese.getBytes("GBK");// 把中文转化成byte数组
 
-	                   int chart = char1 + (b[i] & 255);
+			for (int i = 0; i < b.length; i++) {
 
-	                   buffer.append(getPYIndexChar((char)chart, bUpCase));
+				if ((b[i] & 255) > 128) {
 
-	                   continue;
+					int char1 = b[i++] & 255;
 
-	               }
+					char1 <<= 8;// 左移运算符用“<<”表示，是将运算符左边的对象，向左移动运算符右边指定的位数，并且在低位补零。其实，向左移n位，就相当于乘上2的n次方
 
-	               char c = (char)b[i];
+					int chart = char1 + (b[i] & 255);
 
-	               if(!Character.isJavaIdentifierPart(c))//确定指定字符是否可以是 Java 标识符中首字符以外的部分。
+					buffer.append(getPYIndexChar((char) chart, bUpCase));
 
-	                   c = 'A';
+					continue;
 
-	               buffer.append(c);
+				}
 
-	           }
+				char c = (char) b[i];
 
-	           return buffer.toString();
+				if (!Character.isJavaIdentifierPart(c))// 确定指定字符是否可以是 Java
+														// 标识符中首字符以外的部分。
 
-	       }catch(Exception e){
+					c = 'A';
 
-	           System.out.println((new StringBuilder()).append("\u53D6\u4E2D\u6587\u62FC\u97F3\u6709\u9519").append(e.getMessage()).toString());
+				buffer.append(c);
 
-	       }
+			}
 
-	       return null;
+			return buffer.toString();
 
-	   }
-	
-	
-	 private static char getPYIndexChar(char strChinese, boolean bUpCase){
+		} catch (Exception e) {
 
-	       int charGBK = strChinese;
+			System.out.println((new StringBuilder())
+					.append("\u53D6\u4E2D\u6587\u62FC\u97F3\u6709\u9519")
+					.append(e.getMessage()).toString());
 
-	       char result;
+		}
 
-	       if(charGBK >= 45217 && charGBK <= 45252)
+		return null;
 
-	           result = 'A';
+	}
 
-	       else
+	private static char getPYIndexChar(char strChinese, boolean bUpCase) {
 
-	       if(charGBK >= 45253 && charGBK <= 45760)
+		int charGBK = strChinese;
 
-	           result = 'B';
+		char result;
 
-	       else
+		if (charGBK >= 45217 && charGBK <= 45252)
 
-	       if(charGBK >= 45761 && charGBK <= 46317)
+			result = 'A';
 
-	           result = 'C';
+		else
 
-	       else
+		if (charGBK >= 45253 && charGBK <= 45760)
 
-	       if(charGBK >= 46318 && charGBK <= 46825)
+			result = 'B';
 
-	           result = 'D';
+		else
 
-	       else
+		if (charGBK >= 45761 && charGBK <= 46317)
 
-	       if(charGBK >= 46826 && charGBK <= 47009)
+			result = 'C';
 
-	           result = 'E';
+		else
 
-	       else
+		if (charGBK >= 46318 && charGBK <= 46825)
 
-	       if(charGBK >= 47010 && charGBK <= 47296)
+			result = 'D';
 
-	           result = 'F';
+		else
 
-	       else
+		if (charGBK >= 46826 && charGBK <= 47009)
 
-	       if(charGBK >= 47297 && charGBK <= 47613)
+			result = 'E';
 
-	           result = 'G';
+		else
 
-	       else
+		if (charGBK >= 47010 && charGBK <= 47296)
 
-	       if(charGBK >= 47614 && charGBK <= 48118)
+			result = 'F';
 
-	           result = 'H';
+		else
 
-	       else
+		if (charGBK >= 47297 && charGBK <= 47613)
 
-	       if(charGBK >= 48119 && charGBK <= 49061)
+			result = 'G';
 
-	           result = 'J';
+		else
 
-	       else
+		if (charGBK >= 47614 && charGBK <= 48118)
 
-	       if(charGBK >= 49062 && charGBK <= 49323)
+			result = 'H';
 
-	           result = 'K';
+		else
 
-	       else
+		if (charGBK >= 48119 && charGBK <= 49061)
 
-	       if(charGBK >= 49324 && charGBK <= 49895)
+			result = 'J';
 
-	           result = 'L';
+		else
 
-	       else
+		if (charGBK >= 49062 && charGBK <= 49323)
 
-	       if(charGBK >= 49896 && charGBK <= 50370)
+			result = 'K';
 
-	           result = 'M';
+		else
 
-	       else
+		if (charGBK >= 49324 && charGBK <= 49895)
 
-	       if(charGBK >= 50371 && charGBK <= 50613)
+			result = 'L';
 
-	           result = 'N';
+		else
 
-	       else
+		if (charGBK >= 49896 && charGBK <= 50370)
 
-	       if(charGBK >= 50614 && charGBK <= 50621)
+			result = 'M';
 
-	           result = 'O';
+		else
 
-	       else
+		if (charGBK >= 50371 && charGBK <= 50613)
 
-	       if(charGBK >= 50622 && charGBK <= 50905)
+			result = 'N';
 
-	           result = 'P';
+		else
 
-	       else
+		if (charGBK >= 50614 && charGBK <= 50621)
 
-	       if(charGBK >= 50906 && charGBK <= 51386)
+			result = 'O';
 
-	           result = 'Q';
+		else
 
-	       else
+		if (charGBK >= 50622 && charGBK <= 50905)
 
-	       if(charGBK >= 51387 && charGBK <= 51445)
+			result = 'P';
 
-	           result = 'R';
+		else
 
-	       else
+		if (charGBK >= 50906 && charGBK <= 51386)
 
-	       if(charGBK >= 51446 && charGBK <= 52217)
+			result = 'Q';
 
-	           result = 'S';
+		else
 
-	       else
+		if (charGBK >= 51387 && charGBK <= 51445)
 
-	       if(charGBK >= 52218 && charGBK <= 52697)
+			result = 'R';
 
-	           result = 'T';
+		else
 
-	       else
+		if (charGBK >= 51446 && charGBK <= 52217)
 
-	       if(charGBK >= 52698 && charGBK <= 52979)
+			result = 'S';
 
-	           result = 'W';
+		else
 
-	       else
+		if (charGBK >= 52218 && charGBK <= 52697)
 
-	       if(charGBK >= 52980 && charGBK <= 53688)
+			result = 'T';
 
-	           result = 'X';
+		else
 
-	       else
+		if (charGBK >= 52698 && charGBK <= 52979)
 
-	       if(charGBK >= 53689 && charGBK <= 54480)
+			result = 'W';
 
-	           result = 'Y';
+		else
 
-	       else
+		if (charGBK >= 52980 && charGBK <= 53688)
 
-	       if(charGBK >= 54481 && charGBK <= 55289)
+			result = 'X';
 
-	           result = 'Z';
+		else
 
-	       else
+		if (charGBK >= 53689 && charGBK <= 54480)
 
-	           result = (char)(65 + (new Random()).nextInt(25));
+			result = 'Y';
 
-	       if(!bUpCase)
+		else
 
-	           result = Character.toLowerCase(result);
+		if (charGBK >= 54481 && charGBK <= 55289)
 
-	       return result;
+			result = 'Z';
 
-	   }
+		else
 
+			result = (char) (65 + (new Random()).nextInt(25));
+
+		if (!bUpCase)
+
+			result = Character.toLowerCase(result);
+
+		return result;
+
+	}
 
 }

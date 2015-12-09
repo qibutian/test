@@ -45,6 +45,7 @@ import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.main.SearchActivity;
 import com.means.foods.utils.FoodsUtils;
+import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.RefreshListViewAndMore;
 
 public class HotIndexFragment extends FoodsListFragment implements
@@ -71,7 +72,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 	ImageView collectI;
 
 	NetJSONAdapter adapter;
-	boolean isShowCollect;
+
 	public static HotIndexFragment getInstance() {
 		if (instance == null) {
 			instance = new HotIndexFragment();
@@ -114,7 +115,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
-//				System.out.println("热门详情" + json);
+				// System.out.println("热门详情" + json);
 				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
 				collectI = (ImageView) itemV.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
@@ -131,7 +132,6 @@ public class HotIndexFragment extends FoodsListFragment implements
 						e.printStackTrace();
 					}
 				}
-				isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true : false;
 				collectI.setOnClickListener(new MycollOnClick(json));
 				String des = JSONUtil.getString(json, "city_name")
 						+ "  |  人均 $" + JSONUtil.getString(json, "mean_money");
@@ -181,10 +181,12 @@ public class HotIndexFragment extends FoodsListFragment implements
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				JSONObject jo = adapter.getTItem(position-1);
 				Intent it = new Intent(getActivity(),
 						RestaurantDetailsActivity.class);
+				it.putExtra("store_id", JSONUtil.getString(jo, "store_id"));
 				startActivity(it);
 			}
 		});
@@ -253,29 +255,39 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 		@Override
 		public void onClick(View arg0) {
-			int collectTyp = JSONUtil.getInt(json, "is_collect");
+			final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
+					: false;
 			switch (arg0.getId()) {
 			case R.id.collect:
-				if (!isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(getActivity(),
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						
-						isShowCollect = !isShowCollect;
-						// adapter.notifyDataSetChanged();
-						Toast.makeText(getActivity(), "收藏成功", Toast.LENGTH_SHORT).show();
-						adapter.refresh();
-					}
+				FoodsUtils utils = new FoodsUtils();
+				utils.collect(getActivity(),
+						JSONUtil.getString(json, "store_id"), isShowCollect);
+				utils.setOnCallBack(new OnCallBack() {
 
-				} else if (isShowCollect) {
-					boolean iscollect = FoodsUtils.collect(getActivity(),
-							JSONUtil.getString(json, "store_id"), isShowCollect);
-					if (iscollect) {
-						isShowCollect = !isShowCollect;
-						Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
-						adapter.refresh();
+					@Override
+					public void callBack(Response response) {
+						if (response.isSuccess()) {
+							if (isShowCollect) {
+								Toast.makeText(getActivity(), "取消收藏成功",
+										Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(getActivity(), "收藏成功",
+										Toast.LENGTH_SHORT).show();
+							}
+						}
 					}
+				});
+
+				// adapter.notifyDataSetChanged();
+				try {
+					json.put("is_collect",
+							JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+				adapter.notifyDataSetChanged();
+
 				break;
 
 			default:

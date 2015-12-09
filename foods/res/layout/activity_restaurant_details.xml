@@ -5,13 +5,7 @@
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <LinearLayout
-        android:id="@+id/titlebar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <include layout="@layout/include_title_bar" />
-    </LinearLayout>
+    <include layout="@layout/include_title_bar" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -84,6 +78,7 @@
                         android:background="@color/text_brown" />
 
                     <TextView
+                        android:id="@+id/cuisine"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
                         android:text="/没取到/60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
