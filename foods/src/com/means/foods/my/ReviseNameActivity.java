@@ -117,8 +117,8 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 	public void setContent() {
 		if ("2".equals(start)) {// 修改姓名
 			DhNet netName = new DhNet(API.editName);
-			netName.addParam("uid", "667 ");
-			netName.addParam("token", "202cb962ac59075b964b07152d234b70");
+			netName.addParam("uid", User.getInstance().uid);
+			netName.addParam("token", User.getInstance().token);
 			netName.addParam("truename", newnickname.getText().toString());
 			netName.doPostInDialog(new NetTask(self) {
 
@@ -140,8 +140,8 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 			if (newnickname.getText().toString().length() > 4
 					&& newnickname.getText().toString().length() < 13) {
 				DhNet net = new DhNet(API.editNickName);
-				net.addParam("uid", "667 ");
-				net.addParam("token", "202cb962ac59075b964b07152d234b70");
+				net.addParam("uid", User.getInstance().uid);
+				net.addParam("token", User.getInstance().token);
 				net.addParam("nickname", newnickname.getText().toString());
 				net.doPostInDialog(new NetTask(self) {
 
