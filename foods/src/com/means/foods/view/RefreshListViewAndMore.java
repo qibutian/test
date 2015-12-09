@@ -165,12 +165,17 @@ public class RefreshListViewAndMore extends LinearLayout {
 								.setVisibility(mAdapter.getValues().size() == 0 ? View.VISIBLE
 										: View.GONE);
 					}
+					
 					loadMoreListViewContainer
-							.setShowLoadingForFirstPage(mAdapter.getValues()
-									.size() != 0 ? true : false);
+							.setShowLoadingForFirstPage(mAdapter.hasMore());
+					loadMoreListViewContainer.loadMoreFinish(
+							!mAdapter.hasMore(), mAdapter.hasMore());
+				} else {
+					loadMoreListViewContainer.loadMoreFinish(mAdapter
+							.getValues().size() != 0 ? false : true, mAdapter
+							.hasMore());
+
 				}
-				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
-						.size() != 0 ? false : true, mAdapter.hasMore());
 
 				mPtrFrame.refreshComplete();
 			}
@@ -195,11 +200,14 @@ public class RefreshListViewAndMore extends LinearLayout {
 								: View.GONE);
 					}
 					loadMoreListViewContainer
-							.setShowLoadingForFirstPage(mAdapter.getValues()
-									.size() != 0 ? true : false);
+							.setShowLoadingForFirstPage(mAdapter.hasMore());
+					loadMoreListViewContainer.loadMoreFinish(
+							!mAdapter.hasMore(), mAdapter.hasMore());
+				} else {
+					loadMoreListViewContainer.loadMoreFinish(mAdapter
+							.getValues().size() != 0 ? false : true, mAdapter
+							.hasMore());
 				}
-				loadMoreListViewContainer.loadMoreFinish(mAdapter.getValues()
-						.size() != 0 ? false : true, mAdapter.hasMore());
 
 				mPtrFrame.refreshComplete();
 			}

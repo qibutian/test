@@ -16,6 +16,8 @@ public class LoadMoreDefaultFooterView extends RelativeLayout implements
 
 	ProgressBar progress;
 
+	View layoutV;
+
 	public LoadMoreDefaultFooterView(Context context) {
 		this(context, null);
 	}
@@ -33,13 +35,16 @@ public class LoadMoreDefaultFooterView extends RelativeLayout implements
 	private void setupViews() {
 		LayoutInflater.from(getContext()).inflate(
 				R.layout.cube_views_load_more_default_footer, this);
+		layoutV = findViewById(R.id.layout);
 		mTextView = (TextView) findViewById(R.id.cube_views_load_more_default_footer_text_view);
 		progress = (ProgressBar) findViewById(R.id.progress);
 	}
 
 	@Override
 	public void onLoading(LoadMoreContainer container) {
-		setVisibility(VISIBLE);
+		layoutV.setVisibility(View.VISIBLE);
+		setVisibility(View.VISIBLE);
+		// layoutV.setVisibility(VISIBLE);
 		progress.setVisibility(View.VISIBLE);
 		mTextView.setText(R.string.cube_views_load_more_loading);
 	}
@@ -48,16 +53,19 @@ public class LoadMoreDefaultFooterView extends RelativeLayout implements
 	public void onLoadFinish(LoadMoreContainer container, boolean empty,
 			boolean hasMore) {
 		if (!hasMore) {
-			setVisibility(VISIBLE);
 			progress.setVisibility(View.GONE);
 			if (empty) {
+				layoutV.setVisibility(GONE);
 				setVisibility(GONE);
 				mTextView.setText(R.string.cube_views_load_more_loaded_empty);
 			} else {
+				layoutV.setVisibility(VISIBLE);
+				setVisibility(VISIBLE);
 				mTextView.setText(R.string.cube_views_load_more_loaded_no_more);
 			}
 		} else {
-			setVisibility(INVISIBLE);
+			layoutV.setVisibility(VISIBLE);
+			setVisibility(VISIBLE);
 		}
 	}
 
