@@ -60,6 +60,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		Bundle bd = getIntent().getExtras();
 		if (null != bd) {
 			store_id = bd.getString("store_id");
+			String[] times= bd.getStringArray("times"); 
 		}
 		addressT = (TextView) findViewById(R.id.address);
 		telT = (TextView) findViewById(R.id.tel);
