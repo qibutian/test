@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
@@ -100,7 +101,7 @@ public class LoginActivity extends FoodsBaseActivity implements
 		}
 		// MD5Util.string2MD5(pswd);
 		DhNet net = new DhNet(
-				"http://www.foodies.im/wap.php?g=Wap&c=Login&a=loginApi");
+				API.login);
 		net.addParam("phone", account);
 		net.addParam("password", pswd);
 		// net.addParam("phone", "13852286536");
