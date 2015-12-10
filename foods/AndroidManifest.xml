@@ -79,8 +79,11 @@
         <activity android:name=".main.ReadyActivity" >
         </activity>
         <activity
-            android:name="com.means.foods.my.RegisterThreeActivity"
+            android:name=".my.RegisterThreeActivity"
             android:label="@string/title_activity_register_three" >
+        </activity>
+        <activity
+            android:name=".ConfirmPaymentActivity" >
         </activity>
     </application>
 

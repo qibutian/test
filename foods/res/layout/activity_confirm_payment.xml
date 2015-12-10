@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nav_bg"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <TextView
+        style="@style/text_66_blacklight_medium"
+        android:paddingBottom="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingTop="22dp"
+        android:text="Bouquet by Light Salt" />
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="11dp" >
+
+        <TextView
+            style="@style/text_66_blacklight_small"
+            android:text="预付金额:" />
+
+        <TextView
+            style="@style/text_66_blacklight_smaller"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:text="￥ 0.1"
+            android:textColor="@color/text_gold_yellow" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <TextView
+        style="@style/text_66_blacklight_medium"
+        android:paddingBottom="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingTop="22dp"
+        android:text="选择支付方式" />
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="11dp" >
+
+        <TextView
+            style="@style/text_66_blacklight_small"
+            android:text="微信支付" />
+
+        <CheckBox
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/register_check_s"
+            android:button="@null"
+            android:checked="true" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_margin="11dp"
+        android:background="@drawable/btn_yellow_fill_n"
+        android:text="确认支付"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_big" />
+
+</LinearLayout>
