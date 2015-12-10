@@ -268,7 +268,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 					public void callBack(Response response) {
 						if (response.isSuccess()) {
 							if (isShowCollect) {
-								Toast.makeText(getActivity(), "取消收藏成功",
+								Toast.makeText(getActivity(), "取消收藏",
 										Toast.LENGTH_SHORT).show();
 							} else {
 								Toast.makeText(getActivity(), "收藏成功",

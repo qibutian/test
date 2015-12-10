@@ -58,7 +58,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	ImageView info_foldI, feature_foldI, chef_foldI, tips_foldI;
 
 	// 是否收藏
-	boolean isShowCollect;
+//	boolean isShowCollect;
 
 	Fold info_fold, feature_fold, chef_fold, tips_fold;
 
@@ -148,11 +148,13 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 							JSONUtil.getString(jo, "cuisine"));
 					like_layout.setOnClickListener(new MycollOnClick(jo));
 					JSONArray jsc = JSONUtil.getJSONArray(jo, "all_pic");
-					isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ? true
-							: false;
-					// System.out.println("收藏状态"+JSONUtil.getInt(jo,
-					// "is_collect"));
-
+//					isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ? true
+//							: false;
+					list_img.setImageResource(JSONUtil.getInt(jo, "is_collect") == 0 ? R.drawable.icon_collect
+							: R.drawable.icon_collect_f);
+					 System.out.println("收藏状态"+JSONUtil.getInt(jo,
+					 "is_collect"));
+					
 					// //判断简介为三行以内则不显示
 					// ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
 					// vto.addOnPreDrawListener(new
@@ -199,11 +201,13 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					public void callBack(Response response) {
 						if (response.isSuccess()) {
 							if (isShowCollect) {
-								Toast.makeText(self, "取消收藏成功",
+								Toast.makeText(self, "取消收藏",
 										Toast.LENGTH_SHORT).show();
+								 list_img.setImageResource(R.drawable.icon_collect);
 							} else {
 								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
 										.show();
+								 list_img.setImageResource(R.drawable.icon_collect_f);
 							}
 						}
 					}

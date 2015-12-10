@@ -14,46 +14,55 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/registered_bg" />
+            android:src="@drawable/register_bg" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <TextView
-                style="@style/text_white_big"
-                android:layout_marginTop="63dp"
-                android:text="恭喜您! 已成为食客的会员" />
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="62dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/icon_logo_text" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
-                android:orientation="horizontal"
-                android:paddingLeft="19dp"
-                android:paddingRight="19dp" >
+                android:layout_height="fill_parent"
+                android:layout_marginTop="28dp"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="54dp"
+                    android:background="@drawable/input_bg"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="11dp" >
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:background="@color/nothing"
+                        android:hint="请输入您的密码"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/text_66_black_light"
+                        android:textColorHint="@color/text_99_grey_light" />
+                    
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/edit_info"
-                    android:layout_width="0dp"
+                    android:id="@+id/finish"
+                    android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/btn_yellow_fill_n"
-                    android:text="完善信息"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_big" />
-
-                <Button
-                    android:id="@+id/next"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_register_yellow_n"
-                    android:text="随便逛逛"
+                    android:text="完成"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_big" />
             </LinearLayout>

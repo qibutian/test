@@ -74,7 +74,7 @@ public class CollectIndexFragment extends FoodsListFragment {
 		// 设置空的emptyView
 		emptyView = LayoutInflater.from(getActivity()).inflate(
 				R.layout.list_collect_empty, null);
-		listV.setEmptyView(emptyView);
+		listV.setEmptyViewTop(emptyView);
 		adapter = new NetJSONAdapter(url, getActivity(),
 				R.layout.item_cateindex_list_old);
 		adapter.fromWhat("data");
