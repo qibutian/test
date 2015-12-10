@@ -256,8 +256,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 					it.putExtra("order_id",
 							JSONUtil.getString(json, "order_id"));
 					it.putExtra("name", getIntent().getStringExtra("name"));
-					it.putExtra("order_id",
-							JSONUtil.getString(json, "order_id"));
+					it.putExtra("price", JSONUtil.getDouble(json, "price"));
 					startActivity(it);
 				}
 			}

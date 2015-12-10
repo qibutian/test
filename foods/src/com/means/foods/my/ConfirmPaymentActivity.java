@@ -3,6 +3,7 @@ package com.means.foods.my;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,9 +19,13 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 /**
@@ -33,6 +38,8 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 
 	private IWXAPI api;
 
+	CheckBox checkC;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +50,23 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		setTitle("确认详情");
+		Intent it = getIntent();
+		ViewUtil.bindView(findViewById(R.id.name), it.getStringExtra("name"));
+		ViewUtil.bindView(findViewById(R.id.price), it.getStringExtra("price"));
+		checkC = (CheckBox) findViewById(R.id.check);
+		findViewById(R.id.pay).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (checkC.isChecked()) {
+					pay(getIntent().getStringExtra("order_id"));
+				} else {
+					showToast("请选择付款方式!");
+				}
+			}
+		});
 	}
+	
 
 	private void pay(String orderid) {
 
