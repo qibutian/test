@@ -80,7 +80,8 @@
                     <TextView
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
-                        android:text="/没取到/60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
+                        android:text="/没取到/60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/reason"
