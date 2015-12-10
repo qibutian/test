@@ -13,5 +13,6 @@
     <string name="title_activity_restaurant_details">RestaurantDetailsActivity</string>
     <string name="title_activity_reservations_details">ReservationsDetailsActivity</string>
     <string name="title_activity_confirm_details">ConfirmDetailsActivity</string>
+    <string name="title_activity_register_three">RegisterThreeActivity</string>
 
 </resources>

@@ -48,7 +48,7 @@
             android:name=".my.RegisterOneActivity"
             android:launchMode="singleTask" />
         <activity android:name=".my.RegisterTwoActivity" />
-        <activity android:name=".my.RegisterThreeActivity" />
+        <activity android:name=".my.RegisterFinishActivity" />
         <activity android:name=".main.MainActivity" />
         <activity
             android:name=".my.LoginActivity"
@@ -74,11 +74,13 @@
         </activity>
         <activity android:name=".my.RevisePswdActivity" >
         </activity>
-        <activity
-            android:name=".main.GuidanceActivity" >
+        <activity android:name=".main.GuidanceActivity" >
+        </activity>
+        <activity android:name=".main.ReadyActivity" >
         </activity>
         <activity
-            android:name="com.means.foods.main.ReadyActivity" >
+            android:name="com.means.foods.my.RegisterThreeActivity"
+            android:label="@string/title_activity_register_three" >
         </activity>
     </application>
 

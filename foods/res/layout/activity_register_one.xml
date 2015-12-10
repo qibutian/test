@@ -49,6 +49,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="54dp"
                         android:background="@color/nothing"
+                        android:inputType="phone"
                         android:hint="请输入手机号"
                         android:textColor="@color/text_66_black_light"
                         android:textColorHint="@color/text_99_grey_light"
@@ -66,6 +67,7 @@
                     android:textSize="@dimen/text_big" />
 
                 <LinearLayout
+                    android:id="@+id/terms"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
@@ -75,6 +77,7 @@
                         android:id="@+id/check"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
+                        android:checked="true"
                         android:background="@drawable/register_check_s"
                         android:button="@null" />
 
