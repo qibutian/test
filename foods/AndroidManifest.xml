@@ -87,7 +87,7 @@
         <activity android:name=".main.ReadyActivity" >
         </activity>
         <activity
-            android:name="com.means.foods.my.RegisterThreeActivity"
+            android:name=".my.RegisterThreeActivity"
             android:label="@string/title_activity_register_three" >
         </activity>
         <activity
@@ -98,6 +98,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity android:name="com.means.foods.my.ConfirmPaymentActivity" />
 
         <receiver android:name=".AppRegister" >
             <intent-filter>
