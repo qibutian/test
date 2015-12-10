@@ -31,6 +31,8 @@ import com.means.foods.bean.User;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.FoodsGallery;
+import com.means.foods.view.pop.SharePop;
+import com.means.foods.view.pop.SharePop.ShareResultListener;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -272,7 +274,15 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			textFold(tips_fold);
 			break;
 		case R.id.share:
-			wechatShare(0);
+			SharePop pop = new SharePop(self);
+			pop.setOnShareResultListener(new ShareResultListener() {
+				
+				@Override
+				public void onResult(int result) {
+					wechatShare(result);
+				}
+			});
+			pop.show();
 			break;
 
 		default:
