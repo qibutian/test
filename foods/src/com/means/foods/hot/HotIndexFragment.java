@@ -38,15 +38,20 @@ import android.widget.Toast;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
 import com.means.foods.cate.RestaurantDetailsActivity;
 import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.main.SearchActivity;
+import com.means.foods.manage.UserInfoManage;
+import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.RefreshListViewAndMore;
+
+import de.greenrobot.event.EventBus;
 
 public class HotIndexFragment extends FoodsListFragment implements
 		OnClickListener {
@@ -85,6 +90,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		EventBus.getDefault().register(this);
 		// TODO Auto-generated method stub
 		mainV = inflater.inflate(R.layout.fragment_hot_index, null);
 		mLayoutInflater = inflater;
@@ -120,8 +126,6 @@ public class HotIndexFragment extends FoodsListFragment implements
 				collectI = (ImageView) itemV.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
-				System.out.println("收藏的状态"
-						+ JSONUtil.getInt(json, "is_collect"));
 				if (jsa != null && jsa.length() != 0) {
 					try {
 						ViewUtil.bindNetImage((ImageView) itemV
@@ -183,7 +187,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				JSONObject jo = adapter.getTItem(position-1);
+				JSONObject jo = adapter.getTItem(position - 1);
 				Intent it = new Intent(getActivity(),
 						RestaurantDetailsActivity.class);
 				it.putExtra("store_id", JSONUtil.getString(jo, "store_id"));
@@ -255,10 +259,10 @@ public class HotIndexFragment extends FoodsListFragment implements
 
 		@Override
 		public void onClick(View arg0) {
-			final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
-					: false;
-			switch (arg0.getId()) {
-			case R.id.collect:
+
+			if (User.getInstance().isLogin()) {
+				final boolean isShowCollect = JSONUtil.getInt(json,
+						"is_collect") == 1 ? true : false;
 				FoodsUtils utils = new FoodsUtils();
 				utils.collect(getActivity(),
 						JSONUtil.getString(json, "store_id"), isShowCollect);
@@ -274,28 +278,46 @@ public class HotIndexFragment extends FoodsListFragment implements
 								Toast.makeText(getActivity(), "收藏成功",
 										Toast.LENGTH_SHORT).show();
 							}
+							try {
+								System.out.println("前is_collect:"
+										+ JSONUtil.getInt(json, "is_collect"));
+								json.put("is_collect", JSONUtil.getInt(json,
+										"is_collect") == 0 ? 1 : 0);
+								System.out.println("前is_collect:"
+										+ JSONUtil.getInt(json, "is_collect"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							adapter.notifyDataSetChanged();
+
 						}
 					}
 				});
+			} else {
+				UserInfoManage.getInstance().checkLogin(getActivity(),
+						new LoginCallBack() {
 
-				// adapter.notifyDataSetChanged();
-				try {
-					json.put("is_collect",
-							JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				adapter.notifyDataSetChanged();
+							@Override
+							public void onisLogin() {
+								adapter.refresh();
+							}
 
-				break;
+							@Override
+							public void onLoginFail() {
 
-			default:
-				break;
+							}
+						});
+
 			}
 
 		}
 
+	}
+
+	public void onEventMainThread(LoginEB loginEb) {
+		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.refresh();
 	}
 
 	@Override

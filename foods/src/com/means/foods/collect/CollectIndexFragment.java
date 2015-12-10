@@ -25,10 +25,13 @@ import android.widget.TextView;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
+
+import de.greenrobot.event.EventBus;
 
 public class CollectIndexFragment extends FoodsListFragment {
 
@@ -143,7 +146,6 @@ public class CollectIndexFragment extends FoodsListFragment {
 
 					}
 				});
-
 	}
 
 }

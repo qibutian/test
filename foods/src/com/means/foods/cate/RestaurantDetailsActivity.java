@@ -76,6 +76,8 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	View shareV;
 
+	double price;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -172,8 +174,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					// : false;
 					list_img.setImageResource(JSONUtil.getInt(jo, "is_collect") == 0 ? R.drawable.icon_collect
 							: R.drawable.icon_collect_f);
-					System.out.println("收藏状态"
-							+ JSONUtil.getInt(jo, "is_collect"));
+					price = JSONUtil.getDouble(jo, "price");
 
 					// //判断简介为三行以内则不显示
 					// ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
@@ -258,6 +259,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		case R.id.reserved:
 			it = new Intent(self, ConfirmDetailsActivity.class);
 			it.putExtra("store_id", store_id);
+			it.putExtra("price", price);
 			it.putExtra("name", nameT.getText().toString());
 			startActivity(it);
 			break;
@@ -276,7 +278,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		case R.id.share:
 			SharePop pop = new SharePop(self);
 			pop.setOnShareResultListener(new ShareResultListener() {
-				
+
 				@Override
 				public void onResult(int result) {
 					wechatShare(result);

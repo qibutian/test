@@ -299,6 +299,7 @@
                     android:text="预付款" />
 
                 <TextView
+                    android:id="@+id/price"
                     style="@style/text_66_blacklight_medium"
                     android:text="￥0"
                     android:textColor="@color/text_brown" />
@@ -408,18 +409,51 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/text_brown"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <TextView
-            style="@style/text_white_medium"
-            android:text="确认" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/text_66_black_light"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-        <TextView
-            style="@style/text_white_small"
-            android:layout_marginTop="3dp"
-            android:text="BOOKING" />
+            <LinearLayout
+                android:id="@+id/pre_price_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/pre_price"
+                    style="@style/text_white_small"
+                    android:layout_marginTop="3dp"
+                    android:text="预付定金 : 100" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/reserved"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/text_brown"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@style/text_white_medium"
+                    android:text="确认" />
+
+                <TextView
+                    style="@style/text_white_small"
+                    android:layout_marginTop="3dp"
+                    android:text="BOOKING" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

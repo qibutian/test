@@ -6,13 +6,33 @@ public class User {
 
 	public static User getInstance() {
 		if (instance == null) {
-			return instance=new User();
+			return instance = new User();
 		}
 		return instance;
 	}
 
 	public String uid = "";
 	public String token = "";
+
+	public boolean islogout = false;
+
+	public boolean isLogin;
+
+	public boolean isIslogout() {
+		return islogout;
+	}
+
+	public void setIslogout(boolean islogout) {
+		this.islogout = islogout;
+	}
+
+	public boolean isLogin() {
+		return isLogin;
+	}
+
+	public void setLogin(boolean isLogin) {
+		this.isLogin = isLogin;
+	}
 
 	public String getUid() {
 		return uid;

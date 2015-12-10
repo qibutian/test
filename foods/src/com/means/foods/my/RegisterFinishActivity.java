@@ -4,6 +4,7 @@ import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
+import com.means.foods.bean.User;
 import com.means.foods.main.MainActivity;
 
 import android.content.Intent;
@@ -38,9 +39,16 @@ public class RegisterFinishActivity extends FoodsBaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent it = new Intent(self, MainActivity.class);
-				startActivity(it);
-				finishWithoutAnim();
+				User user = User.getInstance();
+				if (user.isIslogout()) {
+					Intent it = new Intent(self, MainActivity.class);
+					startActivity(it);
+					finishWithoutAnim();
+				} else {
+					// Intent it = new Intent(self, MainActivity.class);
+					// startActivity(it);
+					finishWithoutAnim();
+				}
 			}
 		});
 	}

@@ -4,8 +4,9 @@ import com.means.foods.R;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
+import com.means.foods.bean.User;
+import com.means.foods.manage.UserInfoManage;
 import com.means.foods.my.LoginActivity;
-import com.means.foods.my.EditinfoActivity;
 import com.means.foods.my.RegisterOneActivity;
 
 import de.greenrobot.event.EventBus;
@@ -17,12 +18,17 @@ import android.view.View.OnClickListener;
 
 public class ReadyActivity extends FoodsBaseActivity {
 
+	public static UserInfoManage.LoginCallBack loginCall;
+
+	boolean isFromLogout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ready);
 		EventBus.getDefault().register(this);
+
 	}
 
 	@Override
@@ -54,6 +60,19 @@ public class ReadyActivity extends FoodsBaseActivity {
 
 	public void onEventMainThread(RegisterEB registerEb) {
 		finish();
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		if (loginCall != null) {
+			if (User.getInstance().isLogin()) {
+				loginCall.onisLogin();
+			} else {
+				loginCall.onLoginFail();
+			}
+		}
+		loginCall = null;
 	}
 
 }

@@ -10,6 +10,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,6 +64,11 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 	int people_n;
 
 	Calendar calendar;
+
+	View pre_price_layoutV;
+
+	// 预付款
+	double pre_price;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +125,14 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		sub_TimeT.setOnClickListener(this);
 
 		footerbarLl.setOnClickListener(this);
+		pre_price = getIntent().getDoubleExtra("price", 0);
+		pre_price_layoutV = findViewById(R.id.pre_price_layout);
+		ViewUtil.bindView(findViewById(R.id.price), pre_price);
+
+		if (pre_price != 0) {
+			pre_price_layoutV.setVisibility(View.VISIBLE);
+			ViewUtil.bindView(findViewById(R.id.pre_price), pre_price);
+		}
 
 		initData();
 
@@ -251,13 +265,16 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 				if (response.isSuccess()) {
 					// order_id
 					showToast("提交成功");
-					JSONObject json = response.jSONFromData();
-					Intent it = new Intent(self, ConfirmPaymentActivity.class);
-					it.putExtra("order_id",
-							JSONUtil.getString(json, "order_id"));
-					it.putExtra("name", getIntent().getStringExtra("name"));
-					it.putExtra("price", JSONUtil.getDouble(json, "price"));
-					startActivity(it);
+					if (pre_price != 0) {
+						JSONObject json = response.jSONFromData();
+						Intent it = new Intent(self,
+								ConfirmPaymentActivity.class);
+						it.putExtra("order_id",
+								JSONUtil.getString(json, "order_id"));
+						it.putExtra("name", getIntent().getStringExtra("name"));
+						it.putExtra("price", JSONUtil.getDouble(json, "price"));
+						startActivity(it);
+					}
 				}
 			}
 		});

@@ -2,6 +2,7 @@ package com.means.foods.my;
 
 import org.json.JSONObject;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -22,6 +23,8 @@ import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
 import com.means.foods.bean.User;
 import com.means.foods.main.MainActivity;
+import com.means.foods.manage.UserInfoManage;
+import com.means.foods.utils.FoodsPerference;
 
 import de.greenrobot.event.EventBus;
 
@@ -39,6 +42,7 @@ public class LoginActivity extends FoodsBaseActivity implements
 	TextView registerT, forget_passwordT;
 
 	EditText usernameEt, pswdEt;
+	FoodsPerference per;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class LoginActivity extends FoodsBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		EventBus.getDefault().register(this);
+		per = IocContainer.getShare().get(FoodsPerference.class);
+		per.load();
 	}
 
 	@Override
@@ -114,14 +120,21 @@ public class LoginActivity extends FoodsBaseActivity implements
 					User user = User.getInstance();
 					user.setUid(JSONUtil.getString(jo, "uid"));
 					user.setToken(JSONUtil.getString(jo, "pwd"));
-
+					per.phone = usernameEt.getText().toString().trim();
+					per.pswd = pswdEt.getText().toString().trim();
+					per.commit();
+					user.setLogin(true);
 					showToast("登录成功");
+					if (user.isIslogout()) {
+						Intent it = new Intent(self, MainActivity.class);
+						startActivity(it);
+						finishWithoutAnim();
+					} else {
+						EventBus.getDefault().post(new LoginEB());
+						finish();
+					}
 
-					Intent it = new Intent(self, MainActivity.class);
-					startActivity(it);
-					finishWithoutAnim();
 					// 登录成功后发送事件,关闭之前的页面
-					EventBus.getDefault().post(new LoginEB());
 				}
 			}
 		});
