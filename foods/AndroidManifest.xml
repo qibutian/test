@@ -91,7 +91,7 @@
             android:label="@string/title_activity_register_three" >
         </activity>
         <activity
-            android:name=".ConfirmPaymentActivity" >
+            android:name="com.means.foods.my.ConfirmPaymentActivity" >
         </activity>
 
         <receiver android:name=".AppRegister" >

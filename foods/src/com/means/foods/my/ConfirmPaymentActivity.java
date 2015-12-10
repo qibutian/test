@@ -1,5 +1,7 @@
-package com.means.foods;
+package com.means.foods.my;
 
+import com.means.foods.R;
+import com.means.foods.R.layout;
 import com.means.foods.base.FoodsBaseActivity;
 
 import android.app.Activity;
