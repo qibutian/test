@@ -140,7 +140,7 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 
 	public void setContent() {
 		DhNet netName = new DhNet(API.editPwd);
-		netName.addParam("uid", "667 ");
+		netName.addParam("uid", User.getInstance().uid);
 		netName.addParam("oldPwd", myIntent.getStringExtra("oldPwd"));
 		netName.addParam("newPwd", pswd.getText().toString());
 		netName.addParam("newPwd2", pswd.getText().toString());

@@ -113,8 +113,8 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 	public void setContent() {
 		DhNet net = new DhNet(
 				API.editEmail);
-		net.addParam("uid", "667 ");
-		net.addParam("token", "202cb962ac59075b964b07152d234b70");
+		net.addParam("uid", User.getInstance().uid);
+		net.addParam("token", User.getInstance().token);
 		net.addParam("email", newemail.getText().toString());
 		net.doPostInDialog(new NetTask(self) {
 
