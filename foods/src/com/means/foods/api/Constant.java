@@ -9,5 +9,11 @@ public class Constant {
 
     /** 裁剪图片 */
     public static final int ZOOM_PIC = 1003;
+    
+    
+    public static final String WX_APP_KEY = "wx63ff0f643d107913";
+    public static final String WX_APP_SECRET = "4ec3850d9f5f81ff3c51146a68343bde";
+    
+    
 
 }

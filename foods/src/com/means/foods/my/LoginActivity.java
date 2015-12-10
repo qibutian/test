@@ -100,8 +100,7 @@ public class LoginActivity extends FoodsBaseActivity implements
 			return;
 		}
 		// MD5Util.string2MD5(pswd);
-		DhNet net = new DhNet(
-				API.login);
+		DhNet net = new DhNet(API.login);
 		net.addParam("phone", account);
 		net.addParam("password", pswd);
 		// net.addParam("phone", "13852286536");
