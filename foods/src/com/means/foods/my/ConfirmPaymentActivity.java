@@ -52,7 +52,8 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 		setTitle("确认详情");
 		Intent it = getIntent();
 		ViewUtil.bindView(findViewById(R.id.name), it.getStringExtra("name"));
-		ViewUtil.bindView(findViewById(R.id.price), it.getStringExtra("price"));
+		ViewUtil.bindView(findViewById(R.id.price),
+				it.getDoubleExtra("price", 0));
 		checkC = (CheckBox) findViewById(R.id.check);
 		findViewById(R.id.pay).setOnClickListener(new OnClickListener() {
 
@@ -66,7 +67,6 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 			}
 		});
 	}
-	
 
 	private void pay(String orderid) {
 
@@ -74,7 +74,7 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 		net.addParam("uid ", User.getInstance().getUid());
 		net.addParam("token  ", User.getInstance().getToken());
 		net.addParam("order_id ", orderid);
-		net.doGetInDialog(new NetTask(self) {
+		net.doPostInDialog(new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
