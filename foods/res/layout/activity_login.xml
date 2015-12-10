@@ -52,7 +52,7 @@
                         android:textSize="@dimen/text_small"
                         android:hint="用户名/邮箱号码/手机号"
                         android:textColor="@color/text_66_black_light"
-                        android:text="13852286536"
+                        android:text="18502519390"
                         android:textColorHint="@color/text_99_grey_light" />
 
                     <View style="@style/line_horizontal" />
@@ -66,7 +66,7 @@
                         android:textSize="@dimen/text_small"
                         android:inputType="textPassword"
                         android:textColor="@color/text_66_black_light"
-                        android:text="123"
+                        android:text="123456"
                         android:textColorHint="@color/text_99_grey_light" />
                 </LinearLayout>
 

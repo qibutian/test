@@ -53,7 +53,7 @@ public class FoodsApplication extends Application implements
 		Const.netadapter_step_default = 10;
 		Const.DATABASE_VERSION = 18;
 		Const.response_success = "status";
-		Const.response_msg = "errmsg";
+		Const.response_msg = "info";
 		Const.response_result_status = "1";
 		Const.netadapter_no_more = "";
 //		Const.postType = 2;

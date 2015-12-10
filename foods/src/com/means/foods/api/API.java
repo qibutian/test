@@ -27,9 +27,9 @@ public class API {
 				token);
 	}
 
-	//登录
+	// 登录
 	public static String login = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=loginApi";
-	
+
 	// 餐厅列表
 	public static String restaurantList = "http://www.foodies.im/wap.php?g=Wap&c=Meal_list&a=merchantListApi";
 
@@ -64,8 +64,8 @@ public class API {
 
 	// 我的订单
 	public static String orderList = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myOrderAPI";
-	
-	//添加订单
+
+	// 添加订单
 	public static String addOrder = "http://www.foodies.im/wap.php?g=Wap&c=My&a=saveOrderApi";
 	
 	//获取验证码(注册第一步)
@@ -73,5 +73,8 @@ public class API {
 	
 	//注册
 	public static String register = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=registerApi";
+
+	// 立即支付
+	public static String pay = "http://www.foodies.im/wap.php?g=Wap&c=Pay&a=payApi";
 
 }

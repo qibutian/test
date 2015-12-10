@@ -148,6 +148,17 @@ public class RefreshListViewAndMore extends LinearLayout {
 		}
 	}
 
+	public void setEmptyViewTop(View empty) {
+		mEmptyV = empty;
+		if (mEmptyV != null) {
+			LayoutParams params = new LayoutParams(
+					LinearLayout.LayoutParams.FILL_PARENT,
+					LinearLayout.LayoutParams.FILL_PARENT);
+			params.gravity = Gravity.TOP;
+			emptyLayout.addView(mEmptyV, params);
+		}
+	}
+
 	public void setAdapter(NetJSONAdapter adapter) {
 		mAdapter = adapter;
 		mAdapter.setOnLoadSuccess(new LoadSuccessCallBack() {
@@ -165,7 +176,7 @@ public class RefreshListViewAndMore extends LinearLayout {
 								.setVisibility(mAdapter.getValues().size() == 0 ? View.VISIBLE
 										: View.GONE);
 					}
-					
+
 					loadMoreListViewContainer
 							.setShowLoadingForFirstPage(mAdapter.hasMore());
 					loadMoreListViewContainer.loadMoreFinish(
