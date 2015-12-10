@@ -78,7 +78,6 @@
                         android:background="@color/text_brown" />
 
                     <TextView
-                        android:id="@+id/cuisine"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="12dp"
                         android:text="/没取到/60度墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本墨尔本" />
@@ -383,6 +382,7 @@
             android:orientation="horizontal" >
 
             <LinearLayout
+                android:id="@+id/share"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

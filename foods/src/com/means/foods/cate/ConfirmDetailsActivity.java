@@ -3,10 +3,17 @@ package com.means.foods.cate;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.SyncStateContract.Constants;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,11 +21,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
+import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 确认详情
@@ -44,12 +59,17 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 	int month_n;
 	int day_n;
 	int people_n;
-	
+
 	Calendar calendar;
+
+	private IWXAPI api;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_confirm_details);
+		api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_KEY);
+
 	}
 
 	@Override
@@ -60,7 +80,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		Bundle bd = getIntent().getExtras();
 		if (null != bd) {
 			store_id = bd.getString("store_id");
-			String[] times= bd.getStringArray("times"); 
+			String[] times = bd.getStringArray("times");
 		}
 		addressT = (TextView) findViewById(R.id.address);
 		telT = (TextView) findViewById(R.id.tel);
@@ -102,11 +122,11 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		footerbarLl.setOnClickListener(this);
 
 		initData();
-		
+
 	}
 
-	//初始化页面数据(年,月,日,星期,人数)
-	private void initData(){
+	// 初始化页面数据(年,月,日,星期,人数)
+	private void initData() {
 		calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
 		year_n = calendar.get(Calendar.YEAR);
@@ -114,32 +134,34 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		day_n = calendar.get(Calendar.DATE);
 		setDataView();
 		people_n = 1;
-		numT.setText(people_n+"");
+		numT.setText(people_n + "");
 	}
-	//更新view
-	private void setDataView(){
-		yearT.setText(year_n+"年");
-		monthT.setText(month_n+"月");
+
+	// 更新view
+	private void setDataView() {
+		yearT.setText(year_n + "年");
+		monthT.setText(month_n + "月");
 		dayT.setText(day_n + "日");
 	}
-	//获取更改后的年月日
-	private void getData(){
+
+	// 获取更改后的年月日
+	private void getData() {
 		year_n = calendar.get(Calendar.YEAR);
 		month_n = calendar.get(Calendar.MONTH) + 1;
 		day_n = calendar.get(Calendar.DATE);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		// 确认
 		case R.id.footerbar:
-			 submitOrder();
+			submitOrder();
 			break;
 		// 年份+1
 		case R.id.add_year:
 			calendar.add(Calendar.YEAR, +1);
-			getData();		
+			getData();
 			setDataView();
 			break;
 		// 年份-1
@@ -174,16 +196,16 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 			break;
 		// 人数+1
 		case R.id.add_num:
-			people_n ++;
-			numT.setText(people_n+"");
+			people_n++;
+			numT.setText(people_n + "");
 			break;
 		// 人数-1
 		case R.id.sub_num:
-			people_n --;
-			if (people_n<1) {
+			people_n--;
+			if (people_n < 1) {
 				people_n = 1;
 			}
-			numT.setText(people_n+"");
+			numT.setText(people_n + "");
 			break;
 		// 下一组时间
 		case R.id.add_time:
@@ -215,7 +237,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		net.addParam("uid", user.getUid());
 		net.addParam("token", user.getToken());
 		net.addParam("store_id", store_id);
-		net.addParam("date", year_n+"-"+month_n+"-"+day_n);
+		net.addParam("date", year_n + "-" + month_n + "-" + day_n);
 		net.addParam("hour", "");
 		net.addParam("num", numT.getText().toString());
 		net.addParam("sex",
@@ -230,8 +252,49 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 				if (response.isSuccess()) {
 					// order_id
 					showToast("提交成功");
+					JSONObject json = response.jSONFromData();
+					pay(JSONUtil.getString(json, "order_id"));
 				}
 			}
 		});
 	}
+
+	private void pay(String orderid) {
+
+		DhNet net = new DhNet(API.pay);
+		net.addParam("uid ", User.getInstance().getUid());
+		net.addParam("token  ", User.getInstance().getToken());
+		net.addParam("order_id ", orderid);
+		net.doGetInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject json = response.jSONFromData();
+					PayReq req = new PayReq();
+					// req.appId = "wxf8b4f85f3a794e77"; // 测试用appId
+					try {
+						req.appId = json.getString("appid");
+						req.partnerId = json.getString("partnerid");
+						req.prepayId = json.getString("prepayid");
+						req.nonceStr = json.getString("noncestr");
+						req.timeStamp = json.getString("timestamp");
+						req.packageValue = json.getString("package");
+						req.sign = json.getString("sign");
+						req.extData = "app data"; // optional
+						Toast.makeText(self, "正常调起支付", Toast.LENGTH_SHORT)
+								.show();
+						// 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+						api.sendReq(req);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+	}
+
 }

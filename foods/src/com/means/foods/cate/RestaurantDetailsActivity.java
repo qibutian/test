@@ -11,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,11 +25,17 @@ import android.widget.Toast;
 import com.means.foods.R;
 import com.means.foods.adapter.BigImageAdapter;
 import com.means.foods.api.API;
+import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.FoodsGallery;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 餐厅详情
@@ -58,14 +66,21 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	ImageView info_foldI, feature_foldI, chef_foldI, tips_foldI;
 
 	// 是否收藏
-//	boolean isShowCollect;
+	// boolean isShowCollect;
 
 	Fold info_fold, feature_fold, chef_fold, tips_fold;
+
+	private IWXAPI api;
+
+	View shareV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_details);
+		api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_KEY);
+
+		api.registerApp(Constant.WX_APP_KEY);
 	}
 
 	@Override
@@ -101,12 +116,14 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		feature_fold = new Fold(featureT, feature_foldI, false);
 		chef_fold = new Fold(chefT, chef_foldI, false);
 		tips_fold = new Fold(tipsT, tips_foldI, false);
+		shareV = findViewById(R.id.share);
 
 		reservedV.setOnClickListener(this);
 		info_foldI.setOnClickListener(this);
 		feature_foldI.setOnClickListener(this);
 		chef_foldI.setOnClickListener(this);
 		tips_foldI.setOnClickListener(this);
+		shareV.setOnClickListener(this);
 
 		initData();
 	}
@@ -148,13 +165,14 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 							JSONUtil.getString(jo, "cuisine"));
 					like_layout.setOnClickListener(new MycollOnClick(jo));
 					JSONArray jsc = JSONUtil.getJSONArray(jo, "all_pic");
-//					isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ? true
-//							: false;
+					// isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ?
+					// true
+					// : false;
 					list_img.setImageResource(JSONUtil.getInt(jo, "is_collect") == 0 ? R.drawable.icon_collect
 							: R.drawable.icon_collect_f);
-					 System.out.println("收藏状态"+JSONUtil.getInt(jo,
-					 "is_collect"));
-					
+					System.out.println("收藏状态"
+							+ JSONUtil.getInt(jo, "is_collect"));
+
 					// //判断简介为三行以内则不显示
 					// ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
 					// vto.addOnPreDrawListener(new
@@ -201,13 +219,13 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					public void callBack(Response response) {
 						if (response.isSuccess()) {
 							if (isShowCollect) {
-								Toast.makeText(self, "取消收藏",
-										Toast.LENGTH_SHORT).show();
-								 list_img.setImageResource(R.drawable.icon_collect);
+								Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT)
+										.show();
+								list_img.setImageResource(R.drawable.icon_collect);
 							} else {
 								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
 										.show();
-								 list_img.setImageResource(R.drawable.icon_collect_f);
+								list_img.setImageResource(R.drawable.icon_collect_f);
 							}
 						}
 					}
@@ -238,7 +256,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		case R.id.reserved:
 			it = new Intent(self, ConfirmDetailsActivity.class);
 			it.putExtra("store_id", store_id);
-//			it.putExtra("times",String[]);
+			// it.putExtra("times",String[]);
 			startActivity(it);
 			break;
 		case R.id.info_fold:
@@ -252,6 +270,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.tips_fold:
 			textFold(tips_fold);
+			break;
+		case R.id.share:
+			wechatShare(0);
 			break;
 
 		default:
@@ -322,6 +343,31 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			this.flag = flag;
 		}
 
+	}
+
+	/**
+	 * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
+	 * 
+	 * @param flag
+	 *            (0:分享到微信好友，1：分享到微信朋友圈)
+	 */
+	private void wechatShare(int flag) {
+		WXWebpageObject webpage = new WXWebpageObject();
+		webpage.webpageUrl = "这里填写链接url";
+		WXMediaMessage msg = new WXMediaMessage(webpage);
+		msg.title = "这里填写标题";
+		msg.description = "这里填写内容";
+		// 这里替换一张自己工程里的图片资源
+		Bitmap thumb = BitmapFactory.decodeResource(getResources(),
+				R.drawable.ic_launcher);
+		msg.setThumbImage(thumb);
+
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = String.valueOf(System.currentTimeMillis());
+		req.message = msg;
+		req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
+				: SendMessageToWX.Req.WXSceneTimeline;
+		api.sendReq(req);
 	}
 
 }
