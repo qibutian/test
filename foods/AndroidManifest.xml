@@ -50,7 +50,9 @@
             android:launchMode="singleTask" />
         <activity android:name=".my.RegisterTwoActivity" />
         <activity android:name=".my.RegisterFinishActivity" />
-        <activity android:name=".main.MainActivity" />
+        <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".my.LoginActivity"
             android:launchMode="singleTask" />
@@ -62,13 +64,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".cate.ConfirmDetailsActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="wx63ff0f643d107913" />
-            </intent-filter>
         </activity>
         <activity android:name=".my.ReviseNameActivity" >
         </activity>
@@ -98,7 +93,15 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
-        <activity android:name="com.means.foods.my.ConfirmPaymentActivity" />
+        <activity android:name="com.means.foods.my.ConfirmPaymentActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wx63ff0f643d107913" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".AppRegister" >
             <intent-filter>

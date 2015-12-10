@@ -256,7 +256,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		case R.id.reserved:
 			it = new Intent(self, ConfirmDetailsActivity.class);
 			it.putExtra("store_id", store_id);
-			// it.putExtra("times",String[]);
+			it.putExtra("name", nameT.getText().toString());
 			startActivity(it);
 			break;
 		case R.id.info_fold:

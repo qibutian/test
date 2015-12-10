@@ -10,6 +10,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.my.ConfirmPaymentActivity;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -62,13 +64,10 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	Calendar calendar;
 
-	private IWXAPI api;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_confirm_details);
-		api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_KEY);
 
 	}
 
@@ -253,48 +252,16 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 					// order_id
 					showToast("提交成功");
 					JSONObject json = response.jSONFromData();
-					pay(JSONUtil.getString(json, "order_id"));
+					Intent it = new Intent(self, ConfirmPaymentActivity.class);
+					it.putExtra("order_id",
+							JSONUtil.getString(json, "order_id"));
+					it.putExtra("name", getIntent().getStringExtra("name"));
+					it.putExtra("order_id",
+							JSONUtil.getString(json, "order_id"));
+					startActivity(it);
 				}
 			}
 		});
-	}
-
-	private void pay(String orderid) {
-
-		DhNet net = new DhNet(API.pay);
-		net.addParam("uid ", User.getInstance().getUid());
-		net.addParam("token  ", User.getInstance().getToken());
-		net.addParam("order_id ", orderid);
-		net.doGetInDialog(new NetTask(self) {
-
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					JSONObject json = response.jSONFromData();
-					PayReq req = new PayReq();
-					// req.appId = "wxf8b4f85f3a794e77"; // 测试用appId
-					try {
-						req.appId = json.getString("appid");
-						req.partnerId = json.getString("partnerid");
-						req.prepayId = json.getString("prepayid");
-						req.nonceStr = json.getString("noncestr");
-						req.timeStamp = json.getString("timestamp");
-						req.packageValue = json.getString("package");
-						req.sign = json.getString("sign");
-						req.extData = "app data"; // optional
-						Toast.makeText(self, "正常调起支付", Toast.LENGTH_SHORT)
-								.show();
-						// 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-						api.sendReq(req);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-			}
-		});
-
 	}
 
 }
