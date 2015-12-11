@@ -24,6 +24,7 @@ public class GuidanceActivity extends FoodsBaseActivity {
 	LayoutInflater mLayoutInflater;
 
 	ImageView start;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,14 +44,14 @@ public class GuidanceActivity extends FoodsBaseActivity {
 		pagerAdapter = new SimplePageAdapter(firstView, secondView, thirdView);
 
 		pager.setAdapter(pagerAdapter);
-		
-		start =  (ImageView) thirdView.findViewById(R.id.start);
+
+		start = (ImageView) thirdView.findViewById(R.id.start);
 
 		start.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(self, ReadyActivity.class);
+				Intent intent = new Intent(self, MainActivity.class);
 				startActivity(intent);
 				finishWithoutAnim();
 			}

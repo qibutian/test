@@ -45,12 +45,11 @@ public class SplashActivity extends FoodsBaseActivity {
 			first();
 		} else {
 
-			// if (!TextUtils.isEmpty(per.phone) &&
-			// !TextUtils.isEmpty(per.pswd)) {
-			// login();
-			// } else {
-			notFirst();
-			// }
+			if (!TextUtils.isEmpty(per.phone) && !TextUtils.isEmpty(per.pswd)) {
+				login();
+			} else {
+				notFirst();
+			}
 		}
 	}
 

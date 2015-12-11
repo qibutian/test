@@ -13,6 +13,8 @@ public class Constant {
 	// 价公测试
 	public static final String WX_APP_KEY = "wx63ff0f643d107913";
 	public static final String WX_APP_SECRET = "4ec3850d9f5f81ff3c51146a68343bde";
+	public static final String partnerId = "1263644201";
+	public static final String WX_API_SECRET = "9af645a4075834b66cea3bc12c15da37";
 
 	// 正式
 	// public static final String WX_APP_KEY = "wx21353c1dd9301a4f";
