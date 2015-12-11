@@ -1,5 +1,8 @@
 package com.means.foods.wxapi;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
+
 import com.means.foods.R;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
@@ -46,7 +49,7 @@ public class WXPayEntryActivity extends FoodsBaseActivity implements
 
 	@Override
 	public void onResp(BaseResp resp) {
-
+		dialoger = IocContainer.getShare().get(IDialog.class);
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
 			if (resp.errCode == 0) {
 				showToast("支付成功!");
