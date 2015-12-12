@@ -80,6 +80,13 @@ public class RegisterTwoActivity extends FoodsBaseActivity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
 
 	private void next() {
 		String code = codeED.getText().toString().trim();

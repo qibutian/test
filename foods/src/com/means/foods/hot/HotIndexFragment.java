@@ -250,6 +250,12 @@ public class HotIndexFragment extends FoodsListFragment implements
 		// listV.setAdapter(adapter);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
 	public class MycollOnClick implements View.OnClickListener {
 		JSONObject json;
 

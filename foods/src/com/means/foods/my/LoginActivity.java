@@ -72,6 +72,13 @@ public class LoginActivity extends FoodsBaseActivity implements
 	public void onEventMainThread(RegisterEB registerEb) {
 		finishWithoutAnim();
 	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
 
 	@Override
 	public void onClick(View v) {

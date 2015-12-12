@@ -61,6 +61,13 @@ public class ReadyActivity extends FoodsBaseActivity {
 	}
 
 	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
+	@Override
 	public void finish() {
 		super.finish();
 		if (loginCall != null) {

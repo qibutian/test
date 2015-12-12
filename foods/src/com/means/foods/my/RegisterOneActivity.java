@@ -48,6 +48,13 @@ public class RegisterOneActivity extends FoodsBaseActivity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
 
 	public void onEventMainThread(RegisterEB registerEb) {
 		finish();
