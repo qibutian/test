@@ -72,6 +72,8 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	// 预付款
 	double pre_price;
+	
+	int now_hour;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		Bundle bd = getIntent().getExtras();
 		if (null != bd) {
 			store_id = bd.getString("store_id");
-			String[] times = bd.getStringArray("times");
+//			String[] times = bd.getStringArray("times");
 		}
 		addressT = (TextView) findViewById(R.id.address);
 		telT = (TextView) findViewById(R.id.tel);
@@ -151,6 +153,9 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		setDataView();
 		people_n = 1;
 		numT.setText(people_n + "");
+		now_hour = calendar.get(Calendar.HOUR_OF_DAY);
+		int next_hour = now_hour+1 < 24 ?  now_hour+1 : 0;
+		timeT.setText(now_hour+":00-"+next_hour+":00");
 	}
 
 	// 更新view
@@ -158,6 +163,15 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		yearT.setText(year_n + "年");
 		monthT.setText(month_n + "月");
 		dayT.setText(day_n + "日");
+	}
+	
+	//获取当前时间区域 更新text
+	private void setTimes(int t){
+		now_hour = now_hour + t;
+		now_hour = now_hour < 24 ?  now_hour : 0;
+		now_hour = now_hour >= 0 ?  now_hour : 23;
+		int next_hour = now_hour+1 < 24 ?  now_hour+1 : 0;
+		timeT.setText(now_hour+":00-"+next_hour+":00");
 	}
 
 	// 获取更改后的年月日
@@ -225,9 +239,11 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 			break;
 		// 下一组时间
 		case R.id.add_time:
+			setTimes(1);
 			break;
 		// 上一组时间
 		case R.id.sub_time:
+			setTimes(-1);
 			break;
 
 		default:
@@ -259,7 +275,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 				net.addParam("token", user.getToken());
 				net.addParam("store_id", store_id);
 				net.addParam("date", year_n + "-" + month_n + "-" + day_n);
-				net.addParam("hour", "");
+				net.addParam("hour", timeT.getText().toString());
 				net.addParam("num", numT.getText().toString());
 				net.addParam("sex",
 						rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1" : "2");

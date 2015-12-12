@@ -264,7 +264,7 @@
                     <TextView
                         android:id="@+id/time"
                         style="@style/text_33_black_big"
-                        android:text="12:00 - 13:00"
+                        android:text="12:00-13:00"
                         android:textColor="@color/text_brown" />
 
                     <TextView
