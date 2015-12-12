@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.FoodsGallery;
+import com.means.foods.view.TouchWebView;
 import com.means.foods.view.pop.SharePop;
 import com.means.foods.view.pop.SharePop.ShareResultListener;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -86,10 +88,12 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	double price;
 
 	String name, reason;
-	
+
 	JSONArray jsc;
-	
-	static int IO_BUFFER_SIZE=2*1024;
+
+	static int IO_BUFFER_SIZE = 2 * 1024;
+
+	TouchWebView webV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +145,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		chef_foldI.setOnClickListener(this);
 		tips_foldI.setOnClickListener(this);
 		shareV.setOnClickListener(this);
-
+		webV = (TouchWebView) findViewById(R.id.web);
+		webV.getSettings().setDefaultTextEncodingName("UTF-8");
+		webV.getSettings().setJavaScriptEnabled(true);
 		initData();
 	}
 
@@ -168,6 +174,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					ViewUtil.bindView(reasonT, reason);
 					ViewUtil.bindView(addressT,
 							JSONUtil.getString(jo, "address"));
+
+					webV.loadUrl("http://www.foodies.im/wap.php?g=Wap&c=Food&a=map&address="
+							+ JSONUtil.getString(jo, "address"));
 					ViewUtil.bindView(distanceT,
 							JSONUtil.getString(jo, "distance"));
 					ViewUtil.bindView(travelT, JSONUtil.getString(jo, "travel"));
@@ -392,23 +401,23 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		WXWebpageObject webpage = new WXWebpageObject();
 		webpage.webpageUrl = "这里填写链接url";
 		WXMediaMessage msg = new WXMediaMessage(webpage);
-//		msg.title = name;
-//		msg.description = reason;
-		 msg.title = "这里填写标题";
-		 msg.description = "这里填写内容";
-//		 这里替换一张自己工程里的图片资源
+		// msg.title = name;
+		// msg.description = reason;
+		msg.title = "这里填写标题";
+		msg.description = "这里填写内容";
+		// 这里替换一张自己工程里的图片资源
 		Bitmap thumb = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ic_launcher);
-//		Bitmap thumb = null;
-//		try {
-//			thumb = GetLocalOrNetBitmap(jsc.get(0).toString());
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			thumb = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
-//		}
-		
-		
+		// Bitmap thumb = null;
+		// try {
+		// thumb = GetLocalOrNetBitmap(jsc.get(0).toString());
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// thumb =
+		// BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
+		// }
+
 		msg.setThumbImage(thumb);
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -420,25 +429,25 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	}
 
 	public static Bitmap GetLocalOrNetBitmap(String url) {
-		try{
-		URL urls = new URL(url);
-	    HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
-	    conn.setConnectTimeout(5000);
-	    int max = conn.getContentLength();
-	    InputStream is = conn.getInputStream();
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	    byte[] buffer = new byte[1024];
-	    int len;
-	  
-	    while ((len = is.read(buffer)) != -1) {
-	     baos.write(buffer, 0, len);
-	    }
-	    byte[] result = baos.toByteArray();
-	    return BitmapFactory.decodeByteArray(result, 0, result.length);
-	   } catch (Exception e) {
-	    e.printStackTrace();
-	    return null;
-	   }
-    }
+		try {
+			URL urls = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
+			conn.setConnectTimeout(5000);
+			int max = conn.getContentLength();
+			InputStream is = conn.getInputStream();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			int len;
+
+			while ((len = is.read(buffer)) != -1) {
+				baos.write(buffer, 0, len);
+			}
+			byte[] result = baos.toByteArray();
+			return BitmapFactory.decodeByteArray(result, 0, result.length);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

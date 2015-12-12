@@ -227,11 +227,13 @@
                             style="@style/text_99_greylight_smaller"
                             android:text="地图丨Map" />
 
-                        <ImageView
+                        <com.means.foods.view.TouchWebView
+                            android:id="@+id/web"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:layout_marginTop="7dp"
-                            android:background="@color/text_bb_grey" />
+                            android:layout_marginLeft="-7dp"
+                            android:layout_marginRight="-7dp"
+                            android:layout_marginTop="5dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

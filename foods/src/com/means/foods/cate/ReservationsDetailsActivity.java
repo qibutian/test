@@ -20,6 +20,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.view.TouchWebView;
 
 /**
  * 预定详情
@@ -36,6 +37,8 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 	JSONObject jo;
 
 	Button cancleB, editB;
+	
+	TouchWebView webV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		setTitle("预定详情");
 		reservedV = findViewById(R.id.reserved);
 		reservedV.setOnClickListener(this);
-
+		webV = (TouchWebView) findViewById(R.id.web);
+		webV.getSettings().setDefaultTextEncodingName("UTF-8");
+		webV.getSettings().setJavaScriptEnabled(true);
 		String intentjo = getIntent().getStringExtra("jo");
 		try {
 			jo = new JSONObject(intentjo);
@@ -56,7 +61,8 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		webV.loadUrl("http://www.foodies.im/wap.php?g=Wap&c=Food&a=map&address="
+				+ JSONUtil.getString(jo, "address"));
 		ViewUtil.bindView(findViewById(R.id.name),
 				JSONUtil.getString(jo, "store_name"));
 		ViewUtil.bindView(findViewById(R.id.order_id),
@@ -75,7 +81,7 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		ViewUtil.bindView(findViewById(R.id.tips),
 				JSONUtil.getString(jo, "store_tips"));
 
-		cancleB = (Button) findViewById(R.id.cancel);
+		cancleB = (Button) findViewById(R.id.cancle);
 		editB = (Button) findViewById(R.id.edit);
 		cancleB.setOnClickListener(this);
 		editB.setOnClickListener(this);
