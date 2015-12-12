@@ -28,6 +28,8 @@ import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.manage.UserInfoManage;
+import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
 import com.means.foods.view.FoodsGallery;
@@ -209,45 +211,57 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 		@Override
 		public void onClick(View arg0) {
-			final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
-					: false;
-			switch (arg0.getId()) {
-			case R.id.like_layout:
-				FoodsUtils utils = new FoodsUtils();
-				utils.collect(self, JSONUtil.getString(json, "store_id"),
-						isShowCollect);
-				utils.setOnCallBack(new OnCallBack() {
+			
+			if (User.getInstance().isLogin()) {
+				final boolean isShowCollect = JSONUtil.getInt(json, "is_collect") == 1 ? true
+						: false;
+					FoodsUtils utils = new FoodsUtils();
+					utils.collect(self, JSONUtil.getString(json, "store_id"),
+							isShowCollect);
+					utils.setOnCallBack(new OnCallBack() {
 
-					@Override
-					public void callBack(Response response) {
-						if (response.isSuccess()) {
-							if (isShowCollect) {
-								Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT)
-										.show();
-								list_img.setImageResource(R.drawable.icon_collect);
-							} else {
-								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
-										.show();
-								list_img.setImageResource(R.drawable.icon_collect_f);
+						@Override
+						public void callBack(Response response) {
+							if (response.isSuccess()) {
+								if (isShowCollect) {
+									Toast.makeText(self, "取消收藏", Toast.LENGTH_SHORT)
+											.show();
+									list_img.setImageResource(R.drawable.icon_collect);
+								} else {
+									Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
+											.show();
+									list_img.setImageResource(R.drawable.icon_collect_f);
+								}
 							}
 						}
+					});
+
+					// adapter.notifyDataSetChanged();
+					try {
+						json.put("is_collect",
+								JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				});
 
-				// adapter.notifyDataSetChanged();
-				try {
-					json.put("is_collect",
-							JSONUtil.getInt(json, "is_collect") == 0 ? 1 : 0);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			} else {
+				UserInfoManage.getInstance().checkLogin(self,
+						new LoginCallBack() {
 
-				break;
+							@Override
+							public void onisLogin() {
+								initData();
+							}
 
-			default:
-				break;
+							@Override
+							public void onLoginFail() {
+
+							}
+						});
 			}
+			
+
 
 		}
 	}

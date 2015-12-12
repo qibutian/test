@@ -65,7 +65,7 @@ public class ConfirmPaymentActivity extends FoodsBaseActivity {
 		Intent it = getIntent();
 		ViewUtil.bindView(findViewById(R.id.name), it.getStringExtra("name"));
 		ViewUtil.bindView(findViewById(R.id.price),
-				it.getDoubleExtra("price", 0));
+				"￥"+it.getDoubleExtra("price", 0));
 		checkC = (CheckBox) findViewById(R.id.check);
 		findViewById(R.id.pay).setOnClickListener(new OnClickListener() {
 

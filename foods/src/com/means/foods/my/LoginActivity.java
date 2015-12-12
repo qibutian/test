@@ -126,6 +126,7 @@ public class LoginActivity extends FoodsBaseActivity implements
 					user.setLogin(true);
 					showToast("登录成功");
 					if (user.isIslogout()) {
+						user.setIslogout(false);
 						Intent it = new Intent(self, MainActivity.class);
 						startActivity(it);
 						finishWithoutAnim();

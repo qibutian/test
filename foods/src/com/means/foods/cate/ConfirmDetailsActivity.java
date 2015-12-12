@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.provider.SyncStateContract.Constants;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +31,8 @@ import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.manage.UserInfoManage;
+import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.my.ConfirmPaymentActivity;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -131,7 +134,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 		if (pre_price != 0) {
 			pre_price_layoutV.setVisibility(View.VISIBLE);
-			ViewUtil.bindView(findViewById(R.id.pre_price), pre_price);
+			ViewUtil.bindView(findViewById(R.id.pre_price),"￥"+ pre_price);
 		}
 
 		initData();
@@ -234,50 +237,64 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	// 提交订单
 	private void submitOrder() {
-		String tel = telT.getText().toString().trim();
+		final String tel = telT.getText().toString().trim();
 		if (TextUtils.isEmpty(tel)) {
 			showToast("请输入手机号码");
 			return;
 		}
-		String name = nameT.getText().toString().trim();
+		final String name = nameT.getText().toString().trim();
 		if (TextUtils.isEmpty(tel)) {
 			showToast("请输入姓名");
 			return;
 		}
-		String mark = markT.getText().toString().trim();
-
-		DhNet net = new DhNet(API.addOrder);
-		net.addParam("uid", user.getUid());
-		net.addParam("token", user.getToken());
-		net.addParam("store_id", store_id);
-		net.addParam("date", year_n + "-" + month_n + "-" + day_n);
-		net.addParam("hour", "");
-		net.addParam("num", numT.getText().toString());
-		net.addParam("sex",
-				rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1" : "2");
-		net.addParam("tel", tel);
-		net.addParam("name", name);
-		net.addParam("mark", mark);
-		net.doPostInDialog(new NetTask(self) {
-
+		
+		UserInfoManage.getInstance().checkLogin(self, new  LoginCallBack() {
+			
 			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					// order_id
-					showToast("提交成功");
-					if (pre_price != 0) {
-						JSONObject json = response.jSONFromData();
-						Intent it = new Intent(self,
-								ConfirmPaymentActivity.class);
-						it.putExtra("order_id",
-								JSONUtil.getString(json, "order_id"));
-						it.putExtra("name", getIntent().getStringExtra("name"));
-						it.putExtra("price", JSONUtil.getDouble(json, "price"));
-						startActivity(it);
+			public void onisLogin() {
+				String mark = markT.getText().toString().trim();
+
+				DhNet net = new DhNet(API.addOrder);
+				net.addParam("uid", user.getUid());
+				net.addParam("token", user.getToken());
+				net.addParam("store_id", store_id);
+				net.addParam("date", year_n + "-" + month_n + "-" + day_n);
+				net.addParam("hour", "");
+				net.addParam("num", numT.getText().toString());
+				net.addParam("sex",
+						rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1" : "2");
+				net.addParam("tel", tel);
+				net.addParam("name", name);
+				net.addParam("mark", mark);
+				net.doPostInDialog(new NetTask(self) {
+
+					@Override
+					public void doInUI(Response response, Integer transfer) {
+						if (response.isSuccess()) {
+							// order_id
+							showToast("提交成功");
+							if (pre_price != 0) {
+								JSONObject json = response.jSONFromData();
+								Intent it = new Intent(self,
+										ConfirmPaymentActivity.class);
+								it.putExtra("order_id",
+										JSONUtil.getString(json, "order_id"));
+								it.putExtra("name", getIntent().getStringExtra("name"));
+								it.putExtra("price", JSONUtil.getDouble(json, "price"));
+								startActivity(it);
+							}
+						}
 					}
-				}
+				});
+			}
+			
+			@Override
+			public void onLoginFail() {
+				// TODO Auto-generated method stub
+				
 			}
 		});
+		
 	}
 
 }

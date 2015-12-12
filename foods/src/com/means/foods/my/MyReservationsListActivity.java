@@ -38,7 +38,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 	public void initView() {
 		setTitle("我的预定");
 		listV = (RefreshListViewAndMore) findViewById(R.id.my_listview);
-		String url = API.CWBaseurl + "activity/list?";
+		String url = API.orderList;
 		contentListV = listV.getListView();
 
 		// 设置空的emptyView

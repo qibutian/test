@@ -21,19 +21,20 @@
             android:id="@+id/city"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/icon_location" />
+            android:src="@drawable/icon_location"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/name"
             style="@style/text_white_biger"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="15dp"
-            android:text="纽约·New York" />
+            android:text="纽约·New York" 
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/count"
-            style="@style/text_white_small"
-            android:text="纽约·New York" />
+            style="@style/text_white_small" />
     </LinearLayout>
 
     <View

@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.main.ReadyActivity;
 import com.means.foods.view.RoundImageView;
 import com.means.foods.view.dialog.ReviseHeadDialog;
 import com.means.foods.view.dialog.ReviseHeadDialog.OnHeadResultListener;
@@ -48,6 +50,8 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
 
 	TextView sexT, mailboxT, nameT, nicknameT, phoneT;
+	
+	Button logingoutB;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		nameT = (TextView) findViewById(R.id.name);
 		nicknameT = (TextView) findViewById(R.id.nickname);
 		phoneT = (TextView) findViewById(R.id.phone);
-
+		logingoutB = (Button) findViewById(R.id.logingout);
 		photoR.setOnClickListener(this);
 		nicknameR.setOnClickListener(this);
 		nameR.setOnClickListener(this);
@@ -85,6 +89,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		sexR.setOnClickListener(this);
 		emailR.setOnClickListener(this);
 		passwordR.setOnClickListener(this);
+		logingoutB.setOnClickListener(this);
 
 		getMyDetails();
 	}
@@ -260,6 +265,17 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			it = new Intent(self, RevisePswdActivity.class);
 			it.putExtra("oldPwd", "123");
 			startActivity(it);
+			break;
+			
+		case R.id.logingout:
+			User user = User.getInstance();
+			user.setLogin(false);
+			user.setIslogout(true);
+			user.setToken("");
+			user.setUid("");
+			it = new Intent(self, ReadyActivity.class);
+			startActivity(it);
+			finish();
 			break;
 
 		default:

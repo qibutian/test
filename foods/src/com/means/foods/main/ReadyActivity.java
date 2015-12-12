@@ -20,8 +20,6 @@ public class ReadyActivity extends FoodsBaseActivity {
 
 	public static UserInfoManage.LoginCallBack loginCall;
 
-	boolean isFromLogout;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

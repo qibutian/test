@@ -1,9 +1,12 @@
 package com.means.foods.main;
 
 import com.means.foods.R;
+import com.means.foods.bean.User;
 import com.means.foods.cate.CateIndexFragment;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.hot.HotIndexFragment;
+import com.means.foods.manage.UserInfoManage;
+import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.my.MyIndexFragment;
 
 import android.os.Bundle;
@@ -58,7 +61,29 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	private void setTab(int index) {
+	private void setTab(final int index) {
+		User user = User.getInstance();
+		if(index==1||index==2) {
+			if(!user.isLogin()) {
+				UserInfoManage.getInstance().checkLogin(MainActivity.this, new  LoginCallBack() {
+				
+				@Override
+				public void onisLogin() {
+					setTab(index);
+					
+				}
+				
+				@Override
+				public void onLoginFail() {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+				return;
+			}
+		}
+		
+		
 		for (int i = 0; i < tabV.getChildCount(); i++) {
 			LinearLayout childV = (LinearLayout) tabV.getChildAt(i);
 			RelativeLayout imgV = (RelativeLayout) childV.getChildAt(0);
