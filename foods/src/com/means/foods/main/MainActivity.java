@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 
 	private void setTab(final int index) {
 		User user = User.getInstance();
-		if(index==1||index==2) {
+		if(index==2||index==3) {
 			if(!user.isLogin()) {
 				UserInfoManage.getInstance().checkLogin(MainActivity.this, new  LoginCallBack() {
 				

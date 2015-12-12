@@ -53,7 +53,7 @@ public class FoodsValueFix implements ValueFix {
 			return null;
 		if ("time".equals(type)) {
 			return getStandardTime(Long.parseLong(o.toString()),
-					"yyyy-MM-dd HH:mm");
+					"yyyy年MM月dd");
 		} else if ("neartime".equals(type)) {
 			return converTime(Long.parseLong(o.toString()));
 		}
@@ -108,7 +108,7 @@ public class FoodsValueFix implements ValueFix {
 	@SuppressLint("SimpleDateFormat")
 	public static String getStandardTime(long timestamp, String pattern) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		Date date = new Date(timestamp);
+		Date date = new Date(timestamp*1000);
 		sdf.format(date);
 		return sdf.format(date);
 	}

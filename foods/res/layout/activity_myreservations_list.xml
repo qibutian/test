@@ -6,6 +6,6 @@
 
     <include layout="@layout/include_title_bar" />
 
-    <include layout="@layout/include_refresh_listview" />
+    <include layout="@layout/include_listview" />
 
 </LinearLayout>

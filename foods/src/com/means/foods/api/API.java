@@ -65,13 +65,16 @@ public class API {
 	// 我的订单
 	public static String orderList = "http://www.foodies.im/wap.php?g=Wap&c=My&a=myOrderAPI";
 
+	// 取消订单
+	public static String ordercancle = "http://www.foodies.im/wap.php?g=Wap&c=My&a=orderRefundApi";
+
 	// 添加订单
 	public static String addOrder = "http://www.foodies.im/wap.php?g=Wap&c=My&a=saveOrderApi";
-	
-	//获取验证码(注册第一步)
+
+	// 获取验证码(注册第一步)
 	public static String register_Captcha = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=getVerificationCode";
-	
-	//注册
+
+	// 注册
 	public static String register = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=registerApi";
 
 	// 立即支付

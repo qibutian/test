@@ -33,6 +33,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/letter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="N"
@@ -64,6 +65,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
@@ -73,6 +75,7 @@
                         android:textSize="@dimen/text_big" />
 
                     <TextView
+                        android:id="@+id/count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"

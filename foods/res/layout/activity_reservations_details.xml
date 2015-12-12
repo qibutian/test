@@ -48,6 +48,7 @@
                     android:paddingRight="23dp" >
 
                     <TextView
+                        android:id="@+id/name"
                         style="@style/text_66_blacklight_medium"
                         android:text="Parm Battery pary" />
 
@@ -63,49 +64,52 @@
                         android:layout_height="1.5px"
                         android:background="@color/text_brown" />
 
-                    <LinearLayout 
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical" >
+
                         <TextView
-                        style="@style/text_66_blacklight_small"
-                        android:text="订单号：18505152201" />
-                        
+                            android:id="@+id/order_id"
+                            style="@style/text_66_blacklight_small"
+                            android:text="订单号：18505152201" />
+
                         <TextView
-                        style="@style/text_66_blacklight_small"
-                        android:layout_marginTop="1dp"
-                        android:text="2015年11月26日 19：30" />
-                        
+                            android:id="@+id/date"
+                            style="@style/text_66_blacklight_small"
+                            android:layout_marginTop="1dp"
+                            android:text="2015年11月26日 19：30" />
                     </LinearLayout>
 
-                    <LinearLayout 
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:orientation="horizontal"
-                        >
-                        <Button android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:textSize="@dimen/text_small"
-                        android:textColor="@color/text_white"
-                        android:background="@drawable/btn_code_grey_n"
-                        android:layout_marginRight="4dp"
-                        android:layout_weight="1"
-                        android:text="取消订单"
-                        />
-                        <Button android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:textSize="@dimen/text_small"
-                        android:textColor="@color/text_white"
-                        android:background="@drawable/btn_brown_fill_fillet"
-                        android:layout_marginLeft="4dp"
-                        android:text="修改订单"
-                        android:layout_weight="1"
-                        />
-                        
-                    </LinearLayout> 
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/cancle"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_code_grey_n"
+                            android:text="取消订单"
+                            android:textColor="@color/text_white"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_brown_fill_fillet"
+                            android:text="修改订单"
+                            android:textColor="@color/text_white"
+                            android:textSize="@dimen/text_small" />
+                    </LinearLayout>
 
                     <View
                         style="@style/line_horizontal"
@@ -129,16 +133,16 @@
                             android:orientation="vertical" >
 
                             <TextView
+                                android:id="@+id/address"
                                 style="@style/text_66_blacklight_small"
                                 android:text="Best fine dining in Melbourne	with un-precedented views." />
-
                         </LinearLayout>
                     </LinearLayout>
 
                     <View
                         style="@style/line_horizontal"
                         android:layout_marginTop="12dp" />
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,17 +155,15 @@
                             android:layout_marginRight="7dp"
                             android:src="@drawable/icon_phone" />
 
-
-                            <TextView
-                                style="@style/text_66_blacklight_small"
-                                android:text="4008209888" />
-
+                        <TextView
+                            android:id="@+id/tel"
+                            style="@style/text_66_blacklight_small"
+                            android:text="4008209888" />
                     </LinearLayout>
 
                     <View
                         style="@style/line_horizontal"
                         android:layout_marginTop="12dp" />
-                    
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,6 +176,7 @@
                             android:text="特色推荐丨Feature Recommend" />
 
                         <TextView
+                            android:id="@+id/tuijian"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"
@@ -189,7 +192,7 @@
 
                         <View style="@style/line_horizontal" />
                     </LinearLayout>
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -201,14 +204,16 @@
                             android:text="温馨提示丨Kindly Reminder" />
 
                         <TextView
+                            android:id="@+id/tips"
                             style="@style/text_66_blacklight_small"
                             android:layout_marginTop="7dp"
                             android:ellipsize="end"
                             android:maxLines="3"
                             android:text="坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台坐落于55楼观景阳台" />
 
-                        <View style="@style/line_horizontal" 
-                            android:layout_marginTop="7dp"/>
+                        <View
+                            style="@style/line_horizontal"
+                            android:layout_marginTop="7dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -247,16 +252,16 @@
             android:background="@color/text_66_black_light"
             android:gravity="center"
             android:orientation="vertical" >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/share" />
 
-                <TextView
-                    style="@style/text_white_small"
-                    android:layout_marginTop="3dp"
-                    android:text="分享" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/share" />
 
+            <TextView
+                style="@style/text_white_small"
+                android:layout_marginTop="3dp"
+                android:text="分享" />
         </LinearLayout>
 
         <LinearLayout

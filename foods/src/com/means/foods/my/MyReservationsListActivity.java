@@ -1,19 +1,33 @@
 package com.means.foods.my;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.adapter.PSAdapter;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
+import com.means.foods.FoodsValueFix;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
 import com.means.foods.view.RefreshListViewAndMore;
 
@@ -21,11 +35,15 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 
 	PtrFrameLayout mPtrFrame;
 
-	RefreshListViewAndMore listV;
+	ListView listV;
 
 	LayoutInflater mLayoutInflater;
 
 	ListView contentListV;
+
+	JSONArray jsa;
+
+	PSAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,37 +55,90 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		setTitle("我的预定");
-		listV = (RefreshListViewAndMore) findViewById(R.id.my_listview);
-		String url = API.orderList;
-		contentListV = listV.getListView();
-
+		try {
+			String intentjo = getIntent().getStringExtra("jo");
+			JSONObject jo = new JSONObject(intentjo);
+			jsa = JSONUtil.getJSONArray(jo, "data");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		listV = (ListView) findViewById(R.id.listview);
 		// 设置空的emptyView
-		listV.setEmptyView(LayoutInflater.from(self).inflate(
-				R.layout.list_nomal_emptyview, null));
-		NetJSONAdapter adapter = new NetJSONAdapter(url, self,
-				R.layout.item_reservations);
-		UserLocation location = UserLocation.getInstance();
-		adapter.fromWhat("data");
-		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-		adapter.addparam("latitude", location.getLatitude());
-		adapter.addparam("longitude", location.getLongitude());
-		adapter.addparam("maxDistance", "5000000");
-		adapter.addparam("majorType", "");
-		adapter.addparam("pay", "");
-		adapter.addparam("gender", "");
-		adapter.addparam("transfer", "");
-		adapter.addparam("token", "");
-		adapter.addparam("userId", "");
-		adapter.addField("activityId", R.id.text);
-		listV.setAdapter(adapter);
-
-		contentListV.setOnItemClickListener(new OnItemClickListener() {
+		// listV.setEmptyView(LayoutInflater.from(self).inflate(
+		// R.layout.list_nomal_emptyview, null));
+		adapter = new PSAdapter(self, R.layout.item_reservations);
+		adapter.addField("dateline", R.id.date, "time");
+		adapter.addField(new FieldMap("pay_money", R.id.price) {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+				// TODO Auto-generated method stub
+				return "预付定金￥" + o;
+			}
+		});
+		adapter.addField("order_status", R.id.order_status);
+
+		adapter.addField("store_name", R.id.store_name);
+		adapter.addField(new FieldMap("order_id", R.id.order_id) {
+
+			@Override
+			public Object fix(View itemV, final Integer position,
+					final Object o, Object jo) {
+				JSONObject data = (JSONObject) jo;
+				TextView arrarrive_timeT = (TextView) itemV
+						.findViewById(R.id.arrive_time);
+				String arrtime = FoodsValueFix.getStandardTime(
+						Long.parseLong(JSONUtil.getString(data, "arrive_time")),
+						"yyyy年MM月dd");
+				arrarrive_timeT.setText(arrtime + " "
+						+ JSONUtil.getString(data, "hour" + "") + " "
+						+ JSONUtil.getString(data, "num") + "人");
+
+				itemV.findViewById(R.id.cancel).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View arg0) {
+								cancleOrder(o.toString(), position);
+							}
+						});
+
+				// TODO Auto-generated method stub
+				return "订单号  :  " + o;
+			}
+		});
+
+		listV.setAdapter(adapter);
+		adapter.addAll(jsa);
+		listV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				Intent it = new Intent(self, ReservationsDetailsActivity.class);
+				JSONObject jo = (JSONObject) adapter.getTItem(position);
+				it.putExtra("jo", jo.toString());
 				startActivity(it);
+			}
+		});
+	}
+
+	private void cancleOrder(String orderId, final int index) {
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.ordercancle);
+		net.addParam("orderId", orderId);
+		net.addParam("token", user.getToken());
+		net.addParam("uid", user.getUid());
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("取消成功");
+					jsa.remove(index);
+					adapter.notifyDataSetChanged();
+				}
 			}
 		});
 	}

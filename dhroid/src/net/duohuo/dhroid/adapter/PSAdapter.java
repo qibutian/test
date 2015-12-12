@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.BeanUtil;
 
 import android.content.Context;
@@ -91,7 +92,9 @@ public class PSAdapter extends BeanAdapter
                 v = viewHolder.get(fieldMap.getRefId());
             }
             String value = null;
-            Object valueobj = BeanUtil.getProperty(jo, fieldMap.getKey());
+            JSONObject data = (JSONObject) jo;
+            String valueobj = JSONUtil.getString(data, fieldMap.getKey());
+//            Object valueobj = BeanUtil.getProperty(jo, fieldMap.getKey());
             if (valueobj != null)
             {
                 value = valueobj.toString();

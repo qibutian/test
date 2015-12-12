@@ -1,8 +1,11 @@
 package com.means.foods.my;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -12,6 +15,7 @@ import net.duohuo.dhroid.util.UserLocation;
 import net.duohuo.dhroid.util.ViewUtil;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +31,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
 import com.means.foods.bean.User;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 import com.means.foods.view.RoundImageView;
 import com.means.foods.view.RefreshListViewAndMore.OnLoadSuccess;
@@ -96,15 +101,49 @@ public class MyIndexFragment extends FoodsListFragment implements
 		adapter.fromWhat("data");
 		adapter.addparam("uid", User.getInstance().getUid());
 		adapter.addparam("token", User.getInstance().getToken());
+		adapter.addField(new FieldMap("count", R.id.count) {
+
+			@Override
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+
+//				TextView desT = (TextView) itemV.findViewById(R.id.des);
+				JSONObject data = (JSONObject) jo;
+//				JSONArray jsa = JSONUtil.getJSONArray(data, "data");
+//				String des = "";
+//				for (int i = 0; i < jsa.length(); i++) {
+//					try {
+//						JSONObject cateJo = jsa.getJSONObject(i);
+//						des = des + JSONUtil.getString(cateJo, "name") + "    ";
+//					} catch (JSONException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//				desT.setText(des);
+
+				String address = JSONUtil.getString(data, "city_name");
+				if (!TextUtils.isEmpty(address)) {
+					String letter = FoodsUtils.getPYIndexStr(
+							address.substring(0, 1), true);
+					TextView letterT = (TextView) itemV
+							.findViewById(R.id.letter);
+					letterT.setText(letter);
+				}
+				return "您预定了" + o + "加餐厅";
+			}
+		});
+		adapter.addField("city_name", R.id.name);
 		listV.setAdapter(adapter);
 
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				Intent it = new Intent(getActivity(),
 						MyReservationsListActivity.class);
+				JSONObject jo = adapter.getTItem(position-1);
+				it.putExtra("jo", jo.toString());
 				startActivity(it);
 			}
 		});

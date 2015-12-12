@@ -25,6 +25,7 @@
             android:orientation="horizontal" >
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
                 android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
                 android:textSize="@dimen/text_small" />
 
             <TextView
+                android:id="@+id/price"
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
                 android:layout_height="wrap_content"
@@ -47,6 +49,7 @@
                  android:gravity="center"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/order_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -61,6 +64,7 @@
         <View style="@style/line_horizontal" />
 
         <TextView
+            android:id="@+id/store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -69,6 +73,7 @@
             android:textSize="@dimen/text_big" />
 
         <TextView
+            android:id="@+id/order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -77,6 +82,7 @@
             android:textSize="@dimen/text_small" />
 
         <TextView
+            android:id="@+id/arrive_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
