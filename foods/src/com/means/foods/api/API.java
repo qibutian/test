@@ -80,4 +80,7 @@ public class API {
 	// 立即支付
 	public static String pay = "http://www.foodies.im/wap.php?g=Wap&c=Pay&a=payApi";
 
+	// 订单详情
+	public static String orderDetail = "http://www.foodies.im/wap.php?g=Wap&c=My&a=orderDetailApi";
+
 }

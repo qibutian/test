@@ -30,6 +30,8 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.PaySuccessEB;
+import com.means.foods.bean.RegisterEB;
 import com.means.foods.bean.User;
 import com.means.foods.manage.UserInfoManage;
 import com.means.foods.manage.UserInfoManage.LoginCallBack;
@@ -40,6 +42,8 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 确认详情
@@ -72,14 +76,14 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	// 预付款
 	double pre_price;
-	
+
 	int now_hour;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_confirm_details);
-
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -90,7 +94,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		Bundle bd = getIntent().getExtras();
 		if (null != bd) {
 			store_id = bd.getString("store_id");
-//			String[] times = bd.getStringArray("times");
+			// String[] times = bd.getStringArray("times");
 		}
 		addressT = (TextView) findViewById(R.id.address);
 		telT = (TextView) findViewById(R.id.tel);
@@ -136,7 +140,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 		if (pre_price != 0) {
 			pre_price_layoutV.setVisibility(View.VISIBLE);
-			ViewUtil.bindView(findViewById(R.id.pre_price),"￥"+ pre_price);
+			ViewUtil.bindView(findViewById(R.id.pre_price), "￥" + pre_price);
 		}
 
 		initData();
@@ -154,8 +158,8 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		people_n = 1;
 		numT.setText(people_n + "");
 		now_hour = calendar.get(Calendar.HOUR_OF_DAY);
-		int next_hour = now_hour+1 < 24 ?  now_hour+1 : 0;
-		timeT.setText(now_hour+":00-"+next_hour+":00");
+		int next_hour = now_hour + 1 < 24 ? now_hour + 1 : 0;
+		timeT.setText(now_hour + ":00-" + next_hour + ":00");
 	}
 
 	// 更新view
@@ -164,14 +168,14 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		monthT.setText(month_n + "月");
 		dayT.setText(day_n + "日");
 	}
-	
-	//获取当前时间区域 更新text
-	private void setTimes(int t){
+
+	// 获取当前时间区域 更新text
+	private void setTimes(int t) {
 		now_hour = now_hour + t;
-		now_hour = now_hour < 24 ?  now_hour : 0;
-		now_hour = now_hour >= 0 ?  now_hour : 23;
-		int next_hour = now_hour+1 < 24 ?  now_hour+1 : 0;
-		timeT.setText(now_hour+":00-"+next_hour+":00");
+		now_hour = now_hour < 24 ? now_hour : 0;
+		now_hour = now_hour >= 0 ? now_hour : 23;
+		int next_hour = now_hour + 1 < 24 ? now_hour + 1 : 0;
+		timeT.setText(now_hour + ":00-" + next_hour + ":00");
 	}
 
 	// 获取更改后的年月日
@@ -251,6 +255,17 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		}
 	}
 
+	public void onEventMainThread(PaySuccessEB registerEb) {
+		finish();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
 	// 提交订单
 	private void submitOrder() {
 		final String tel = telT.getText().toString().trim();
@@ -263,9 +278,9 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 			showToast("请输入姓名");
 			return;
 		}
-		
-		UserInfoManage.getInstance().checkLogin(self, new  LoginCallBack() {
-			
+
+		UserInfoManage.getInstance().checkLogin(self, new LoginCallBack() {
+
 			@Override
 			public void onisLogin() {
 				String mark = markT.getText().toString().trim();
@@ -278,7 +293,8 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 				net.addParam("hour", timeT.getText().toString());
 				net.addParam("num", numT.getText().toString());
 				net.addParam("sex",
-						rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1" : "2");
+						rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1"
+								: "2");
 				net.addParam("tel", tel);
 				net.addParam("name", name);
 				net.addParam("mark", mark);
@@ -295,22 +311,24 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 										ConfirmPaymentActivity.class);
 								it.putExtra("order_id",
 										JSONUtil.getString(json, "order_id"));
-								it.putExtra("name", getIntent().getStringExtra("name"));
-								it.putExtra("price", JSONUtil.getDouble(json, "price"));
+								it.putExtra("name",
+										getIntent().getStringExtra("name"));
+								it.putExtra("price",
+										JSONUtil.getDouble(json, "price"));
 								startActivity(it);
 							}
 						}
 					}
 				});
 			}
-			
+
 			@Override
 			public void onLoginFail() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 	}
 
 }

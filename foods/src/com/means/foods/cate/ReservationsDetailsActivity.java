@@ -1,5 +1,7 @@
 package com.means.foods.cate;
 
+import java.io.File;
+
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -11,6 +13,8 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,6 +24,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.utils.DownLoad;
 import com.means.foods.view.TouchWebView;
 
 /**
@@ -37,13 +42,20 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 	JSONObject jo;
 
 	Button cancleB, editB;
-	
+
 	TouchWebView webV;
+
+	String order_id;
+
+	private String saveDir;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reservations_details);
+//		saveDir = new File(getCacheDir(), "foods").getPath()+"/";
+//		saveDir.mkdirs();
+		saveDir = getCacheDir().getPath() + "/";
 	}
 
 	@Override
@@ -54,15 +66,47 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		webV = (TouchWebView) findViewById(R.id.web);
 		webV.getSettings().setDefaultTextEncodingName("UTF-8");
 		webV.getSettings().setJavaScriptEnabled(true);
-		String intentjo = getIntent().getStringExtra("jo");
-		try {
-			jo = new JSONObject(intentjo);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		order_id = getIntent().getStringExtra("order_id");
+		if (TextUtils.isEmpty(order_id)) {
+			String intentjo = getIntent().getStringExtra("jo");
+			try {
+				jo = new JSONObject(intentjo);
+				order_id = JSONUtil.getString(jo, "order_id");
+				bindView(jo);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			DhNet net = new DhNet(API.orderDetail);
+			net.addParam("uid ", User.getInstance().getUid());
+			net.addParam("token  ", User.getInstance().getToken());
+			net.addParam("order_id ", order_id);
+			net.doGetInDialog(new NetTask(self) {
+
+				@Override
+				public void doInUI(Response response, Integer transfer) {
+					if (response.isSuccess()) {
+						jo = response.jSONFromData();
+						bindView(jo);
+					}
+
+				}
+			});
 		}
+
+		cancleB = (Button) findViewById(R.id.cancle);
+		editB = (Button) findViewById(R.id.edit);
+		cancleB.setOnClickListener(this);
+		editB.setOnClickListener(this);
+		// ViewUtil.bindView(findViewById(R.id.name), JSONUtil.getString(jo,
+		// "store_name"));
+
+	}
+
+	private void bindView(JSONObject jo) {
 		webV.loadUrl("http://www.foodies.im/wap.php?g=Wap&c=Food&a=map&address="
-				+ JSONUtil.getString(jo, "address"));
+				+ JSONUtil.getString(jo, "store_address"));
 		ViewUtil.bindView(findViewById(R.id.name),
 				JSONUtil.getString(jo, "store_name"));
 		ViewUtil.bindView(findViewById(R.id.order_id),
@@ -80,14 +124,6 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 				JSONUtil.getString(jo, "store_feature"));
 		ViewUtil.bindView(findViewById(R.id.tips),
 				JSONUtil.getString(jo, "store_tips"));
-
-		cancleB = (Button) findViewById(R.id.cancle);
-		editB = (Button) findViewById(R.id.edit);
-		cancleB.setOnClickListener(this);
-		editB.setOnClickListener(this);
-		// ViewUtil.bindView(findViewById(R.id.name), JSONUtil.getString(jo,
-		// "store_name"));
-
 	}
 
 	@Override
@@ -95,8 +131,10 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		Intent it;
 		switch (v.getId()) {
 		case R.id.reserved:
-			it = new Intent(self, ConfirmDetailsActivity.class);
-			startActivity(it);
+			String url = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=html2pdfApi";
+			DownLoad downLoad = new DownLoad(self, mhandler, url, saveDir,
+					order_id);
+			downLoad.start();
 			break;
 
 		case R.id.cancel:
@@ -130,4 +168,28 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			}
 		});
 	}
+
+	private Handler mhandler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+
+			switch (msg.what) {
+			case 1:
+				showToast("下载成功!");
+				break;
+			case 2:
+				showToast("文件不存在,下载失败！");
+				break;
+			case 3:
+				showToast("文件已存在!");
+				break;
+
+			case 4:
+				showToast("下载中,请稍后！");
+				break;
+			default:
+				break;
+			}
+		};
+
+	};
 }

@@ -1,0 +1,131 @@
+package com.means.foods.utils;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.http.util.EncodingUtils;
+
+import android.content.Context;
+import android.provider.ContactsContract.Contacts.Data;
+import android.util.Log;
+
+/**
+ * �ĵ�����
+ * 
+ * @author Administrator
+ * 
+ */
+
+public class HttpDownloader {
+	private URL url = null;
+	FileUtils fileUtils;
+
+	String uid, token, order_id;
+
+	private final static String LINEND = "\r\n";
+
+	private final static String BOUNDARY = "---------------------------7da2137580612"; // 数据分隔线
+
+	private final static String PREFIX = "--";
+
+	private final static String MUTIPART_FORMDATA = "multipart/form-data";
+
+	private final static String CHARSET = "utf-8";
+
+	private final static String CONTENTTYPE = "application/octet-stream";
+
+	public HttpDownloader(Context context, String uid, String token,
+			String order_id) {
+		fileUtils = new FileUtils(context);
+		this.uid = uid;
+
+		this.token = token;
+		this.order_id = order_id;
+	}
+
+	public int downfile(String urlStr, String path, String fileName) {
+		if (fileUtils.isFileExist(fileName)) {
+			return 1;
+		} else {
+			try {
+				InputStream input = null;
+				input = getInputStream(urlStr);
+				int resultFile = fileUtils.write2SDFromInput(path, fileName,
+						input);
+				if (resultFile != 1) {
+					return -1;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+				return -2;
+			}
+
+		}
+		return 0;
+	}
+
+	// ���ڵõ�һ��InputStream�����������ļ�����ǰ����Ĳ��������Խ����������װ����һ������
+	public InputStream getInputStream(String urlStr) throws IOException {
+		InputStream is = null;
+		try {
+			url = new URL(urlStr);
+
+			// URLConnection ucon = url.openConnection();
+			// // ʹ��InputStream����URLConnection��ȡ���?
+			// InputStream sis = ucon.getInputStream();
+			//
+			// System.out.println(sis);
+			EncodingUtils.getString(urlStr.getBytes("GB2312"), "UTF-8");
+			HttpURLConnection urlConn = (HttpURLConnection) url
+					.openConnection();
+			urlConn.setRequestMethod("POST");
+			urlConn.setDoOutput(true); // 允许输出
+			urlConn.setDoInput(true); // 允许输入
+//			urlConn.setRequestProperty("connection", "Keep-Alive");
+//			urlConn.setRequestProperty("Charset", CHARSET);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("token", token);
+			params.put("uid", uid);
+			params.put("order_id", order_id);
+			String entryText = bulidFormText(params);
+			DataOutputStream dos = new DataOutputStream(urlConn.getOutputStream());
+			dos.write(entryText.getBytes());
+			// urlConn.connect();
+			is = urlConn.getInputStream();
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			Log.e("TAG", e.getMessage());
+			e.printStackTrace();
+		}
+
+		return is;
+	}
+
+	private String bulidFormText(Map<String, Object> paramText) {
+		if (paramText == null || paramText.isEmpty())
+			return "";
+		StringBuffer sb = new StringBuffer("");
+		for (Entry<String, Object> entry : paramText.entrySet()) {
+			sb.append(PREFIX).append(BOUNDARY).append(LINEND);
+			sb.append("Content-Disposition:form-data;name=\"" + entry.getKey()
+					+ "\"" + LINEND);
+			// sb.append("Content-Type:text/plain;charset=" + CHARSET + LINEND);
+			sb.append(LINEND);
+			sb.append(entry.getValue());
+			sb.append(LINEND);
+		}
+		return sb.toString();
+	}
+}

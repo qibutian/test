@@ -277,7 +277,7 @@
 
             <TextView
                 style="@style/text_white_medium"
-                android:text="立即预定" />
+                android:text="发送确认单" />
 
             <TextView
                 style="@style/text_white_small"
