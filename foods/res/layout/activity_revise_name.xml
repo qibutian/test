@@ -23,7 +23,7 @@
             android:singleLine="true"
             android:textColor="@color/text_66_black_light"
             android:textSize="@dimen/text_medium"
-            android:text="韩梅梅" />
+            android:text="" />
         
         <ImageView 
              android:id="@+id/clear"

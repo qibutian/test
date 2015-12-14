@@ -1,5 +1,6 @@
 package com.means.foods.my;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
@@ -18,6 +19,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.utils.FoodsPerference;
 import com.means.foods.view.Utils;
 
 /**
@@ -31,10 +33,9 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 	EditText pswd;
 	ImageView clear;
 	User user;
-	Intent myIntent;
 	TextView right_text;
-	String oldPwd;
 
+	FoodsPerference per;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,10 +45,10 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 
 	@Override
 	public void initView() {
+		per = IocContainer.getShare().get(FoodsPerference.class);
+		per.load();
 		setTitle("修改密码");
 		user = User.getInstance();
-		myIntent = getIntent();
-		oldPwd = myIntent.getStringExtra("oldPwd");
 		pswd = (EditText) findViewById(R.id.pswd);
 		clear = (ImageView) findViewById(R.id.clear);
 		right_text = (TextView) findViewById(R.id.right_text);
@@ -97,15 +98,15 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 					showToast("请输入密码");
 					return;
 				}
-				if (oldPwd.equals(pswd.getText().toString())) {
+				if (per.getPswd().equals(pswd.getText().toString())) {
 					showToast("新密码和旧密码不能一致，请重新输入");
 					return;
 				}
 
-				if (!Utils.isValidPassword(pswd.getText().toString())) {
-					showToast("密码为6-15位字母和数字的组合");
-					return;
-				}
+//				if (!Utils.isValidPassword(pswd.getText().toString())) {
+//					showToast("密码为6-15位字母和数字的组合");
+//					return;
+//				}
 
 				if (pswd.length() < 6 || pswd.length() > 20) {
 					showToast("密码长度应在6-20之间，请重新输入");
@@ -132,7 +133,7 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 			return false;
 		}
 		if (!pswd.getText().toString()
-				.equals(myIntent.getStringExtra("oldPwd"))) {
+				.equals(per.getPswd())) {
 			return true;
 		}
 		return false;
@@ -141,7 +142,7 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 	public void setContent() {
 		DhNet netName = new DhNet(API.editPwd);
 		netName.addParam("uid", User.getInstance().uid);
-		netName.addParam("oldPwd", myIntent.getStringExtra("oldPwd"));
+		netName.addParam("oldPwd", per.getPswd());
 		netName.addParam("newPwd", pswd.getText().toString());
 		netName.addParam("newPwd2", pswd.getText().toString());
 		netName.doPostInDialog(new NetTask(self) {
@@ -151,6 +152,8 @@ public class RevisePswdActivity extends FoodsBaseActivity implements
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
 					 showToast("密码修改成功");
+					 per.setPswd(pswd.getText().toString());
+					 per.commit();
 					finish();
 				}
 			}

@@ -2,6 +2,7 @@ package com.means.foods.my;
 
 import java.io.File;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -29,6 +30,7 @@ import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.main.ReadyActivity;
+import com.means.foods.utils.FoodsPerference;
 import com.means.foods.view.RoundImageView;
 import com.means.foods.view.dialog.ReviseHeadDialog;
 import com.means.foods.view.dialog.ReviseHeadDialog.OnHeadResultListener;
@@ -50,7 +52,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
 
 	TextView sexT, mailboxT, nameT, nicknameT, phoneT;
-	
+
 	Button logingoutB;
 
 	@Override
@@ -59,7 +61,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personalpenter);
 
-		mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+		mCacheDir = new File(getExternalCacheDir(), "foods");
 		mCacheDir.mkdirs();
 	}
 
@@ -156,33 +158,28 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	private void uploadHead(String path) {
 
 		// Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
-		System.out.println("1111111111");
 		DhNet net = new DhNet(API.editAvatar);
 		net.addParam("uid", user.getUid());
 		net.addParam("token", user.getToken());
-		net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self) {
+//		net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self) {
+//
+//			@Override
+//			public void doInUI(Response response, Integer transfer) {
+//				if (response.isSuccess()) {
+//					showToast("更换头像成功");
+//				}
+//			}
+//		});
+		net.upload("imgFile", new File(path), new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
+				hidenProgressDialog();
 				if (response.isSuccess()) {
 					showToast("更换头像成功");
 				}
 			}
 		});
-		// net.upload("imgFile", new File(path), new NetTask(self) {
-		//
-		// @Override
-		// public void doInUI(Response response, Integer transfer) {
-		// hidenProgressDialog();
-		// if (response.isSuccess()
-		// && Integer.parseInt(response.getBundle("proccess")
-		// .toString()) == 100) {
-		// showToast("更换头像成功");
-		// } else {
-		// System.out.println("333333");
-		// }
-		// }
-		// });
 	}
 
 	@Override
@@ -225,13 +222,13 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			it = new Intent(self, ReviseNameActivity.class);
 			it.putExtra("name", nicknameT.getText().toString());
 			it.putExtra("start", "1");
-			startActivity(it);
+			startActivityForResult(it, NICKNAME);
 			break;
 		case R.id.name_edit:
 			it = new Intent(self, ReviseNameActivity.class);
 			it.putExtra("name", nameT.getText().toString());
 			it.putExtra("start", "2");
-			startActivity(it);
+			startActivityForResult(it, NAME);
 
 			break;
 		case R.id.phone_edit:
@@ -263,10 +260,9 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.password_edit:
 			it = new Intent(self, RevisePswdActivity.class);
-			it.putExtra("oldPwd", "123");
 			startActivity(it);
 			break;
-			
+
 		case R.id.logingout:
 			User user = User.getInstance();
 			user.setLogin(false);

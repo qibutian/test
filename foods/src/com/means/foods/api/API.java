@@ -71,7 +71,7 @@ public class API {
 	// 添加订单
 	public static String addOrder = "http://www.foodies.im/wap.php?g=Wap&c=My&a=saveOrderApi";
 
-	// 获取验证码(注册第一步)
+	// 获取注册验证码(注册第一步)
 	public static String register_Captcha = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=getVerificationCode";
 
 	// 注册
@@ -82,5 +82,11 @@ public class API {
 
 	// 订单详情
 	public static String orderDetail = "http://www.foodies.im/wap.php?g=Wap&c=My&a=orderDetailApi";
+	
+	//获取修改手机验证码
+	public static String revisePhoneCode = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=checkPassword";
+	
+	//修改手机号
+	public static String revisePhone = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=checkPassword";
 
 }

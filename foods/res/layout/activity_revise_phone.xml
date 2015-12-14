@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/nothing"
-            android:hint="输入验证码"
+            android:hint="请输入验证码"
             android:inputType="number"
             android:paddingLeft="14dp"
             android:textColor="@color/text_33_black"
@@ -40,9 +40,23 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_small" />
     </RelativeLayout>
-
+    
+    <View style="@style/line_horizontal"/>
+    
+    <EditText
+            android:id="@+id/tel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:hint="请输入需绑定的手机号"
+            android:inputType="number"
+            android:paddingLeft="14dp"
+            android:textColor="@color/text_33_black"
+            android:textColorHint="@color/text_99_grey_light"
+            android:textSize="@dimen/text_medium" />
+<View style="@style/line_horizontal"/>
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/finish"
         style="@style/text_white_big"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"

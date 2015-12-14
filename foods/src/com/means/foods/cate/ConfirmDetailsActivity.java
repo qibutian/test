@@ -154,12 +154,13 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		year_n = calendar.get(Calendar.YEAR);
 		month_n = calendar.get(Calendar.MONTH) + 1;
 		day_n = calendar.get(Calendar.DATE);
+		weekT.setText(getWeekOfDate());
 		setDataView();
 		people_n = 1;
 		numT.setText(people_n + "");
 		now_hour = calendar.get(Calendar.HOUR_OF_DAY);
 		int next_hour = now_hour + 1 < 24 ? now_hour + 1 : 0;
-		timeT.setText(now_hour + ":00-" + next_hour + ":00");
+		timeT.setText(now_hour + ":00" + "-" + next_hour + ":00");
 	}
 
 	// 更新view
@@ -167,6 +168,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		yearT.setText(year_n + "年");
 		monthT.setText(month_n + "月");
 		dayT.setText(day_n + "日");
+		weekT.setText(getWeekOfDate());
 	}
 
 	// 获取当前时间区域 更新text
@@ -183,6 +185,15 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		year_n = calendar.get(Calendar.YEAR);
 		month_n = calendar.get(Calendar.MONTH) + 1;
 		day_n = calendar.get(Calendar.DATE);
+	}
+
+	// 获取星期
+	public String getWeekOfDate() {
+		String[] weekDays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+		int w = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+		if (w < 0)
+			w = 0;
+		return weekDays[w];
 	}
 
 	@Override
@@ -271,6 +282,10 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		final String tel = telT.getText().toString().trim();
 		if (TextUtils.isEmpty(tel)) {
 			showToast("请输入手机号码");
+			return;
+		}
+		if (tel.length()!=11) {
+			showToast("手机号格式不正确");
 			return;
 		}
 		final String name = nameT.getText().toString().trim();

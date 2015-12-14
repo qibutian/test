@@ -126,10 +126,10 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 				public void doInUI(Response response, Integer transfer) {
 					// TODO Auto-generated method stub
 					if (response.isSuccess()) {
-						Intent intent = getIntent();
+						Intent intent = new Intent();
 						intent.putExtra("name", newnickname.getText()
 								.toString());
-						setResult(self.RESULT_OK, intent);
+						setResult(RESULT_OK, intent);
 						 showToast("姓名修改成功");
 						finish();
 						// JSONObject jo = response.jSONFromData();
@@ -137,8 +137,8 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 				}
 			});
 		} else {// 修改昵称
-			if (newnickname.getText().toString().length() > 4
-					&& newnickname.getText().toString().length() < 13) {
+//			if (newnickname.getText().toString().length() > 4
+//					&& newnickname.getText().toString().length() < 13) {
 				DhNet net = new DhNet(API.editNickName);
 				net.addParam("uid", User.getInstance().uid);
 				net.addParam("token", User.getInstance().token);
@@ -149,19 +149,19 @@ public class ReviseNameActivity extends FoodsBaseActivity implements
 					public void doInUI(Response response, Integer transfer) {
 						// TODO Auto-generated method stub
 						if (response.isSuccess()) {
-							Intent intent = getIntent();
+							Intent intent = new Intent();
 							intent.putExtra("nickname", newnickname.getText()
 									.toString());
-							setResult(self.RESULT_OK, intent);
+							setResult(RESULT_OK, intent);
 							 showToast("昵称修改成功");
 							finish();
 							// JSONObject jo = response.jSONFromData();
 						}
 					}
 				});
-			} else {
-				showToast("昵称不正确，请按提示填写~");
-			}
+//			} else {
+//				showToast("昵称不正确，请按提示填写~");
+//			}
 
 		}
 
