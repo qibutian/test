@@ -53,9 +53,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reservations_details);
-//		saveDir = new File(getCacheDir(), "foods").getPath()+"/";
-//		saveDir.mkdirs();
-		saveDir = getCacheDir().getPath() + "/";
+		// saveDir = new File(getCacheDir(), "foods").getPath()+"/";
+		// saveDir.mkdirs();
+		saveDir = getExternalCacheDir().getPath() + "/foods/";
 	}
 
 	@Override

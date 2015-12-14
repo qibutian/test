@@ -8,10 +8,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.duohuo.dhroid.net.HttpManager;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EncodingUtils;
 
 import android.content.Context;
@@ -75,34 +86,34 @@ public class HttpDownloader {
 		return 0;
 	}
 
-	// ���ڵõ�һ��InputStream�����������ļ�����ǰ����Ĳ��������Խ����������װ����һ������
+	//
 	public InputStream getInputStream(String urlStr) throws IOException {
 		InputStream is = null;
 		try {
-			url = new URL(urlStr);
-
-			// URLConnection ucon = url.openConnection();
-			// // ʹ��InputStream����URLConnection��ȡ���?
-			// InputStream sis = ucon.getInputStream();
+			String entryText = "&token=" + token + "&uid=" + uid + "&order_id="
+					+ order_id;
+			// url = new URL(urlStr + entryText);
+			// HttpURLConnection urlConn = (HttpURLConnection) url
+			// .openConnection();
+			// // 实现连接
+			// urlConn.setRequestProperty("Charset", CHARSET);
+			// urlConn.setRequestProperty("Accept-Charset", "utf-8");
+			// urlConn.setRequestProperty("contentType", "utf-8");
+			// urlConn.setRequestMethod("GET");
 			//
-			// System.out.println(sis);
-			EncodingUtils.getString(urlStr.getBytes("GB2312"), "UTF-8");
-			HttpURLConnection urlConn = (HttpURLConnection) url
-					.openConnection();
-			urlConn.setRequestMethod("POST");
-			urlConn.setDoOutput(true); // 允许输出
-			urlConn.setDoInput(true); // 允许输入
-//			urlConn.setRequestProperty("connection", "Keep-Alive");
-//			urlConn.setRequestProperty("Charset", CHARSET);
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("token", token);
-			params.put("uid", uid);
-			params.put("order_id", order_id);
-			String entryText = bulidFormText(params);
-			DataOutputStream dos = new DataOutputStream(urlConn.getOutputStream());
-			dos.write(entryText.getBytes());
+			// // DataOutputStream dos = new DataOutputStream(
+			// // urlConn.getOutputStream());
+			// // dos.write(entryText.getBytes());
 			// urlConn.connect();
-			is = urlConn.getInputStream();
+			// is = urlConn.getInputStream();
+
+			HttpGet httpGet = new HttpGet(urlStr + entryText);
+			HttpResponse response = HttpManager.execute(httpGet);
+			HttpEntity rentity = response.getEntity();
+			if (rentity != null) {
+				System.out.println("rentity:" + rentity.getContentLength());
+				return rentity.getContent();
+			}
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -112,6 +123,26 @@ public class HttpDownloader {
 
 		return is;
 	}
+
+	// public InputStream getInputStream(String urlStr) throws IOException {
+	//
+	// HttpPost httppost = new HttpPost(urlStr);
+	// List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+	//
+	// formparams.add(new BasicNameValuePair("token", token));
+	// formparams.add(new BasicNameValuePair("uid", uid));
+	// formparams.add(new BasicNameValuePair("order_id", order_id.toString()));
+	// UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
+	// "UTF-8");
+	// httppost.setEntity(entity);
+	// HttpResponse response = HttpManager.execute(httppost);
+	// HttpEntity rentity = response.getEntity();
+	// if (rentity != null) {
+	// System.out.println("rentity:" + rentity.getContentLength());
+	// return rentity.getContent();
+	// }
+	// return null;
+	// }
 
 	private String bulidFormText(Map<String, Object> paramText) {
 		if (paramText == null || paramText.isEmpty())

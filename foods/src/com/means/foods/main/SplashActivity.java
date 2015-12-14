@@ -73,7 +73,7 @@ public class SplashActivity extends FoodsBaseActivity {
 		net.addParam("password", per.pswd);
 		// net.addParam("phone", "13852286536");
 		// net.addParam("password", "123");
-		net.doPostInDialog("登录中...",new NetTask(self) {
+		net.doPostInDialog("登录中...", new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
@@ -83,7 +83,6 @@ public class SplashActivity extends FoodsBaseActivity {
 					user.setUid(JSONUtil.getString(jo, "uid"));
 					user.setToken(JSONUtil.getString(jo, "pwd"));
 					user.setLogin(true);
-					notFirst();
 
 					// showToast("登录成功");
 
@@ -94,6 +93,8 @@ public class SplashActivity extends FoodsBaseActivity {
 				}else {
 					notFirst();
 				}
+
+				notFirst();
 			}
 
 			@Override

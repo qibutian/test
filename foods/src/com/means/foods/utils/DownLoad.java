@@ -40,7 +40,7 @@ public class DownLoad extends Thread {
 		// intent.setClassName("cn.wps.moffice",
 		// "cn.wps.moffice.documentmanager.PreStartActivity");
 		Uri uri = Uri.fromFile(new File(param));
-		intent.setDataAndType(uri, "application/pdf");
+		intent.setDataAndType(uri, "text/plain");
 		return intent;
 	}
 
@@ -51,13 +51,13 @@ public class DownLoad extends Thread {
 		/**
 		 * 判断是否有文件
 		 */
-		File file = new File(saveDir + UUID);
+		File file = new File(saveDir + UUID + ".txt");
 		if (file == null || !file.exists()) {
 			mhandler.sendEmptyMessage(4);
 			User user = User.getInstance();
 			HttpDownloader httpDownLoader = new HttpDownloader(context,
 					user.getUid(), user.getToken(), UUID);
-			int result = httpDownLoader.downfile(url, "foods", UUID);
+			int result = httpDownLoader.downfile(url, saveDir, UUID + ".txt");
 			if (result == 0) {
 
 				mhandler.sendEmptyMessage(1);
@@ -78,7 +78,7 @@ public class DownLoad extends Thread {
 		} else {
 
 			try {
-				Intent intent = getWordFileIntent(saveDir + UUID);
+				Intent intent = getWordFileIntent(saveDir + UUID + ".txt");
 				context.startActivity(intent);
 			} catch (ActivityNotFoundException e) {
 				// 检测到系统尚未安装OliveOffice的apk程序

@@ -9,45 +9,49 @@ import java.io.OutputStream;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Xml.Encoding;
+
 /**
  * �ļ�����
+ * 
  * @author Administrator
- *
+ * 
  */
 public class FileUtils {
 
 	private String SDPATH;
-	
+
 	Context context;
 
 	public String getSDPATH() {
 		return SDPATH;
 	}
+
 	public FileUtils(Context context) {
-		//�õ���ǰ�ⲿ�洢�豸��Ŀ¼
+		// �õ���ǰ�ⲿ�洢�豸��Ŀ¼
 		// /SDCARD
-	    this.context = context;
-//		SDPATH = Environment.getDataDirectory() + "/";
-	    SDPATH = context.getFilesDir().getPath()+"/";
+		this.context = context;
+		// SDPATH = Environment.getDataDirectory() + "/";
+		SDPATH = context.getExternalCacheDir().getPath() + "/";
 	}
+
 	/**
 	 * ��SD���ϴ����ļ�
 	 * 
 	 * @throws IOException
 	 */
 	public File creatSDFile(String fileName) throws IOException {
-		File file = new File(SDPATH + fileName);
+		File file = new File(SDPATH + "/foods/" + fileName);
 		file.createNewFile();
 		return file;
 	}
-	
+
 	/**
 	 * ��SD���ϴ���Ŀ¼
 	 * 
 	 * @param dirName
 	 */
 	public File creatSDDir(String dirName) {
-		File dir = new File(SDPATH,"hfsj");
+		File dir = new File(SDPATH, "foods");
 		dir.mkdirs();
 		return dir;
 	}
@@ -55,42 +59,33 @@ public class FileUtils {
 	/**
 	 * �ж�SD���ϵ��ļ����Ƿ����?
 	 */
-	public boolean isFileExist(String fileName){
-		File file = new File(SDPATH + fileName);
+	public boolean isFileExist(String fileName) {
+		File file = new File(SDPATH + "/foods/" + fileName);
 		return file.exists();
 	}
-	
+
 	/**
 	 * ��һ��InputStream��������д�뵽SD����
 	 */
-	public int write2SDFromInput(String path,String fileName,InputStream input){
+	public int write2SDFromInput(String path, String fileName, InputStream input) {
 		File file = null;
 		OutputStream output = null;
-		try{
-//			creatSDDir(path);
-//			file = creatSDFile(path + fileName);
-			output = context.openFileOutput(fileName, Context.MODE_WORLD_READABLE+Context.MODE_WORLD_WRITEABLE);
-//			output = new FileOutputStream(file);
-			byte[] buffer = new byte[1024];
-		//	byte buffer [] = new byte[100 * 1024];
-			int len = 0;
-			while ((len = input.read(buffer)) != -1) {
-				output.write(buffer, 0, len);
+		try {
+			creatSDDir(path);
+			file = creatSDFile(fileName);
+			output = new FileOutputStream(file);
+			byte buffer[] = new byte[10 * 1024];
+			while ((input.read(buffer)) != -1) {
+				output.write(buffer);
 			}
-//			while((input.read(buffer)) != -1){
-//				output.write(buffer);
-//			}
 			output.flush();
 			return 1;
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
-			try{
+		} finally {
+			try {
 				output.close();
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
