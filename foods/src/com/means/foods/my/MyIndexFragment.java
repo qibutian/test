@@ -30,11 +30,15 @@ import android.widget.TextView;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsListFragment;
+import com.means.foods.bean.MyIndexEB;
+import com.means.foods.bean.PaySuccessEB;
 import com.means.foods.bean.User;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 import com.means.foods.view.RoundImageView;
 import com.means.foods.view.RefreshListViewAndMore.OnLoadSuccess;
+
+import de.greenrobot.event.EventBus;
 
 public class MyIndexFragment extends FoodsListFragment implements
 		OnClickListener, OnLoadSuccess {
@@ -80,6 +84,7 @@ public class MyIndexFragment extends FoodsListFragment implements
 			Bundle savedInstanceState) {
 		mainV = inflater.inflate(R.layout.fragment_my_index, null);
 		mLayoutInflater = inflater;
+		EventBus.getDefault().register(this);
 		initView();
 		// TODO Auto-generated method stub
 		return mainV;
@@ -200,5 +205,10 @@ public class MyIndexFragment extends FoodsListFragment implements
 	public void loadSuccess(Response response) {
 		headV.findViewById(R.id.empty_view).setVisibility(
 				adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
+	}
+	
+	//更新个人信息
+	public void onEventMainThread(MyIndexEB myIndexEB) {
+		getMyDetails();
 	}
 }

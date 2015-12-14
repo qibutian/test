@@ -7,6 +7,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -18,9 +19,12 @@ import android.widget.EditText;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.User;
 import com.means.foods.my.RegisterTwoActivity.CountTimer;
 import com.means.foods.utils.FoodsPerference;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 修改绑定手机号
@@ -78,8 +82,19 @@ public class RevisePhoneActivity extends FoodsBaseActivity implements
 	
 	//获取验证码
 	private void getVerificationCode(){
+		
+		final String tel = telEt.getText().toString().trim();
+		if (TextUtils.isEmpty(tel)) {
+			showToast("手机号不能为空");
+			return;
+		}
+		if (tel.length()!=11) {
+			showToast("手机格式不正确");
+			return;
+		}
+		
 		DhNet net = new DhNet(API.revisePhoneCode);
-		net.addParam("phone", per.getPhone());
+		net.addParam("phone", tel);
 		net.addParam("password", per.getPswd());
 		net.addParam("uid", user.getUid());
 		net.doPostInDialog(new NetTask(self) {
@@ -105,13 +120,13 @@ public class RevisePhoneActivity extends FoodsBaseActivity implements
 			showToast("验证码不能为空");
 			return;
 		}
+		if (!verificationCode.equals(code)) {
+			showToast("验证码输入错误");
+			return;
+		}
 		final String tel = telEt.getText().toString().trim();
 		if (TextUtils.isEmpty(tel)) {
 			showToast("手机号不能为空");
-			return;
-		}
-		if (!verificationCode.equals(code)) {
-			showToast("验证码输入错误");
 			return;
 		}
 		if (tel.length()!=11) {
@@ -131,6 +146,11 @@ public class RevisePhoneActivity extends FoodsBaseActivity implements
 				if (response.isSuccess()) {
 					per.setPhone(tel);
 					per.commit();
+					Intent intent = new Intent();
+					intent.putExtra("tel", tel);
+					setResult(RESULT_OK, intent);
+					showToast("修改成功");
+					finish();
 				}
 			}
 		});

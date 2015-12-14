@@ -91,6 +91,8 @@ public class SplashActivity extends FoodsBaseActivity {
 					// startActivity(it);
 					// finishWithoutAnim();
 					// 登录成功后发送事件,关闭之前的页面
+				}else {
+					notFirst();
 				}
 			}
 

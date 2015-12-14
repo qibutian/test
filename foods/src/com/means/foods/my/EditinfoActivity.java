@@ -28,6 +28,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.User;
 import com.means.foods.main.ReadyActivity;
 import com.means.foods.utils.FoodsPerference;
@@ -36,6 +37,8 @@ import com.means.foods.view.dialog.ReviseHeadDialog;
 import com.means.foods.view.dialog.ReviseHeadDialog.OnHeadResultListener;
 import com.means.foods.view.dialog.ReviseSexDialog;
 import com.means.foods.view.dialog.ReviseSexDialog.OnSexResultListener;
+
+import de.greenrobot.event.EventBus;
 
 public class EditinfoActivity extends FoodsBaseActivity implements
 		View.OnClickListener {
@@ -47,6 +50,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 	public static final int EMAIL = 3;
 	public static final int NAME = 4;
 	public static final int NICKNAME = 5;
+	public static final int PHONE = 6;
 	RoundImageView headI;
 
 	RelativeLayout photoR, nicknameR, nameR, phoneR, sexR, emailR, passwordR;
@@ -136,8 +140,6 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 						data, 1, 1, 1000);
 				break;
 			case Constant.ZOOM_PIC:
-				Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
-				headI.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
 				uploadHead(mPhotoPath);
 				break;
 			case EMAIL:
@@ -147,7 +149,11 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				nameT.setText(data.getStringExtra("name"));
 				break;
 			case NICKNAME:
+				EventBus.getDefault().post(new MyIndexEB());
 				nicknameT.setText(data.getStringExtra("nickname"));
+				break;
+			case PHONE:
+				phoneT.setText(data.getStringExtra("tel"));
 				break;
 
 			}
@@ -176,6 +182,9 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				hidenProgressDialog();
 				if (response.isSuccess()) {
+					EventBus.getDefault().post(new MyIndexEB());
+					Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
+					headI.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
 					showToast("更换头像成功");
 				}
 			}
@@ -233,7 +242,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 		case R.id.phone_edit:
 			it = new Intent(self, RevisePhoneActivity.class);
-			startActivity(it);
+			startActivityForResult(it, PHONE);
 			break;
 		case R.id.sex_edit:
 			ReviseSexDialog sexdialog = new ReviseSexDialog(self);

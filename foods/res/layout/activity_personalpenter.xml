@@ -222,7 +222,6 @@
                         android:layout_gravity="right"
                         android:layout_marginRight="10dp"
                         android:text="已绑定"
-                        android:visibility="gone"
                         android:textColor="@color/text_99_grey_light"
                         android:textSize="@dimen/text_small" />
                 </LinearLayout>

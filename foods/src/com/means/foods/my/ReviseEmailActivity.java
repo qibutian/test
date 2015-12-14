@@ -52,6 +52,7 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 		clear = (ImageView) findViewById(R.id.clear);
 		right_text = (TextView) findViewById(R.id.right_text);
 		right_text.setText("保存");
+		right_text.setVisibility(View.VISIBLE);
 		newemail.setText(myIntent.getStringExtra("email"));
 		if (!"".equals(myIntent.getStringExtra("email"))) {
 			clear.setVisibility(View.VISIBLE);
@@ -95,11 +96,6 @@ public class ReviseEmailActivity extends FoodsBaseActivity implements
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				if (start > 0) {
-					right_text.setVisibility(View.VISIBLE);
-				}else{
-					right_text.setVisibility(View.GONE);
-				}
 			}
 
 			@Override
