@@ -1,5 +1,7 @@
 package com.means.foods.utils;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,22 +71,28 @@ public class FileUtils {
 	 */
 	public int write2SDFromInput(String path, String fileName, InputStream input) {
 		File file = null;
-		OutputStream output = null;
 		try {
 			creatSDDir(path);
 			file = creatSDFile(fileName);
-			output = new FileOutputStream(file);
-			byte buffer[] = new byte[10 * 1024];
-			while ((input.read(buffer)) != -1) {
-				output.write(buffer);
+
+			byte[] arr = new byte[1];
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(baos);
+			int n = input.read(arr);
+			while (n > 0) {
+				bos.write(arr);
+				n = input.read(arr);
 			}
-			output.flush();
+			bos.close();
+
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(baos.toByteArray());
+			fos.close();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				output.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

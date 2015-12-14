@@ -92,28 +92,20 @@ public class HttpDownloader {
 		try {
 			String entryText = "&token=" + token + "&uid=" + uid + "&order_id="
 					+ order_id;
-			// url = new URL(urlStr + entryText);
-			// HttpURLConnection urlConn = (HttpURLConnection) url
-			// .openConnection();
-			// // 实现连接
-			// urlConn.setRequestProperty("Charset", CHARSET);
-			// urlConn.setRequestProperty("Accept-Charset", "utf-8");
-			// urlConn.setRequestProperty("contentType", "utf-8");
-			// urlConn.setRequestMethod("GET");
-			//
-			// // DataOutputStream dos = new DataOutputStream(
-			// // urlConn.getOutputStream());
-			// // dos.write(entryText.getBytes());
-			// urlConn.connect();
-			// is = urlConn.getInputStream();
+			url = new URL(urlStr + entryText);
+			HttpURLConnection urlConn = (HttpURLConnection) url
+					.openConnection();
+			// 实现连接
+			urlConn.setRequestProperty("Charset", CHARSET);
+			urlConn.setRequestProperty("Accept-Charset", "utf-8");
+			urlConn.setRequestProperty("contentType", "utf-8");
+			urlConn.setRequestMethod("GET");
 
-			HttpGet httpGet = new HttpGet(urlStr + entryText);
-			HttpResponse response = HttpManager.execute(httpGet);
-			HttpEntity rentity = response.getEntity();
-			if (rentity != null) {
-				System.out.println("rentity:" + rentity.getContentLength());
-				return rentity.getContent();
-			}
+			// DataOutputStream dos = new DataOutputStream(
+			// urlConn.getOutputStream());
+			// dos.write(entryText.getBytes());
+			urlConn.connect();
+			is = urlConn.getInputStream();
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

@@ -24,6 +24,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
+import com.means.foods.main.WebActivity;
 import com.means.foods.utils.DownLoad;
 import com.means.foods.view.TouchWebView;
 
@@ -135,6 +136,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			DownLoad downLoad = new DownLoad(self, mhandler, url, saveDir,
 					order_id);
 			downLoad.start();
+			// it = new Intent(self, WebActivity.class);
+			// it.putExtra("order_id", order_id);
+			// startActivity(it);
 			break;
 
 		case R.id.cancel:
