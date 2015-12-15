@@ -228,7 +228,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		// 确认
 		case R.id.footerbar:
 			if (orderType.equals(ModifyOrder)) {// 修改订单
-				
+				editOrder();
 			}else{//添加订单
 				submitOrder();
 			}
@@ -360,9 +360,8 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 					} else {
 						Intent it = new Intent(self,
 								ReservationsDetailsActivity.class);
-						JSONObject json = response.jSONFromData();
 						it.putExtra("order_id",
-								JSONUtil.getString(json, "order_id"));
+								JSONUtil.getString(jo, "order_id"));
 						startActivity(it);
 						finish();
 					}
