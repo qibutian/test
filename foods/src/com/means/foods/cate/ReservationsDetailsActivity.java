@@ -1,7 +1,5 @@
 package com.means.foods.cate;
 
-import java.io.File;
-
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -53,9 +51,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reservations_details);
-//		saveDir = new File(getCacheDir(), "foods").getPath()+"/";
-//		saveDir.mkdirs();
-		saveDir = getCacheDir().getPath() + "/";
+		// saveDir = new File(getCacheDir(), "foods").getPath()+"/";
+		// saveDir.mkdirs();
+		saveDir = getExternalCacheDir().getPath() + "/foods/";
 	}
 
 	@Override
@@ -135,6 +133,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			DownLoad downLoad = new DownLoad(self, mhandler, url, saveDir,
 					order_id);
 			downLoad.start();
+			// it = new Intent(self, WebActivity.class);
+			// it.putExtra("order_id", order_id);
+			// startActivity(it);
 			break;
 
 		case R.id.cancel:
