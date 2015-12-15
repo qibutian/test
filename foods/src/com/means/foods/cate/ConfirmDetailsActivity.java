@@ -79,6 +79,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	int now_hour;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -284,7 +285,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 			showToast("请输入手机号码");
 			return;
 		}
-		if (tel.length()!=11) {
+		if (tel.length() != 11) {
 			showToast("手机号格式不正确");
 			return;
 		}
@@ -319,7 +320,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 					public void doInUI(Response response, Integer transfer) {
 						if (response.isSuccess()) {
 							// order_id
-							showToast("提交成功");
+							showToast("订单提交成功");
 							if (pre_price != 0) {
 								JSONObject json = response.jSONFromData();
 								Intent it = new Intent(self,
@@ -331,6 +332,14 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 								it.putExtra("price",
 										JSONUtil.getDouble(json, "price"));
 								startActivity(it);
+							} else {
+								Intent it = new Intent(self,
+										ReservationsDetailsActivity.class);
+								JSONObject json = response.jSONFromData();
+								it.putExtra("order_id",
+										JSONUtil.getString(json, "order_id"));
+								startActivity(it);
+								finish();
 							}
 						}
 					}
