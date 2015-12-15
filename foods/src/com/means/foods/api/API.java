@@ -70,6 +70,9 @@ public class API {
 
 	// 添加订单
 	public static String addOrder = "http://www.foodies.im/wap.php?g=Wap&c=My&a=saveOrderApi";
+	
+	// 修改订单
+	public static String modifyOrder= "http://www.foodies.im/wap.php?g=Wap&c=My&a=modifyOrderApi";
 
 	// 获取注册验证码(注册第一步)
 	public static String register_Captcha = "http://www.foodies.im/wap.php?g=Wap&c=Login&a=getVerificationCode";

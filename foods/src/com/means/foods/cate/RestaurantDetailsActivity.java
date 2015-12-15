@@ -87,7 +87,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	double price;
 
-	String name, reason;
+	String name, reason,address;
 
 	JSONArray jsc;
 
@@ -172,8 +172,8 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					reason = JSONUtil.getString(jo, "reason");
 					ViewUtil.bindView(nameT, name);
 					ViewUtil.bindView(reasonT, reason);
-					ViewUtil.bindView(addressT,
-							JSONUtil.getString(jo, "address"));
+					address = JSONUtil.getString(jo, "address");
+					ViewUtil.bindView(addressT,address);
 
 					webV.loadUrl("http://www.foodies.im/wap.php?g=Wap&c=Food&a=map&address="
 							+ JSONUtil.getString(jo, "address"));
@@ -294,6 +294,8 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			it = new Intent(self, ConfirmDetailsActivity.class);
 			it.putExtra("store_id", store_id);
 			it.putExtra("price", price);
+			it.putExtra("orderType", "saveOrder");
+			it.putExtra("address", address);
 			it.putExtra("name", nameT.getText().toString());
 			startActivity(it);
 			break;

@@ -95,6 +95,13 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 		cancleB = (Button) findViewById(R.id.cancle);
 		editB = (Button) findViewById(R.id.edit);
+		if (JSONUtil.getInt(jo, "can_edit")!=0) {
+			editB.setEnabled(false);
+			editB.setBackgroundResource(R.drawable.btn_code_grey_n);
+		}
+		if (JSONUtil.getInt(jo, "can_cancel")!=0) {
+			cancleB.setEnabled(false);
+		}
 		cancleB.setOnClickListener(this);
 		editB.setOnClickListener(this);
 		// ViewUtil.bindView(findViewById(R.id.name), JSONUtil.getString(jo,
@@ -144,6 +151,9 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 		case R.id.edit:
 			it = new Intent(self, ConfirmDetailsActivity.class);
+			it.putExtra("order_id", order_id);
+			it.putExtra("jo", jo.toString());
+			it.putExtra("orderType", "modifyOrder");
 			startActivity(it);
 			break;
 
