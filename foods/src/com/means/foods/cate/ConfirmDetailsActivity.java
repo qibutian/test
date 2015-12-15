@@ -331,7 +331,10 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 								it.putExtra("price",
 										JSONUtil.getDouble(json, "price"));
 								startActivity(it);
+							}else {
+								finish();
 							}
+							
 						}
 					}
 				});
