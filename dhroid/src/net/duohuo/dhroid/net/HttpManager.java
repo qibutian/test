@@ -57,14 +57,14 @@ import android.text.TextUtils;
 public class HttpManager {
 
 	private static final int DEFAULT_MAX_CONNECTIONS = 30;
-	public  static final int DEFAULT_SOCKET_TIMEOUT = 30 * 1000;
+	public static final int DEFAULT_SOCKET_TIMEOUT = 30 * 1000;
 
 	public static final int DEFAULT_SOCKET_TIMEOUT_SHORT = 10 * 1000;
 
 	private static final int DEFAULT_SOCKET_BUFFER_SIZE = 8192;
 
 	private static DefaultHttpClient sHttpClient;
-	
+
 	final static HttpParams httpParams = new BasicHttpParams();
 	static {
 		ConnManagerParams.setTimeout(httpParams, 1000);
@@ -199,9 +199,11 @@ public class HttpManager {
 	}
 
 	public static HttpResponse execute(Context context, HttpUriRequest post)
-			throws IOException {
+
+	throws IOException {
 		if (!NetworkUtils.isNetworkAvailable() && isWapNetwork()) {
 			setSinaWapProxy();
+
 		}
 		return sHttpClient.execute(post);
 	}

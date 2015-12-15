@@ -145,6 +145,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		sub_YearI.setOnClickListener(this);
 		add_MonthI.setOnClickListener(this);
 		sub_MonthI.setOnClickListener(this);
+
 		add_DayI.setOnClickListener(this);
 		sub_DayI.setOnClickListener(this);
 		add_NumI.setOnClickListener(this);
