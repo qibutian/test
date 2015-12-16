@@ -14,34 +14,39 @@
         android:background="@color/white" >
 
         <EditText
-            android:id="@+id/pswd"
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:background="@color/nothing"
             android:gravity="center_vertical"
+            android:hint="请输入您绑定的手机号"
             android:inputType="textPassword"
             android:paddingLeft="14dp"
             android:singleLine="true"
-            android:hint="请输入新密码"
             android:textColor="@color/text_66_black_light"
             android:textSize="@dimen/text_medium" />
 
         <ImageView
             android:id="@+id/clear"
-            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="10dp"
-            android:src="@drawable/revise_close" />
+            android:src="@drawable/revise_close"
+            android:visibility="invisible" />
     </RelativeLayout>
 
-    <TextView
-        android:visibility="invisible"
-        style="@style/text_66_blacklight_small"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="9dp"
-        android:text="限制4-12个字符，可由中英文字符、数字、“-”、“—” 组成" />
+    <Button
+        android:id="@+id/next"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_yellow_fill_n"
+        android:text="下一步,验证手机号"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_big" />
 
 </LinearLayout>

@@ -72,7 +72,7 @@ public class LoginActivity extends FoodsBaseActivity implements
 	public void onEventMainThread(RegisterEB registerEb) {
 		finishWithoutAnim();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -92,8 +92,8 @@ public class LoginActivity extends FoodsBaseActivity implements
 			startActivity(it);
 			break;
 		case R.id.forget_password:
-			// it = new Intent(self, LoginActivity.class);
-			// startActivity(it);
+			it = new Intent(self, ResetPswdOneActivity.class);
+			startActivity(it);
 			break;
 
 		default:

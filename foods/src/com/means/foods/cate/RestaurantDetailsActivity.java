@@ -87,7 +87,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	double price;
 
-	String name, reason,address;
+	String name, reason, address;
 
 	JSONArray jsc;
 
@@ -173,7 +173,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					ViewUtil.bindView(nameT, name);
 					ViewUtil.bindView(reasonT, reason);
 					address = JSONUtil.getString(jo, "address");
-					ViewUtil.bindView(addressT,address);
+					ViewUtil.bindView(addressT, address);
 
 					webV.loadUrl("http://www.foodies.im/wap.php?g=Wap&c=Food&a=map&address="
 							+ JSONUtil.getString(jo, "address"));
@@ -401,25 +401,16 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	 */
 	private void wechatShare(int flag) {
 		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = "这里填写链接url";
+		webpage.webpageUrl = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=shop&mer_id=68&store_id="
+				+ store_id;
 		WXMediaMessage msg = new WXMediaMessage(webpage);
-		// msg.title = name;
-		// msg.description = reason;
-		msg.title = "这里填写标题";
-		msg.description = "这里填写内容";
+		msg.title = name;
+		msg.description = reason;
 		// 这里替换一张自己工程里的图片资源
-		Bitmap thumb = BitmapFactory.decodeResource(getResources(),
-				R.drawable.ic_launcher);
-		// Bitmap thumb = null;
-		// try {
-		// thumb = GetLocalOrNetBitmap(jsc.get(0).toString());
-		// } catch (JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// thumb =
-		// BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
-		// }
+		Bitmap thumb = null;
 
+		thumb = BitmapFactory.decodeResource(getResources(),
+				R.drawable.ic_launcher);
 		msg.setThumbImage(thumb);
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -430,26 +421,26 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		api.sendReq(req);
 	}
 
-	public static Bitmap GetLocalOrNetBitmap(String url) {
-		try {
-			URL urls = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
-			conn.setConnectTimeout(5000);
-			int max = conn.getContentLength();
-			InputStream is = conn.getInputStream();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-			int len;
-
-			while ((len = is.read(buffer)) != -1) {
-				baos.write(buffer, 0, len);
-			}
-			byte[] result = baos.toByteArray();
-			return BitmapFactory.decodeByteArray(result, 0, result.length);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	// public static Bitmap GetLocalOrNetBitmap(String url) {
+	// try {
+	// URL urls = new URL(url);
+	// HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
+	// conn.setConnectTimeout(5000);
+	// int max = conn.getContentLength();
+	// InputStream is = conn.getInputStream();
+	// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	// byte[] buffer = new byte[1024];
+	// int len;
+	//
+	// while ((len = is.read(buffer)) != -1) {
+	// baos.write(buffer, 0, len);
+	// }
+	// byte[] result = baos.toByteArray();
+	// return BitmapFactory.decodeByteArray(result, 0, result.length);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// return null;
+	// }
+	// }
 
 }

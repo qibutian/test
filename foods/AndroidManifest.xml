@@ -44,7 +44,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".my.MsgDetailActivity" />
-         <activity android:name=".main.WebActivity" />
+        <activity android:name=".main.WebActivity" />
         <activity android:name=".cate.ReservationsDetailsActivity" />
         <activity
             android:name=".my.RegisterOneActivity"
@@ -81,6 +81,12 @@
         <activity android:name=".main.GuidanceActivity" >
         </activity>
         <activity android:name=".main.ReadyActivity" >
+        </activity>
+        <activity android:name=".my.ResetPswdOneActivity" >
+        </activity>
+        <activity android:name=".my.ResetPswdTwoActivity" >
+        </activity>
+        <activity android:name=".my.ResetPswdThreeActivity" >
         </activity>
         <activity
             android:name=".my.RegisterThreeActivity"
