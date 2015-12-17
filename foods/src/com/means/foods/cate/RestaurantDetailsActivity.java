@@ -396,6 +396,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	/**
 	 * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
 	 * 
+	 * 
 	 * @param flag
 	 *            (0:分享到微信好友，1：分享到微信朋友圈)
 	 */
