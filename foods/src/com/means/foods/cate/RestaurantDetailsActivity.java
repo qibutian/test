@@ -81,8 +81,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	Fold info_fold, feature_fold, chef_fold, tips_fold;
 
-	private IWXAPI api;
-
 	View shareV;
 
 	double price;
@@ -99,9 +97,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_details);
-		api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_KEY);
-
-		api.registerApp(Constant.WX_APP_KEY);
 	}
 
 	@Override
@@ -317,7 +312,8 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 				@Override
 				public void onResult(int result) {
-					wechatShare(result);
+					FoodsUtils
+							.wechatShare(result, self, name, reason, store_id);
 				}
 			});
 			pop.show();
@@ -391,35 +387,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			this.flag = flag;
 		}
 
-	}
-
-	/**
-	 * 微信分享 （这里仅提供一个分享网页的示例，其它请参看官网示例代码）
-	 * 
-	 * 
-	 * @param flag
-	 *            (0:分享到微信好友，1：分享到微信朋友圈)
-	 */
-	private void wechatShare(int flag) {
-		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=shop&mer_id=68&store_id="
-				+ store_id;
-		WXMediaMessage msg = new WXMediaMessage(webpage);
-		msg.title = name;
-		msg.description = reason;
-		// 这里替换一张自己工程里的图片资源
-		Bitmap thumb = null;
-
-		thumb = BitmapFactory.decodeResource(getResources(),
-				R.drawable.ic_launcher);
-		msg.setThumbImage(thumb);
-
-		SendMessageToWX.Req req = new SendMessageToWX.Req();
-		req.transaction = String.valueOf(System.currentTimeMillis());
-		req.message = msg;
-		req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
-				: SendMessageToWX.Req.WXSceneTimeline;
-		api.sendReq(req);
 	}
 
 	// public static Bitmap GetLocalOrNetBitmap(String url) {

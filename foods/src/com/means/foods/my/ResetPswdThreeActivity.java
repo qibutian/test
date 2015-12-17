@@ -61,7 +61,7 @@ public class ResetPswdThreeActivity extends FoodsBaseActivity {
 			return;
 		}
 
-		DhNet net = new DhNet(API.register);
+		DhNet net = new DhNet(API.resetPhone);
 		net.addParam("phone", getIntent().getStringExtra("phone"));
 		net.addParam("password", password);
 		net.addParam("verificationCode",
@@ -71,6 +71,7 @@ public class ResetPswdThreeActivity extends FoodsBaseActivity {
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
+					showToast("重置成功!");
 					Intent it = getIntent();
 					setResult(Activity.RESULT_OK, it);
 					finish();

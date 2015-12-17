@@ -21,7 +21,7 @@
             android:background="@color/nothing"
             android:gravity="center_vertical"
             android:hint="请输入您绑定的手机号"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:paddingLeft="14dp"
             android:singleLine="true"
             android:textColor="@color/text_66_black_light"

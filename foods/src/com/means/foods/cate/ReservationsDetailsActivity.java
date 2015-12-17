@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -20,10 +22,19 @@ import android.widget.Button;
 import com.means.foods.FoodsValueFix;
 import com.means.foods.R;
 import com.means.foods.api.API;
+import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.utils.DownLoad;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.TouchWebView;
+import com.means.foods.view.pop.SharePop;
+import com.means.foods.view.pop.SharePop.ShareResultListener;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 /**
  * 预定详情
@@ -47,12 +58,12 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 	private String saveDir;
 
+	View shareV;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reservations_details);
-		// saveDir = new File(getCacheDir(), "foods").getPath()+"/";
-		// saveDir.mkdirs();
 		saveDir = getExternalCacheDir().getPath() + "/foods/";
 	}
 
@@ -95,15 +106,17 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 		cancleB = (Button) findViewById(R.id.cancle);
 		editB = (Button) findViewById(R.id.edit);
-		if (JSONUtil.getInt(jo, "can_edit")!=0) {
+		if (JSONUtil.getInt(jo, "can_edit") != 0) {
 			editB.setEnabled(false);
 			editB.setBackgroundResource(R.drawable.btn_code_grey_n);
 		}
-		if (JSONUtil.getInt(jo, "can_cancel")!=0) {
+		if (JSONUtil.getInt(jo, "can_cancel") != 0) {
 			cancleB.setEnabled(false);
 		}
 		cancleB.setOnClickListener(this);
 		editB.setOnClickListener(this);
+		shareV = findViewById(R.id.share);
+		shareV.setOnClickListener(this);
 		// ViewUtil.bindView(findViewById(R.id.name), JSONUtil.getString(jo,
 		// "store_name"));
 
@@ -157,6 +170,21 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			startActivity(it);
 			break;
 
+		case R.id.share:
+			SharePop pop = new SharePop(self);
+			pop.setOnShareResultListener(new ShareResultListener() {
+
+				@Override
+				public void onResult(int result) {
+					FoodsUtils.wechatShare(result, self,
+							JSONUtil.getString(jo, "name"),
+							JSONUtil.getString(jo, "reason"),
+							JSONUtil.getString(jo, "store_id"));
+				}
+			});
+			pop.show();
+			break;
+
 		default:
 			break;
 		}
@@ -203,4 +231,5 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		};
 
 	};
+
 }

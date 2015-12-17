@@ -59,7 +59,7 @@ public class ResetPswdOneActivity extends FoodsBaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RESULT_OK && requestCode == Edit) {
+		if (resultCode == RESULT_OK && requestCode == Edit) {
 			finish();
 		}
 	}

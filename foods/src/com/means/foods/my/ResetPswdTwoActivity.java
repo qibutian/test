@@ -38,7 +38,7 @@ public class ResetPswdTwoActivity extends FoodsBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_reset_pswd_one);
+		setContentView(R.layout.activity_reset_pswd_two);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ResetPswdTwoActivity extends FoodsBaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				DhNet net = new DhNet(API.register_Captcha);
+				DhNet net = new DhNet(API.resetPhone);
 				net.addParam("phone", getIntent().getStringExtra("phone"));
 				net.doPostInDialog(new NetTask(self) {
 
@@ -120,7 +120,7 @@ public class ResetPswdTwoActivity extends FoodsBaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RESULT_OK && requestCode == Edit) {
+		if (resultCode == RESULT_OK && requestCode == Edit) {
 			Intent it = getIntent();
 			setResult(Activity.RESULT_OK, it);
 			finish();

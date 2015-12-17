@@ -1,6 +1,14 @@
 package com.means.foods.main;
 
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONObject;
+
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.bean.User;
 import com.means.foods.cate.CateIndexFragment;
 import com.means.foods.collect.CollectIndexFragment;
@@ -9,6 +17,10 @@ import com.means.foods.manage.UserInfoManage;
 import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.my.MyIndexFragment;
 
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,6 +51,7 @@ public class MainActivity extends FragmentActivity {
 		initView();
 		initTab();
 		setTab(0);
+		updateApp();
 	}
 
 	private void initView() {
@@ -63,27 +76,27 @@ public class MainActivity extends FragmentActivity {
 
 	private void setTab(final int index) {
 		User user = User.getInstance();
-		if(index==2||index==3) {
-			if(!user.isLogin()) {
-				UserInfoManage.getInstance().checkLogin(MainActivity.this, new  LoginCallBack() {
-				
-				@Override
-				public void onisLogin() {
-					setTab(index);
-					
-				}
-				
-				@Override
-				public void onLoginFail() {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+		if (index == 2 || index == 3) {
+			if (!user.isLogin()) {
+				UserInfoManage.getInstance().checkLogin(MainActivity.this,
+						new LoginCallBack() {
+
+							@Override
+							public void onisLogin() {
+								setTab(index);
+
+							}
+
+							@Override
+							public void onLoginFail() {
+								// TODO Auto-generated method stub
+
+							}
+						});
 				return;
 			}
 		}
-		
-		
+
 		for (int i = 0; i < tabV.getChildCount(); i++) {
 			LinearLayout childV = (LinearLayout) tabV.getChildAt(i);
 			RelativeLayout imgV = (RelativeLayout) childV.getChildAt(0);
@@ -177,6 +190,65 @@ public class MainActivity extends FragmentActivity {
 			currentFragment = fragment;
 		} catch (Exception e) {
 		}
+	}
+
+	public void updateApp() {
+		final String mCurrentVersion = getAppVersion();
+		DhNet net = new DhNet(API.update);
+		net.doGet(new NetTask(MainActivity.this) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					String version = JSONUtil.getString(jo, "version");
+					if (0 < version.compareTo(mCurrentVersion)) {
+						showUpdateDialog(jo);
+					}
+				}
+			}
+		});
+	}
+
+	private String getAppVersion() {
+		String versionName = null;
+		try {
+			String pkName = this.getPackageName();
+			versionName = this.getPackageManager().getPackageInfo(pkName, 0).versionName;
+
+		} catch (Exception e) {
+			return null;
+		}
+		return versionName;
+	}
+
+	private void showUpdateDialog(final JSONObject jo) {
+		Builder builder = new Builder(this);
+		builder.setTitle("发现新版本 " + JSONUtil.getString(jo, "version"));
+		builder.setMessage(JSONUtil.getString(jo, "remarks"));
+		builder.setPositiveButton("立即更新",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent it = new Intent(Intent.ACTION_VIEW);
+						Uri uri = Uri.parse(JSONUtil.getString(jo, "url"));
+						it.setData(uri);
+						startActivity(it);
+					}
+
+				});
+		builder.setNegativeButton("以后再说",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						if (JSONUtil.getInt(jo, "forceUpgrade") == 1) {
+							finish();
+						}
+					}
+				});
+		builder.create().show();
 	}
 
 }

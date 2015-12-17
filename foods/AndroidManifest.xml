@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.means.foods"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,14 +28,20 @@
         android:name=".FoodsApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:persistent="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".cate.RestaurantDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".main.SearchActivity" />
-        <activity android:name=".main.SearchResultActivity" />
+        <activity android:name=".main.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".main.SearchResultActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".cate.RestaurantListActivity"
             android:label="@string/title_activity_restaurant_list" />
@@ -43,54 +49,82 @@
             android:name=".my.EditinfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".my.MsgDetailActivity" />
-        <activity android:name=".main.WebActivity" />
-        <activity android:name=".cate.ReservationsDetailsActivity" />
+        <activity
+            android:name=".my.MsgDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".cate.ReservationsDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".my.RegisterOneActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".my.RegisterTwoActivity" />
-        <activity android:name=".my.RegisterFinishActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.RegisterTwoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.RegisterFinishActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.MainActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".my.LoginActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".main.SplashActivity" >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.SplashActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".cate.ConfirmDetailsActivity" >
+        <activity android:name=".cate.ConfirmDetailsActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.ReviseNameActivity" >
+        <activity android:name=".my.ReviseNameActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".my.RevisePhoneActivity" >
+        <activity android:name=".my.RevisePhoneActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".my.MsgListActivity" >
+        <activity android:name=".my.MsgListActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".my.MyReservationsListActivity" >
+        <activity android:name=".my.MyReservationsListActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.ReviseEmailActivity" >
+        <activity android:name=".my.ReviseEmailActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.RevisePswdActivity" >
+        <activity android:name=".my.RevisePswdActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".main.GuidanceActivity" >
+        <activity android:name=".main.GuidanceActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".main.ReadyActivity" >
+        <activity android:name=".main.ReadyActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.ResetPswdOneActivity" >
+        <activity android:name=".my.ResetPswdOneActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.ResetPswdTwoActivity" >
+        <activity android:name=".my.ResetPswdTwoActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".my.ResetPswdThreeActivity" >
+        <activity android:name=".my.ResetPswdThreeActivity" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".my.RegisterThreeActivity"
-            android:label="@string/title_activity_register_three" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".wxapi.WXPayEntryActivity"
