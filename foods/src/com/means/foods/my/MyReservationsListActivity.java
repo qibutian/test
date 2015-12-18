@@ -29,7 +29,10 @@ import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
+import com.means.foods.view.pop.SharePop;
+import com.means.foods.view.pop.SharePop.ShareResultListener;
 
 public class MyReservationsListActivity extends FoodsBaseActivity {
 
@@ -85,7 +88,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 			@Override
 			public Object fix(View itemV, final Integer position,
 					final Object o, Object jo) {
-				JSONObject data = (JSONObject) jo;
+				final JSONObject data = (JSONObject) jo;
 				TextView arrarrive_timeT = (TextView) itemV
 						.findViewById(R.id.arrive_time);
 				String arrtime = FoodsValueFix.getStandardTime(
@@ -101,6 +104,29 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 							@Override
 							public void onClick(View arg0) {
 								cancleOrder(o.toString(), position);
+							}
+						});
+
+				itemV.findViewById(R.id.share).setOnClickListener(
+						new OnClickListener() {
+
+							@Override
+							public void onClick(View arg0) {
+								SharePop pop = new SharePop(self);
+								pop.setOnShareResultListener(new ShareResultListener() {
+
+									@Override
+									public void onResult(int result) {
+										FoodsUtils.wechatShare(result, self,
+												JSONUtil.getString(data,
+														"store_name"),
+												JSONUtil.getString(data,
+														"store_feature"),
+												JSONUtil.getString(data,
+														"store_id"));
+									}
+								});
+								pop.show();
 							}
 						});
 

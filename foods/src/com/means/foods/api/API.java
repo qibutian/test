@@ -98,4 +98,7 @@ public class API {
 	// 版本更新
 	public static String update = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=versionUpdate";
 
+	// 消息列表
+	public static String msglist = "http://www.foodies.im/wap.php?g=Wap&c=My&a=messageListApi";
+
 }

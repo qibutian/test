@@ -1,5 +1,7 @@
 package com.means.foods.my;
 
+import org.json.JSONObject;
+
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.util.UserLocation;
@@ -14,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.User;
 import com.means.foods.cate.RestaurantListActivity;
 import com.means.foods.view.RefreshListViewAndMore;
 
@@ -21,12 +24,12 @@ public class MsgListActivity extends FoodsBaseActivity {
 
 	PtrFrameLayout mPtrFrame;
 
-
 	RefreshListViewAndMore listV;
 
 	LayoutInflater mLayoutInflater;
 
 	ListView contentListV;
+	NetJSONAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,35 +42,30 @@ public class MsgListActivity extends FoodsBaseActivity {
 	public void initView() {
 		setTitle("消息列表");
 		listV = (RefreshListViewAndMore) findViewById(R.id.my_listview);
-		String url = API.CWBaseurl + "activity/list?";
+		String url = API.msglist;
 		contentListV = listV.getListView();
 
 		// 设置空的emptyView
 		listV.setEmptyView(LayoutInflater.from(self).inflate(
 				R.layout.list_nomal_emptyview, null));
-		NetJSONAdapter adapter = new NetJSONAdapter(url, self,
-				R.layout.item_msg);
-		UserLocation location = UserLocation.getInstance();
+		adapter = new NetJSONAdapter(url, self, R.layout.item_msg);
 		adapter.fromWhat("data");
-		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-		adapter.addparam("latitude", location.getLatitude());
-		adapter.addparam("longitude", location.getLongitude());
-		adapter.addparam("maxDistance", "5000000");
-		adapter.addparam("majorType", "");
-		adapter.addparam("pay", "");
-		adapter.addparam("gender", "");
-		adapter.addparam("transfer", "");
-		adapter.addparam("token", "");
-		adapter.addparam("userId", "");
-		adapter.addField("activityId", R.id.text);
+		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.addparam("token", User.getInstance().getToken());
+		adapter.addField("title", R.id.title);
+		adapter.addField("content", R.id.content);
+		adapter.addField("creattime", R.id.date, "time");
+		adapter.addField("show_type", R.id.show_type);
 		listV.setAdapter(adapter);
 
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				Intent it = new Intent(self, MsgDetailActivity.class);
+				JSONObject data = adapter.getTItem(position);
+				it.putExtra("jo", data.toString());
 				startActivity(it);
 			}
 		});

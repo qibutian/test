@@ -224,8 +224,8 @@
                             android:id="@+id/info_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
+                            android:paddingBottom="7dp"
+                            android:paddingTop="12dp"
                             android:src="@drawable/icon_down" />
 
                         <View style="@style/line_horizontal" />
@@ -257,11 +257,13 @@
                             android:orientation="horizontal" >
 
                             <LinearLayout
+                                android:id="@+id/menu"
                                 android:layout_width="120dp"
                                 android:layout_height="35dp"
                                 android:background="@drawable/btn_brown_fillet"
                                 android:gravity="center"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal"
+                                android:visibility="gone" >
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -280,8 +282,8 @@
                             android:id="@+id/feature_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
+                            android:paddingBottom="7dp"
+                            android:paddingTop="12dp"
                             android:src="@drawable/icon_down" />
 
                         <View style="@style/line_horizontal" />
@@ -309,8 +311,8 @@
                             android:id="@+id/chef_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
+                            android:paddingBottom="7dp"
+                            android:paddingTop="12dp"
                             android:src="@drawable/icon_down" />
 
                         <View style="@style/line_horizontal" />
@@ -338,8 +340,8 @@
                             android:id="@+id/tips_fold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginTop="12dp"
+                            android:paddingBottom="7dp"
+                            android:paddingTop="12dp"
                             android:src="@drawable/icon_down" />
 
                         <View style="@style/line_horizontal" />
@@ -443,5 +445,12 @@
                 android:text="BOOKING" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/menu_pic"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
 
 </RelativeLayout>

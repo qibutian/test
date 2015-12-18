@@ -13,10 +13,13 @@
         android:paddingTop="10dp" >
 
         <TextView
+            android:id="@+id/show_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:background="@color/text_yellow"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:text="进度"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small" />
@@ -34,26 +37,25 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/msg_title"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wine&amp;WisKey餐厅预订状态"
                     android:textColor="@color/text_33_black"
                     android:textSize="@dimen/text_medium" />
 
                 <TextView
-                    android:id="@+id/mag_content"
+                    android:id="@+id/content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:lineSpacingExtra="4dp"
                     android:maxLines="2"
-                    android:text="您预订的餐厅Wine&amp;WisKey已成功，请查看更多详情ASDASDADDA"
                     android:textColor="@color/text_66_black_light"
                     android:textSize="@dimen/text_small" />
 
                 <TextView
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

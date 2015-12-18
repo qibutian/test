@@ -53,7 +53,7 @@ public class FoodsValueFix implements ValueFix {
 			return null;
 		if ("time".equals(type)) {
 			return getStandardTime(Long.parseLong(o.toString()),
-					"yyyy年MM月dd");
+					"yyyy年MM月dd日");
 		} else if ("neartime".equals(type)) {
 			return converTime(Long.parseLong(o.toString()));
 		}

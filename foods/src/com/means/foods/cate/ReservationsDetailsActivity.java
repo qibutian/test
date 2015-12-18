@@ -177,8 +177,8 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 				@Override
 				public void onResult(int result) {
 					FoodsUtils.wechatShare(result, self,
-							JSONUtil.getString(jo, "name"),
-							JSONUtil.getString(jo, "reason"),
+							JSONUtil.getString(jo, "store_name"),
+							JSONUtil.getString(jo, "store_feature"),
 							JSONUtil.getString(jo, "store_id"));
 				}
 			});

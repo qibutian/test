@@ -93,6 +93,10 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	TouchWebView webV;
 
+	View menuV;
+
+	ImageView menuI;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -122,6 +126,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		list_img.setImageResource(R.drawable.icon_collect);
 		mViewPager = (FoodsGallery) findViewById(R.id.viewer);
 		reservedV = findViewById(R.id.reserved);
+		menuI = (ImageView) findViewById(R.id.menu_pic);
 
 		info_foldI = (ImageView) findViewById(R.id.info_fold);
 		feature_foldI = (ImageView) findViewById(R.id.feature_fold);
@@ -133,13 +138,15 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		chef_fold = new Fold(chefT, chef_foldI, false);
 		tips_fold = new Fold(tipsT, tips_foldI, false);
 		shareV = findViewById(R.id.share);
-
+		menuV = findViewById(R.id.menu);
 		reservedV.setOnClickListener(this);
 		info_foldI.setOnClickListener(this);
 		feature_foldI.setOnClickListener(this);
 		chef_foldI.setOnClickListener(this);
 		tips_foldI.setOnClickListener(this);
 		shareV.setOnClickListener(this);
+		menuV.setOnClickListener(this);
+		menuI.setOnClickListener(this);
 		webV = (TouchWebView) findViewById(R.id.web);
 		webV.getSettings().setDefaultTextEncodingName("UTF-8");
 		webV.getSettings().setJavaScriptEnabled(true);
@@ -186,6 +193,14 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					ViewUtil.bindView(tipsT, JSONUtil.getString(jo, "tips"));
 					ViewUtil.bindView(findViewById(R.id.cuisine),
 							JSONUtil.getString(jo, "cuisine"));
+					ViewUtil.bindNetImage(menuI,
+							JSONUtil.getString(jo, "menuimage"), "default");
+					if (TextUtils.isEmpty(JSONUtil.getString(jo, "menuimage"))) {
+						menuV.setVisibility(View.GONE);
+					} else {
+						menuV.setVisibility(View.VISIBLE);
+					}
+
 					like_layout.setOnClickListener(new MycollOnClick(jo));
 					jsc = JSONUtil.getJSONArray(jo, "all_pic");
 					// isShowCollect = JSONUtil.getInt(jo, "is_collect") == 1 ?
@@ -319,6 +334,14 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			pop.show();
 			break;
 
+		case R.id.menu:
+			menuI.setVisibility(View.VISIBLE);
+			break;
+
+		case R.id.menu_pic:
+			menuI.setVisibility(View.GONE);
+			break;
+
 		default:
 			break;
 		}
@@ -336,12 +359,12 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		if (fold.isFlag()) {
 			tv.setEllipsize(TextUtils.TruncateAt.END);// 收缩
 			tv.setMaxLines(3);
-			img.setImageResource(R.drawable.icon_down);
+			img.setImageResource(R.drawable.icon_down_new);
 			fold.setFlag(false);
 		} else {
 			tv.setEllipsize(null); // 展开
 			tv.setMaxLines(100);
-			img.setImageResource(R.drawable.icon_brown_top);
+			img.setImageResource(R.drawable.arrow_up);
 			fold.setFlag(true);
 		}
 	}

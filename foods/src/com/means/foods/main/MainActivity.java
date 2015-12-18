@@ -225,14 +225,14 @@ public class MainActivity extends FragmentActivity {
 	private void showUpdateDialog(final JSONObject jo) {
 		Builder builder = new Builder(this);
 		builder.setTitle("发现新版本 " + JSONUtil.getString(jo, "version"));
-		builder.setMessage(JSONUtil.getString(jo, "remarks"));
+		builder.setMessage(JSONUtil.getString(jo, "des"));
 		builder.setPositiveButton("立即更新",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 						Intent it = new Intent(Intent.ACTION_VIEW);
-						Uri uri = Uri.parse(JSONUtil.getString(jo, "url"));
+						Uri uri = Uri.parse(JSONUtil.getString(jo, "download"));
 						it.setData(uri);
 						startActivity(it);
 					}
@@ -243,7 +243,7 @@ public class MainActivity extends FragmentActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						if (JSONUtil.getInt(jo, "forceUpgrade") == 1) {
+						if (JSONUtil.getInt(jo, "force_update") == 1) {
 							finish();
 						}
 					}
