@@ -89,6 +89,7 @@ public class NetUtil {
         HttpResponse response;
         if (method.equalsIgnoreCase("POST")) {
             HttpPost httppost = new HttpPost(url);
+//            httppost.setHeader("app-version", "GB2312,utf-8;q=0.7,*;q=0.7");  
             if (Const.postType == 1) {
                 List<NameValuePair> formparams = new ArrayList<NameValuePair>();
                 for (String key : params.keySet()) {
@@ -179,4 +180,5 @@ public class NetUtil {
         }
         return sb.toString();
     }
+    
 }
