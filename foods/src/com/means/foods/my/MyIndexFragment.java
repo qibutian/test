@@ -165,7 +165,7 @@ public class MyIndexFragment extends FoodsListFragment implements
 				Intent it = new Intent(getActivity(),
 						MyReservationsListActivity.class);
 				JSONObject jo = adapter.getTItem(position - 1);
-				it.putExtra("jo", jo.toString());
+				it.putExtra("cityName", JSONUtil.getString(jo, "city_name"));
 				startActivity(it);
 			}
 		});
@@ -177,13 +177,13 @@ public class MyIndexFragment extends FoodsListFragment implements
 		msgI = (ImageView) headV.findViewById(R.id.msg);
 		msgI.setOnClickListener(this);
 
-		// bradeV = headV.findViewById(R.id.brade);
-		badgeT = new BadgeView(getActivity(), msgI);// 创建一个BadgeView对象，view为你需要显示提醒信息的控件
+		bradeV = headV.findViewById(R.id.brade);
+		badgeT = new BadgeView(getActivity(), bradeV);// 创建一个BadgeView对象，view为你需要显示提醒信息的控件
 		badgeT.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);// 显示的位置.中间，还有其他位置属性
 		badgeT.setTextColor(Color.WHITE); // 文本颜色
 		badgeT.setBadgeBackgroundColor(getResources()
 				.getColor(R.color.text_red)); // 背景颜色
-		badgeT.setTextSize(12); // 文本大小
+		badgeT.setTextSize(10); // 文本大小
 		getMyDetails();
 		getMsgCount();
 	}

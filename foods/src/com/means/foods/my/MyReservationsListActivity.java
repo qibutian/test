@@ -45,9 +45,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 
 	ListView contentListV;
 
-	JSONArray jsa;
-
-	PSAdapter adapter;
+	NetJSONAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +57,17 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		setTitle("我的预定");
-		try {
-			String intentjo = getIntent().getStringExtra("jo");
-			JSONObject jo = new JSONObject(intentjo);
-			jsa = JSONUtil.getJSONArray(jo, "data");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		listV = (ListView) findViewById(R.id.listview);
 		// 设置空的emptyView
 		// listV.setEmptyView(LayoutInflater.from(self).inflate(
 		// R.layout.list_nomal_emptyview, null));
-		adapter = new PSAdapter(self, R.layout.item_reservations);
+
+		String url = API.orderList;
+		adapter = new NetJSONAdapter(url, self, R.layout.item_reservations);
+		adapter.fromWhat("data");
+		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.addparam("token", User.getInstance().getToken());
+		adapter.addparam("cityName", getIntent().getStringExtra("cityName"));
 		adapter.addField("dateline", R.id.date, "time");
 		adapter.addField(new FieldMap("pay_money", R.id.price) {
 
@@ -137,7 +133,6 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 		});
 
 		listV.setAdapter(adapter);
-		adapter.addAll(jsa);
 		listV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -149,9 +144,9 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 				startActivity(it);
 			}
 		});
+		adapter.showNextInDialog();
 	}
 
-	@SuppressLint("NewApi")
 	private void cancleOrder(String orderId, final int index) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.ordercancle);
@@ -164,8 +159,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("取消成功");
-					jsa.remove(index);
-					adapter.notifyDataSetChanged();
+					adapter.refresh();
 				}
 			}
 		});
