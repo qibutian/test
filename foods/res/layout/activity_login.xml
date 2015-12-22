@@ -49,11 +49,10 @@
                         android:layout_width="fill_parent"
                         android:layout_height="54dp"
                         android:background="@color/nothing"
-                        android:textSize="@dimen/text_small"
                         android:hint="用户名/邮箱号码/手机号"
                         android:textColor="@color/text_66_black_light"
-                        android:text="18502519390"
-                        android:textColorHint="@color/text_99_grey_light" />
+                        android:textColorHint="@color/text_99_grey_light"
+                        android:textSize="@dimen/text_small" />
 
                     <View style="@style/line_horizontal" />
 
@@ -63,11 +62,10 @@
                         android:layout_height="54dp"
                         android:background="@color/nothing"
                         android:hint="密码"
-                        android:textSize="@dimen/text_small"
                         android:inputType="textPassword"
                         android:textColor="@color/text_66_black_light"
-                        android:text="123456"
-                        android:textColorHint="@color/text_99_grey_light" />
+                        android:textColorHint="@color/text_99_grey_light"
+                        android:textSize="@dimen/text_small" />
                 </LinearLayout>
 
                 <Button

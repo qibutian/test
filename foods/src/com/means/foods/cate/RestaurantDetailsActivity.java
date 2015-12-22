@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,17 +135,18 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		chef_foldI = (ImageView) findViewById(R.id.chef_fold);
 		tips_foldI = (ImageView) findViewById(R.id.tips_fold);
 
-		info_fold = new Fold(txt_infoT, info_foldI, false);
-		feature_fold = new Fold(featureT, feature_foldI, false);
-		chef_fold = new Fold(chefT, chef_foldI, false);
-		tips_fold = new Fold(tipsT, tips_foldI, false);
+//		feature_fold = new Fold(featureT, feature_foldI, false);
+//		chef_fold = new Fold(chefT, chef_foldI, false);
+//		tips_fold = new Fold(tipsT, tips_foldI, false);
 		shareV = findViewById(R.id.share);
 		menuV = findViewById(R.id.menu);
 		reservedV.setOnClickListener(this);
+
 		info_foldI.setOnClickListener(this);
 		feature_foldI.setOnClickListener(this);
 		chef_foldI.setOnClickListener(this);
 		tips_foldI.setOnClickListener(this);
+
 		shareV.setOnClickListener(this);
 		menuV.setOnClickListener(this);
 		menuI.setOnClickListener(this);
@@ -165,7 +168,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 
 				if (response.isSuccess()) {
-					JSONObject jo = response.jSONFromData();
+					final JSONObject jo = response.jSONFromData();
 					ViewUtil.bindView(mean_moneyT,
 							"人均￥" + JSONUtil.getString(jo, "mean_money"));
 					ViewUtil.bindView(cuisineT,
@@ -187,10 +190,90 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					ViewUtil.bindView(hoursT, JSONUtil.getString(jo, "hours"));
 					ViewUtil.bindView(txt_infoT,
 							JSONUtil.getString(jo, "txt_info"));
+
+					ViewTreeObserver vto = txt_infoT.getViewTreeObserver();
+					vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@Override
+						public void onGlobalLayout() {
+							ViewTreeObserver obs = txt_infoT
+									.getViewTreeObserver();
+							obs.removeGlobalOnLayoutListener(this);
+
+							if (txt_infoT.getLineCount() > 3) {
+								info_fold = new Fold(txt_infoT, info_foldI,
+										true);
+								textFold(info_fold);
+							} else {
+								info_foldI.setVisibility(View.GONE);
+							}
+
+						}
+					});
+
 					ViewUtil.bindView(featureT,
 							JSONUtil.getString(jo, "feature"));
+
+					ViewTreeObserver vto1 = featureT.getViewTreeObserver();
+					vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@Override
+						public void onGlobalLayout() {
+							ViewTreeObserver obs = featureT
+									.getViewTreeObserver();
+							obs.removeGlobalOnLayoutListener(this);
+
+							if (featureT.getLineCount() > 3) {
+								feature_fold = new Fold(featureT,
+										feature_foldI, true);
+								textFold(feature_fold);
+							} else {
+								feature_foldI.setVisibility(View.GONE);
+							}
+
+						}
+					});
+
 					ViewUtil.bindView(chefT, JSONUtil.getString(jo, "chef"));
+
+					ViewTreeObserver vto2 = chefT.getViewTreeObserver();
+					vto2.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@Override
+						public void onGlobalLayout() {
+							ViewTreeObserver obs = chefT.getViewTreeObserver();
+							obs.removeGlobalOnLayoutListener(this);
+
+							if (chefT.getLineCount() > 3) {
+								chef_fold = new Fold(chefT, chef_foldI, true);
+								textFold(chef_fold);
+							} else {
+								chef_foldI.setVisibility(View.GONE);
+							}
+
+						}
+					});
+
 					ViewUtil.bindView(tipsT, JSONUtil.getString(jo, "tips"));
+
+					ViewTreeObserver vto3 = tipsT.getViewTreeObserver();
+					vto3.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+						@Override
+						public void onGlobalLayout() {
+							ViewTreeObserver obs = tipsT.getViewTreeObserver();
+							obs.removeGlobalOnLayoutListener(this);
+
+							if (tipsT.getLineCount() > 3) {
+								tips_fold = new Fold(tipsT, tips_foldI, true);
+								textFold(tips_fold);
+							} else {
+								tips_foldI.setVisibility(View.GONE);
+							}
+
+						}
+					});
+
 					ViewUtil.bindView(findViewById(R.id.cuisine),
 							JSONUtil.getString(jo, "cuisine"));
 					ViewUtil.bindNetImage(menuI,

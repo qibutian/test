@@ -19,7 +19,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.User;
+import com.means.foods.main.MainActivity;
 import com.means.foods.main.ReadyActivity;
 import com.means.foods.utils.FoodsPerference;
 import com.means.foods.view.RoundImageView;
@@ -97,6 +100,19 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		passwordR.setOnClickListener(this);
 		logingoutB.setOnClickListener(this);
 
+		findViewById(R.id.backLayout).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (getIntent().getStringExtra("type") != null) {
+					Intent it = new Intent(self, MainActivity.class);
+					startActivity(it);
+					finishWithoutAnim();
+				} else {
+					finish();
+				}
+			}
+		});
 		getMyDetails();
 	}
 
@@ -167,15 +183,16 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 		DhNet net = new DhNet(API.editAvatar);
 		net.addParam("uid", user.getUid());
 		net.addParam("token", user.getToken());
-//		net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self) {
-//
-//			@Override
-//			public void doInUI(Response response, Integer transfer) {
-//				if (response.isSuccess()) {
-//					showToast("更换头像成功");
-//				}
-//			}
-//		});
+		// net.upload(new FileInfo("imgFile", new File(path)), new NetTask(self)
+		// {
+		//
+		// @Override
+		// public void doInUI(Response response, Integer transfer) {
+		// if (response.isSuccess()) {
+		// showToast("更换头像成功");
+		// }
+		// }
+		// });
 		net.upload("imgFile", new File(path), new NetTask(self) {
 
 			@Override
@@ -301,10 +318,27 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				hidenProgressDialog();
 				if (response.isSuccess()) {
 					sexT.setText("1".equals(sex) ? "男" : "女");
-					showToast("更换性别成功");
+					showToast("更换性别成功");  
 				}
 			}
 		});
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			if (getIntent().getStringExtra("type") != null) {
+				Intent it = new Intent(self, MainActivity.class);
+				startActivity(it);
+				finishWithoutAnim();
+			} else {
+				finish();
+			}
+
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

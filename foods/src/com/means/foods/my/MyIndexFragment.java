@@ -13,7 +13,9 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 import net.duohuo.dhroid.util.ViewUtil;
+import net.duohuo.dhroid.view.BadgeView;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -70,6 +72,12 @@ public class MyIndexFragment extends FoodsListFragment implements
 
 	NetJSONAdapter adapter;
 
+	boolean hidden;
+
+	BadgeView badgeT;
+
+	View bradeV;
+
 	public static MyIndexFragment getInstance() {
 		if (instance == null) {
 			instance = new MyIndexFragment();
@@ -89,6 +97,15 @@ public class MyIndexFragment extends FoodsListFragment implements
 		// TODO Auto-generated method stub
 		return mainV;
 
+	}
+
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		super.onHiddenChanged(hidden);
+		this.hidden = hidden;
+		if (!hidden) {
+			getMsgCount();
+		}
 	}
 
 	private void initView() {
@@ -111,20 +128,20 @@ public class MyIndexFragment extends FoodsListFragment implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 
-//				TextView desT = (TextView) itemV.findViewById(R.id.des);
+				// TextView desT = (TextView) itemV.findViewById(R.id.des);
 				JSONObject data = (JSONObject) jo;
-//				JSONArray jsa = JSONUtil.getJSONArray(data, "data");
-//				String des = "";
-//				for (int i = 0; i < jsa.length(); i++) {
-//					try {
-//						JSONObject cateJo = jsa.getJSONObject(i);
-//						des = des + JSONUtil.getString(cateJo, "name") + "    ";
-//					} catch (JSONException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//				desT.setText(des);
+				// JSONArray jsa = JSONUtil.getJSONArray(data, "data");
+				// String des = "";
+				// for (int i = 0; i < jsa.length(); i++) {
+				// try {
+				// JSONObject cateJo = jsa.getJSONObject(i);
+				// des = des + JSONUtil.getString(cateJo, "name") + "    ";
+				// } catch (JSONException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				// }
+				// desT.setText(des);
 
 				String address = JSONUtil.getString(data, "city_name");
 				if (!TextUtils.isEmpty(address)) {
@@ -143,11 +160,11 @@ public class MyIndexFragment extends FoodsListFragment implements
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				Intent it = new Intent(getActivity(),
 						MyReservationsListActivity.class);
-				JSONObject jo = adapter.getTItem(position-1);
+				JSONObject jo = adapter.getTItem(position - 1);
 				it.putExtra("jo", jo.toString());
 				startActivity(it);
 			}
@@ -159,8 +176,16 @@ public class MyIndexFragment extends FoodsListFragment implements
 		editB.setOnClickListener(this);
 		msgI = (ImageView) headV.findViewById(R.id.msg);
 		msgI.setOnClickListener(this);
-		getMyDetails();
 
+		// bradeV = headV.findViewById(R.id.brade);
+		badgeT = new BadgeView(getActivity(), msgI);// 创建一个BadgeView对象，view为你需要显示提醒信息的控件
+		badgeT.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);// 显示的位置.中间，还有其他位置属性
+		badgeT.setTextColor(Color.WHITE); // 文本颜色
+		badgeT.setBadgeBackgroundColor(getResources()
+				.getColor(R.color.text_red)); // 背景颜色
+		badgeT.setTextSize(12); // 文本大小
+		getMyDetails();
+		getMsgCount();
 	}
 
 	private void getMyDetails() {
@@ -206,9 +231,39 @@ public class MyIndexFragment extends FoodsListFragment implements
 		headV.findViewById(R.id.empty_view).setVisibility(
 				adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
 	}
-	
-	//更新个人信息
+
+	// 更新个人信息
 	public void onEventMainThread(MyIndexEB myIndexEB) {
 		getMyDetails();
+	}
+
+	private void getMsgCount() {
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.msgcount);
+		net.addParam("uid ", user.getUid());
+		net.addParam("token", user.getToken());
+		net.doGet(new NetTask(getActivity()) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					// 公平价收车数
+					int count = JSONUtil.getInt(jo, "count");
+					if (count > 0) {
+
+						if (count > 99) {
+							badgeT.setText("N");
+						} else {
+							badgeT.setText(count + "");
+						}
+						badgeT.show();
+					} else {
+						badgeT.hide();
+					}
+
+				}
+			}
+		});
 	}
 }

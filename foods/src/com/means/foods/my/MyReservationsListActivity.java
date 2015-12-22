@@ -13,6 +13,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -150,6 +151,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 		});
 	}
 
+	@SuppressLint("NewApi")
 	private void cancleOrder(String orderId, final int index) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.ordercancle);
@@ -168,5 +170,4 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 			}
 		});
 	}
-
 }

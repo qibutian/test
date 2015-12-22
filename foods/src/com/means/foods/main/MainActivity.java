@@ -1,5 +1,8 @@
 package com.means.foods.main;
 
+import net.duohuo.dhroid.activity.ActivityTack;
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -22,10 +25,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -43,6 +48,10 @@ public class MainActivity extends FragmentActivity {
 
 	TextView titleT;
 
+	boolean isExit;
+
+	Handler mHandler;
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -55,6 +64,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initView() {
+		mHandler = new Handler();
 		fm = getSupportFragmentManager();
 		tabV = (LinearLayout) findViewById(R.id.tab);
 		titleT = (TextView) findViewById(R.id.title);
@@ -249,6 +259,29 @@ public class MainActivity extends FragmentActivity {
 					}
 				});
 		builder.create().show();
+	}
+
+	public class ExitRunnable implements Runnable {
+		@Override
+		public void run() {
+			isExit = false;
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (!isExit) {
+				isExit = true;
+				IocContainer.getShare().get(IDialog.class)
+						.showToastShort(MainActivity.this, "再按一次退出程序");
+				mHandler.postDelayed(new ExitRunnable(), 2000);
+			} else {
+				ActivityTack.getInstanse().exit(MainActivity.this);
+			}
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

@@ -31,7 +31,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/white_fillet"
                     android:gravity="center"
-                    android:padding="4dp" >
+                    android:padding="2dp" >
 
                     <com.means.foods.view.RoundImageView
                         android:id="@+id/head"
@@ -62,14 +62,20 @@
                     android:textSize="@dimen/text_small" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/msg"
-                android:layout_width="19dp"
-                android:layout_height="23dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/remind" />
+            <RelativeLayout
+                android:id="@+id/brade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/msg"
+                    android:layout_width="19dp"
+                    android:layout_height="23dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/remind" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <LinearLayout

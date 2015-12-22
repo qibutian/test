@@ -90,7 +90,7 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 		adapter.addparam("name", "");
 		adapter.addparam("uid", User.getInstance().getUid());
 		adapter.addField("name", R.id.name);
-		adapter.addField(new FieldMap("tips", R.id.des) {
+		adapter.addField(new FieldMap("tagline", R.id.des) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
@@ -163,7 +163,7 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				JSONObject jo = adapter.getTItem(position-1);
+				JSONObject jo = adapter.getTItem(position - 1);
 				Intent it = new Intent(self, RestaurantDetailsActivity.class);
 				it.putExtra("store_id", JSONUtil.getString(jo, "store_id"));
 				startActivity(it);

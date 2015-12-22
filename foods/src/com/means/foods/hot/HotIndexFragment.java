@@ -23,6 +23,7 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -137,8 +138,14 @@ public class HotIndexFragment extends FoodsListFragment implements
 					}
 				}
 				collectI.setOnClickListener(new MycollOnClick(json));
-				String des = JSONUtil.getString(json, "city_name")
-						+ "  |  人均 $" + JSONUtil.getString(json, "mean_money");
+
+				String des;
+				if (TextUtils.isEmpty(JSONUtil.getString(json, "tagline"))) {
+					des = JSONUtil.getString(json, "city_name");
+				} else {
+					des = JSONUtil.getString(json, "city_name") + "  |  "
+							+ JSONUtil.getString(json, "tagline");
+				}
 				return des;
 			}
 		});

@@ -101,4 +101,10 @@ public class API {
 	// 消息列表
 	public static String msglist = "http://www.foodies.im/wap.php?g=Wap&c=My&a=messageListApi";
 
+	// 消息未读数量
+	public static String msgcount = "http://www.foodies.im/wap.php?g=Wap&c=My&a=messageCountApi";
+
+	// 设置消息已读
+	public static String resetMsg = "http://www.foodies.im/wap.php?g=Wap&c=My&a=setMessageReadApi";
+
 }

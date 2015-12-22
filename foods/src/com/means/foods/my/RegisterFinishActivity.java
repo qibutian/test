@@ -29,7 +29,8 @@ public class RegisterFinishActivity extends FoodsBaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent it = new Intent(self, MainActivity.class);
+				Intent it = new Intent(self, EditinfoActivity.class);
+				it.putExtra("type", "register");
 				startActivity(it);
 				finishWithoutAnim();
 			}
@@ -45,8 +46,8 @@ public class RegisterFinishActivity extends FoodsBaseActivity {
 					startActivity(it);
 					finishWithoutAnim();
 				} else {
-					// Intent it = new Intent(self, MainActivity.class);
-					// startActivity(it);
+					Intent it = new Intent(self, MainActivity.class);
+					startActivity(it);
 					finishWithoutAnim();
 				}
 			}
