@@ -106,10 +106,10 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 
 				View cancelV = itemV.findViewById(R.id.cancel);
 
-				cancelV.setEnabled(JSONUtil.getInt(data, "canCancel") == 1 ? true
+				cancelV.setEnabled(JSONUtil.getInt(data, "can_cancel") == 1 ? true
 						: false);
-				cancelV.setBackgroundResource(JSONUtil
-						.getInt(data, "canCancel") == 1 ? R.drawable.reservat_oval
+				cancelV.setBackgroundResource(JSONUtil.getInt(data,
+						"can_cancel") == 1 ? R.drawable.reservat_oval
 						: R.drawable.btn_code_grey_n);
 
 				cancelV.setOnClickListener(new OnClickListener() {

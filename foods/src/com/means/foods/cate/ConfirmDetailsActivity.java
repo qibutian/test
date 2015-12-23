@@ -44,7 +44,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 
 	User user;
 
-	TextView addressT, telT, nameT, markT,priceT,featureT;
+	TextView addressT, telT, nameT, markT, priceT, featureT;
 	RadioGroup rad_sex;
 	LinearLayout footerbarLl;
 
@@ -163,30 +163,33 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 	private void initData() {
 		calendar = Calendar.getInstance();
 		if (orderType.equals(ModifyOrder)) {// 修改订单
-			calendar.setTime(new Date(Long.parseLong(JSONUtil.getString(jo, "arrive_time"))*1000));
+			calendar.setTime(new Date(Long.parseLong(JSONUtil.getString(jo,
+					"arrive_time")) * 1000));
 			timeT.setText(JSONUtil.getString(jo, "hour"));
-			people_n=JSONUtil.getInt(jo, "num");
-			priceT.setText("￥"+JSONUtil.getDouble(jo, "pay_money"));
+			people_n = JSONUtil.getInt(jo, "num");
+			priceT.setText("￥" + JSONUtil.getDouble(jo, "pay_money"));
 			nameT.setText(JSONUtil.getString(jo, "name"));
 			telT.setText(JSONUtil.getString(jo, "phone"));
 			markT.setText(JSONUtil.getString(jo, "note"));
-			rad_sex.check(JSONUtil.getInt(jo, "sex")==1?R.id.rad_man:R.id.rad_woman);
-			featureT.setText(JSONUtil.getString(jo, "store_feature"));
+			rad_sex.check(JSONUtil.getInt(jo, "sex") == 1 ? R.id.rad_man
+					: R.id.rad_woman);
+			featureT.setText(JSONUtil.getString(jo, "name"));
 			addressT.setText(JSONUtil.getString(jo, "store_address"));
-			
-		}else {
+
+		} else {
 			calendar.setTime(new Date());
 			now_hour = calendar.get(Calendar.HOUR_OF_DAY);
 			int next_hour = now_hour + 1 < 24 ? now_hour + 1 : 0;
 			timeT.setText(now_hour + ":00" + "-" + next_hour + ":00");
 			people_n = 2;
+			featureT.setText(getIntent().getStringExtra("name"));
 			addressT.setText(getIntent().getStringExtra("address"));
 		}
 		year_n = calendar.get(Calendar.YEAR);
 		month_n = calendar.get(Calendar.MONTH) + 1;
 		day_n = calendar.get(Calendar.DATE);
 		setDataView();
-		
+
 		numT.setText(people_n + "");
 	}
 
@@ -230,7 +233,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		case R.id.footerbar:
 			if (orderType.equals(ModifyOrder)) {// 修改订单
 				editOrder();
-			}else{//添加订单
+			} else {// 添加订单
 				submitOrder();
 			}
 			break;
@@ -307,8 +310,9 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
 	}
+
 	// 修改订单
-	private void editOrder(){
+	private void editOrder() {
 		final String tel = telT.getText().toString().trim();
 		if (TextUtils.isEmpty(tel)) {
 			showToast("请输入手机号码");
@@ -323,7 +327,6 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 			showToast("请输入姓名");
 			return;
 		}
-		
 
 		String mark = markT.getText().toString().trim();
 
@@ -335,8 +338,7 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 		net.addParam("hour", timeT.getText().toString());
 		net.addParam("num", numT.getText().toString());
 		net.addParam("sex",
-				rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1"
-						: "2");
+				rad_sex.getCheckedRadioButtonId() == R.id.rad_man ? "1" : "2");
 		net.addParam("tel", tel);
 		net.addParam("name", name);
 		net.addParam("mark", mark);
@@ -353,10 +355,8 @@ public class ConfirmDetailsActivity extends FoodsBaseActivity implements
 								ConfirmPaymentActivity.class);
 						it.putExtra("order_id",
 								JSONUtil.getString(json, "order_id"));
-						it.putExtra("name",
-								getIntent().getStringExtra("name"));
-						it.putExtra("price",
-								JSONUtil.getDouble(json, "price"));
+						it.putExtra("name", getIntent().getStringExtra("name"));
+						it.putExtra("price", JSONUtil.getDouble(json, "price"));
 						startActivity(it);
 					} else {
 						Intent it = new Intent(self,

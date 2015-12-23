@@ -127,9 +127,11 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			editB.setBackgroundResource(R.drawable.btn_code_grey_n);
 		}
 		if (JSONUtil.getInt(jo, "can_cancel") != 1) {
-			cancleB.setEnabled(false);
+			editB.setBackgroundResource(R.drawable.btn_code_grey_n);
+		} else {
+			cancleB.setOnClickListener(this);
+			cancleB.setBackgroundResource(R.drawable.btn_brown_fill_fillet);
 		}
-		cancleB.setOnClickListener(this);
 		editB.setOnClickListener(this);
 		shareV = findViewById(R.id.share);
 		shareV.setOnClickListener(this);

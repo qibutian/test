@@ -57,6 +57,7 @@ public class MainActivity extends FragmentActivity {
 	boolean isExit;
 
 	Handler mHandler;
+	private ActivityTack tack = ActivityTack.getInstanse();
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -64,10 +65,18 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_main);
 		FoodsUtils.initSystemBar(this);
+		// tack.addActivity(this);
 		initView();
 		initTab();
 		setTab(0);
 		updateApp();
+	}
+
+	@Override
+	public void setContentView(int layoutResID) {
+		// TODO Auto-generated method stub
+		super.setContentView(layoutResID);
+		ActivityTack.getInstanse().addActivity(this);
 	}
 
 	private void initView() {
@@ -289,6 +298,12 @@ public class MainActivity extends FragmentActivity {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
+		tack.removeActivity(this);
 	}
 
 }

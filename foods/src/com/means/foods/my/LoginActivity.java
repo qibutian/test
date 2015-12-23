@@ -2,6 +2,7 @@ package com.means.foods.my;
 
 import org.json.JSONObject;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -66,6 +67,13 @@ public class LoginActivity extends FoodsBaseActivity implements
 		loginBtn.setOnClickListener(this);
 		registerT.setOnClickListener(this);
 		forget_passwordT.setOnClickListener(this);
+		if (User.getInstance().isIslogout()) {
+			System.out.println("112121");
+			ActivityTack.getInstanse().finishOthers(this);
+		}
+
+		System.out.println("User.getInstance().isIslogout():"
+				+ User.getInstance().isIslogout());
 
 	}
 

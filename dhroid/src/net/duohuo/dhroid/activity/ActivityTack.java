@@ -57,8 +57,10 @@ public class ActivityTack {
 	 * @param context
 	 */
 	public void finishOthers(Context context) {
-
+		System.out.println("activityList.size():" + activityList.size());
 		while (activityList.size() > 1) {
+//			System.out.println("activityList.get(activityList.size() - 2):"
+//					+ activityList.get(activityList.size() - 2));
 			activityList.get(activityList.size() - 2).finish();
 		}
 	}

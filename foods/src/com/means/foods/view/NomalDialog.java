@@ -47,7 +47,6 @@ public class NomalDialog extends DialogImpl {
 			View toastV = LayoutInflater.from(context).inflate(
 					R.layout.toast_view, null);
 			ViewUtil.bindView(toastV.findViewById(R.id.text), msg);
-			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.setView(toastV);
 			toast.show();
 		}

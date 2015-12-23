@@ -230,6 +230,12 @@ public class MyIndexFragment extends Fragment implements OnClickListener,
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
+	@Override
 	public void loadSuccess(Response response) {
 		headV.findViewById(R.id.empty_view).setVisibility(
 				adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
