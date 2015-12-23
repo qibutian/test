@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,7 +89,7 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 		adapter.addparam("city_id ", cityId);
 		adapter.addparam("name", "");
 		adapter.addparam("uid", User.getInstance().getUid());
-		adapter.addField("city_name", R.id.name);
+		adapter.addField("name", R.id.name);
 		adapter.addField(new FieldMap("tagline", R.id.des) {
 
 			@Override
@@ -110,7 +111,15 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 					}
 				}
 				collectI.setOnClickListener(new MycollOnClick(json));
-				return o;
+
+				String des;
+				if (TextUtils.isEmpty(JSONUtil.getString(json, "tagline"))) {
+					des = JSONUtil.getString(json, "city_name");
+				} else {
+					des = JSONUtil.getString(json, "city_name") + "  |  "
+							+ JSONUtil.getString(json, "tagline");
+				}
+				return des;
 			}
 		});
 		listV.setAdapter(adapter);

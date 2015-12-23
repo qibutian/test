@@ -11,6 +11,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,7 +44,7 @@ public class CollectListActivity extends FoodsBaseActivity implements
 
 	LayoutInflater mLayoutInflater;
 
-	JSONObject jo;
+	JSONObject jodata;
 
 	JSONArray jsa;
 
@@ -61,8 +62,8 @@ public class CollectListActivity extends FoodsBaseActivity implements
 		setTitle("我的收藏");
 		String joStr = getIntent().getStringExtra("jo");
 		try {
-			jo = new JSONObject(joStr);
-			jsa = JSONUtil.getJSONArray(jo, "data");
+			jodata = new JSONObject(joStr);
+			jsa = JSONUtil.getJSONArray(jodata, "data");
 
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
@@ -88,7 +89,15 @@ public class CollectListActivity extends FoodsBaseActivity implements
 				ViewUtil.bindNetImage((ImageView) itemV.findViewById(R.id.pic),
 						JSONUtil.getString(json, "list_pic"), "default");
 				collectI.setOnClickListener(new MycollOnClick(json));
-				return o;
+
+				String des;
+				if (TextUtils.isEmpty(JSONUtil.getString(json, "tagline"))) {
+					des = JSONUtil.getString(jodata, "city_name");
+				} else {
+					des = JSONUtil.getString(jodata, "city_name") + "  |  "
+							+ JSONUtil.getString(json, "tagline");
+				}
+				return des;
 			}
 		});
 		listV.setAdapter(adapter);

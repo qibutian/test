@@ -113,7 +113,7 @@ public class CollectIndexFragment extends Fragment {
 				// .findViewById(R.id.letter);
 				// letterT.setText(letter);
 				// }
-				return "您收藏了" + o + "加餐厅";
+				return "您收藏了" + o + "家餐厅";
 			}
 		});
 		listV.setAdapter(adapter);
