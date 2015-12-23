@@ -12,6 +12,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,6 @@ import android.widget.TextView;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
-import com.means.foods.base.FoodsListFragment;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.RestaurantListActivity;
@@ -33,7 +33,7 @@ import com.means.foods.view.RefreshListViewAndMore;
 
 import de.greenrobot.event.EventBus;
 
-public class CollectIndexFragment extends FoodsListFragment {
+public class CollectIndexFragment extends Fragment {
 
 	static CollectIndexFragment instance;
 
@@ -83,36 +83,36 @@ public class CollectIndexFragment extends FoodsListFragment {
 		adapter.fromWhat("data");
 		adapter.addparam("uid", User.getInstance().getUid());
 		adapter.addparam("token", User.getInstance().getToken());
-//		adapter.addField("city_name", R.id.name);
+		// adapter.addField("city_name", R.id.name);
 		adapter.addField("area_img", R.id.pic, "default");
 		adapter.addField(new FieldMap("count", R.id.count) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 
-//				TextView desT = (TextView) itemV.findViewById(R.id.des);
-//				JSONObject data = (JSONObject) jo;
-//				JSONArray jsa = JSONUtil.getJSONArray(data, "data");
-//				String des = "";
-//				for (int i = 0; i < jsa.length(); i++) {
-//					try {
-//						JSONObject cateJo = jsa.getJSONObject(i);
-//						des = des + JSONUtil.getString(cateJo, "name") + "    ";
-//					} catch (JSONException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//				desT.setText(des);
+				// TextView desT = (TextView) itemV.findViewById(R.id.des);
+				// JSONObject data = (JSONObject) jo;
+				// JSONArray jsa = JSONUtil.getJSONArray(data, "data");
+				// String des = "";
+				// for (int i = 0; i < jsa.length(); i++) {
+				// try {
+				// JSONObject cateJo = jsa.getJSONObject(i);
+				// des = des + JSONUtil.getString(cateJo, "name") + "    ";
+				// } catch (JSONException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				// }
+				// desT.setText(des);
 
-//				String address = JSONUtil.getString(data, "city_name");
-//				if (!TextUtils.isEmpty(address)) {
-//					String letter = FoodsUtils.getPYIndexStr(
-//							address.substring(0, 1), true);
-//					TextView letterT = (TextView) itemV
-//							.findViewById(R.id.letter);
-//					letterT.setText(letter);
-//				}
+				// String address = JSONUtil.getString(data, "city_name");
+				// if (!TextUtils.isEmpty(address)) {
+				// String letter = FoodsUtils.getPYIndexStr(
+				// address.substring(0, 1), true);
+				// TextView letterT = (TextView) itemV
+				// .findViewById(R.id.letter);
+				// letterT.setText(letter);
+				// }
 				return "您收藏了" + o + "加餐厅";
 			}
 		});
@@ -128,7 +128,8 @@ public class CollectIndexFragment extends FoodsListFragment {
 					JSONArray jsa = jo.getJSONArray("data");
 					JSONObject dataJo = jsa.getJSONObject(0);
 					Intent it = new Intent(getActivity(),
-							RestaurantListActivity.class);
+							CollectListActivity.class);
+					it.putExtra("jo", jo.toString());
 					it.putExtra("cityId", JSONUtil.getString(dataJo, "city_id"));
 					startActivity(it);
 				} catch (JSONException e) {

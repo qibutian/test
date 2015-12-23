@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nav_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginTop="26dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="11dp" >
+
+        <TextView
+            style="@style/text_66_blacklight_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="定金:" />
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/text_66_blacklight_small" />
+    </LinearLayout>
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="11dp" >
+
+        <TextView
+            style="@style/text_66_blacklight_small"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="订单号:" />
+
+        <TextView
+            android:id="@+id/order_id"
+            style="@style/text_yellow_small" />
+    </LinearLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/btn_yellow_fill_n"
+        android:text="确定取消"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_big" />
+
+</LinearLayout>

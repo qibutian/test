@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,9 @@ import android.widget.ListView;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
-import com.means.foods.base.FoodsListFragment;
 import com.means.foods.view.RefreshListViewAndMore;
 
-public class CateIndexFragment extends FoodsListFragment {
+public class CateIndexFragment extends Fragment {
 
 	static CateIndexFragment instance;
 

@@ -11,6 +11,7 @@ import android.content.Context;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.means.foods.db.DaoHelper;
+import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.NomalDialog;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;

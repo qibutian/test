@@ -23,6 +23,8 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +40,6 @@ import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
-import com.means.foods.base.FoodsListFragment;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
@@ -54,8 +55,7 @@ import com.means.foods.view.RefreshListViewAndMore;
 
 import de.greenrobot.event.EventBus;
 
-public class HotIndexFragment extends FoodsListFragment implements
-		OnClickListener {
+public class HotIndexFragment extends Fragment implements OnClickListener {
 
 	static HotIndexFragment instance;
 
@@ -116,6 +116,7 @@ public class HotIndexFragment extends FoodsListFragment implements
 		adapter.fromWhat("data");
 		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
 		adapter.addparam("uid", User.getInstance().getUid());
+		adapter.addparam("recommend", "1");
 		adapter.addField("name", R.id.name);
 		adapter.addField(new FieldMap("tips", R.id.des) {
 

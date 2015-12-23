@@ -1,5 +1,9 @@
 package com.means.foods.cate;
 
+import java.io.File;
+
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -9,12 +13,17 @@ import net.duohuo.dhroid.util.ViewUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,7 +33,9 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.CancelOrderEB;
 import com.means.foods.bean.User;
+import com.means.foods.my.CancelOerderActivity;
 import com.means.foods.utils.DownLoad;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.TouchWebView;
@@ -35,6 +46,8 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 预定详情
@@ -60,11 +73,14 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 	View shareV;
 
+	int CANCEL = 1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reservations_details);
 		saveDir = getExternalCacheDir().getPath() + "/foods/";
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -106,11 +122,11 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 
 		cancleB = (Button) findViewById(R.id.cancle);
 		editB = (Button) findViewById(R.id.edit);
-		if (JSONUtil.getInt(jo, "can_edit") != 0) {
+		if (JSONUtil.getInt(jo, "can_edit") != 1) {
 			editB.setEnabled(false);
 			editB.setBackgroundResource(R.drawable.btn_code_grey_n);
 		}
-		if (JSONUtil.getInt(jo, "can_cancel") != 0) {
+		if (JSONUtil.getInt(jo, "can_cancel") != 1) {
 			cancleB.setEnabled(false);
 		}
 		cancleB.setOnClickListener(this);
@@ -142,6 +158,15 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 				JSONUtil.getString(jo, "store_feature"));
 		ViewUtil.bindView(findViewById(R.id.tips),
 				JSONUtil.getString(jo, "store_tips"));
+
+		ViewUtil.bindView(findViewById(R.id.order_status),
+				JSONUtil.getString(jo, "order_status"));
+
+		String arrtime1 = FoodsValueFix.getStandardTime(
+				Long.parseLong(JSONUtil.getString(jo, "arrive_time")),
+				"yyyy-MM-dd");
+		ViewUtil.bindView(findViewById(R.id.order_des), arrtime1 + "  "
+				+ "预付定金￥" + JSONUtil.getString(jo, "pay_money"));
 	}
 
 	@Override
@@ -159,7 +184,12 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 			break;
 
 		case R.id.cancel:
-			cancleOrder(JSONUtil.getString(jo, "order_id"));
+
+			it = new Intent(self, CancelOerderActivity.class);
+			it.putExtra("order_id", order_id);
+			it.putExtra("price", JSONUtil.getString(jo, "pay_money"));
+			startActivity(it);
+			// cancleOrder(JSONUtil.getString(jo, "order_id"));
 			break;
 
 		case R.id.edit:
@@ -190,30 +220,24 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		}
 	}
 
-	private void cancleOrder(String orderId) {
-		User user = User.getInstance();
-		DhNet net = new DhNet(API.ordercancle);
-		net.addParam("orderId", orderId);
-		net.addParam("token", user.getToken());
-		net.addParam("uid", user.getUid());
-		net.doPostInDialog(new NetTask(self) {
-
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					showToast("取消成功");
-					finish();
-				}
-			}
-		});
-	}
-
 	private Handler mhandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 
 			switch (msg.what) {
 			case 1:
 				showToast("下载成功!");
+				try {
+					Intent intent = getWordFileIntent(saveDir + order_id
+							+ ".pdf");
+					startActivity(intent);
+				} catch (ActivityNotFoundException e) {
+					// 检测到系统尚未安装OliveOffice的apk程序
+					// 请先到www.olivephone.com/e.apk下载并安装
+					IocContainer.getShare().get(IDialog.class)
+							.showToastShort(self, "检测到系统尚未安装打开Word文档的程序");
+					Log.i("TAG", "检测到系统尚未安装打开Word文档的程序");
+				}
+
 				break;
 			case 2:
 				showToast("文件不存在,下载失败！");
@@ -231,5 +255,27 @@ public class ReservationsDetailsActivity extends FoodsBaseActivity implements
 		};
 
 	};
+
+	public Intent getWordFileIntent(String param) {
+		Intent intent = new Intent("android.intent.action.VIEW");
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setAction(android.content.Intent.ACTION_VIEW);
+		// intent.setClassName("cn.wps.moffice",
+		// "cn.wps.moffice.documentmanager.PreStartActivity");
+		Uri uri = Uri.fromFile(new File(param));
+		intent.setDataAndType(uri, "application/pdf");
+		return intent;
+	}
+
+	public void onEventMainThread(CancelOrderEB myIndexEB) {
+		finish();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
 
 }

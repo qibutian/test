@@ -79,8 +79,15 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".collect.CollectListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my.CancelOerderActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".main.SplashActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

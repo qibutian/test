@@ -138,10 +138,11 @@ public class SearchResultActivity extends FoodsBaseActivity implements
 		if (adapter.getValues().size() == 0) {
 			adapter.addparam("name", "");
 			adapter.addparam("city_id ", "");
+			adapter.addparam("recommend", "1");
 			adapter.refresh();
 			headV.findViewById(R.id.head_layout).setVisibility(View.VISIBLE);
 			isRecommendedData = true;
-		} 
+		}
 	}
 
 }

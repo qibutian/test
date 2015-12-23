@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}" >
 
@@ -18,10 +19,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <com.means.foods.view.FoodsGallery
-                android:id="@+id/viewer"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp" >
+
+                <com.means.foods.view.FoodsGallery
+                    android:id="@+id/viewer"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <net.duohuo.dhroid.view.DotLinLayout
+                    android:id="@+id/dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="150dp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -401,8 +415,8 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
                     android:src="@drawable/share" />
 
                 <TextView
@@ -421,8 +435,8 @@
 
                 <ImageView
                     android:id="@+id/list_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
                     android:src="@drawable/dislike" />
 
                 <TextView

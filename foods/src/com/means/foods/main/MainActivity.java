@@ -16,14 +16,18 @@ import com.means.foods.bean.User;
 import com.means.foods.cate.CateIndexFragment;
 import com.means.foods.collect.CollectIndexFragment;
 import com.means.foods.hot.HotIndexFragment;
+import com.means.foods.manage.SystemBarTintManager;
 import com.means.foods.manage.UserInfoManage;
 import com.means.foods.manage.UserInfoManage.LoginCallBack;
 import com.means.foods.my.MyIndexFragment;
+import com.means.foods.utils.FoodsUtils;
 
+import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -33,6 +37,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,6 +63,7 @@ public class MainActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_main);
+		FoodsUtils.initSystemBar(this);
 		initView();
 		initTab();
 		setTab(0);

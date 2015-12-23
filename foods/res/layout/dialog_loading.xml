@@ -6,6 +6,7 @@
     android:layout_marginRight="20dp"
     android:gravity="center"
     android:layout_gravity="center"
+    android:fitsSystemWindows="true"
     android:background="@drawable/tips_bg" >
     <LinearLayout
         android:paddingLeft="10dp"

@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/reservations_background"
-        android:orientation="vertical" 
+        android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -27,8 +27,8 @@
             <TextView
                 android:id="@+id/date"
                 android:layout_width="0dp"
-                android:layout_weight="1.7"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.7"
                 android:text="2015年8月25日"
                 android:textColor="@color/text_66_black_light"
                 android:textSize="@dimen/text_small" />
@@ -36,29 +36,29 @@
             <TextView
                 android:id="@+id/price"
                 android:layout_width="0dp"
-                android:layout_weight="1.7"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.7"
                 android:text="预付定金¥100"
                 android:textColor="@color/text_66_black_light"
                 android:textSize="@dimen/text_small" />
-            <LinearLayout 
-               android:layout_width="0dp"
-                android:layout_weight="1"
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                 android:background="@color/text_yellow"
-                 android:gravity="center"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:background="@color/text_yellow"
+                android:gravity="center"
+                android:orientation="vertical" >
+
                 <TextView
                     android:id="@+id/order_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="正在处理"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/text_small" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="正在处理"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_small" />
             </LinearLayout>
-
-            
         </LinearLayout>
 
         <View style="@style/line_horizontal" />
@@ -93,8 +93,8 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp" >
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp" >
 
             <TextView
                 android:id="@+id/cancel"
@@ -102,8 +102,8 @@
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/reservat_oval"
-                android:text="取消"
                 android:gravity="center"
+                android:text="取消"
                 android:textColor="@color/text_yellow"
                 android:textSize="@dimen/text_small" />
 
@@ -111,13 +111,14 @@
                 android:id="@+id/share"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
-                android:layout_toLeftOf="@+id/cancel"
                 android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/cancel"
                 android:background="@drawable/reservat_oval"
-                 android:gravity="center"
+                android:gravity="center"
                 android:text="分享"
                 android:textColor="@color/text_yellow"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_small"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

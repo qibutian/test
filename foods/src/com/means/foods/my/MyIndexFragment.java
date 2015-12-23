@@ -1,5 +1,7 @@
 package com.means.foods.my;
 
+import java.util.Timer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ import net.duohuo.dhroid.view.BadgeView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +34,7 @@ import android.widget.TextView;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
-import com.means.foods.base.FoodsListFragment;
+import com.means.foods.bean.CancelOrderEB;
 import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.PaySuccessEB;
 import com.means.foods.bean.User;
@@ -42,8 +45,8 @@ import com.means.foods.view.RefreshListViewAndMore.OnLoadSuccess;
 
 import de.greenrobot.event.EventBus;
 
-public class MyIndexFragment extends FoodsListFragment implements
-		OnClickListener, OnLoadSuccess {
+public class MyIndexFragment extends Fragment implements OnClickListener,
+		OnLoadSuccess {
 
 	static MyIndexFragment instance;
 
@@ -151,7 +154,7 @@ public class MyIndexFragment extends FoodsListFragment implements
 							.findViewById(R.id.letter);
 					letterT.setText(letter);
 				}
-				return "您预定了" + o + "加餐厅";
+				return "您预定了" + o + "家餐厅";
 			}
 		});
 		adapter.addField("city_name", R.id.name);
@@ -237,6 +240,10 @@ public class MyIndexFragment extends FoodsListFragment implements
 		getMyDetails();
 	}
 
+	public void onEventMainThread(CancelOrderEB myIndexEB) {
+		adapter.refresh();
+	}
+
 	private void getMsgCount() {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.msgcount);
@@ -266,4 +273,5 @@ public class MyIndexFragment extends FoodsListFragment implements
 			}
 		});
 	}
+
 }

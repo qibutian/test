@@ -4,12 +4,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
+import net.duohuo.dhroid.view.DotLinLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,12 +22,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -99,6 +106,14 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	ImageView menuI;
 
+	Timer galleryTimer;
+
+	int currentPosition = 200;
+
+	DotLinLayout dotLinLayout;
+
+	int galleryCount;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -127,6 +142,27 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		list_img = (ImageView) findViewById(R.id.list_img);
 		list_img.setImageResource(R.drawable.icon_collect);
 		mViewPager = (FoodsGallery) findViewById(R.id.viewer);
+
+		mViewPager.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View view,
+					int position, long arg3) {
+
+				if (position >= galleryCount) {
+					if (galleryCount != 0) {
+						position = position % galleryCount;
+					}
+				}
+				dotLinLayout.setCurrentFocus(position);
+				// ImageView img = (ImageView) view.findViewById(R.id.pic);
+				// img.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+				// R.anim.home_res_video_gallery_in));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
 		reservedV = findViewById(R.id.reserved);
 		menuI = (ImageView) findViewById(R.id.menu_pic);
 
@@ -135,9 +171,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		chef_foldI = (ImageView) findViewById(R.id.chef_fold);
 		tips_foldI = (ImageView) findViewById(R.id.tips_fold);
 
-//		feature_fold = new Fold(featureT, feature_foldI, false);
-//		chef_fold = new Fold(chefT, chef_foldI, false);
-//		tips_fold = new Fold(tipsT, tips_foldI, false);
+		// feature_fold = new Fold(featureT, feature_foldI, false);
+		// chef_fold = new Fold(chefT, chef_foldI, false);
+		// tips_fold = new Fold(tipsT, tips_foldI, false);
 		shareV = findViewById(R.id.share);
 		menuV = findViewById(R.id.menu);
 		reservedV.setOnClickListener(this);
@@ -153,6 +189,9 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		webV = (TouchWebView) findViewById(R.id.web);
 		webV.getSettings().setDefaultTextEncodingName("UTF-8");
 		webV.getSettings().setJavaScriptEnabled(true);
+
+		dotLinLayout = (DotLinLayout) findViewById(R.id.dots);
+		dotLinLayout.setDotImage(R.drawable.dot_n, R.drawable.dot_f);
 		initData();
 	}
 
@@ -308,7 +347,18 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 					// });
 
 					if (jsc != null) {
+						galleryCount = jsc.length();
+						if (galleryCount > 0) {
+							dotLinLayout.setDotCount(galleryCount);
+							dotLinLayout.setCurrentFocus(galleryCount / 2);
+							mViewPager.setSelection(galleryCount / 2);
+						}
 						BigImageAdapter adapter = new BigImageAdapter(self, jsc);
+						if (jsc.length() > 1) {
+							mViewPager.setSelection(200);
+							currentPosition = 200;
+						}
+
 						mViewPager.setAdapter(adapter);
 					}
 				}
@@ -345,7 +395,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 							} else {
 								Toast.makeText(self, "收藏成功", Toast.LENGTH_SHORT)
 										.show();
-								list_img.setImageResource(R.drawable.icon_collect_f);
+								list_img.setImageResource(R.drawable.like);
 							}
 						}
 					}
@@ -495,26 +545,45 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 
 	}
 
-	// public static Bitmap GetLocalOrNetBitmap(String url) {
-	// try {
-	// URL urls = new URL(url);
-	// HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
-	// conn.setConnectTimeout(5000);
-	// int max = conn.getContentLength();
-	// InputStream is = conn.getInputStream();
-	// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	// byte[] buffer = new byte[1024];
-	// int len;
-	//
-	// while ((len = is.read(buffer)) != -1) {
-	// baos.write(buffer, 0, len);
-	// }
-	// byte[] result = baos.toByteArray();
-	// return BitmapFactory.decodeByteArray(result, 0, result.length);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// return null;
-	// }
-	// }
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+		galleryTimer = new Timer();
+		galleryTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage(0);
+			}
+		}, 3 * 1000, 10 * 1000);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+
+	}
+
+	Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			currentPosition = currentPosition + 1;
+			mViewPager.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
+		};
+	};
 
 }

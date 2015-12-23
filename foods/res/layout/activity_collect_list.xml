@@ -10,9 +10,9 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-         android:animateLayoutChanges="true" >
+        android:animateLayoutChanges="true" >
 
-        <include layout="@layout/include_refresh_listview" />
+        <include layout="@layout/include_listview" />
 
         <ImageView
             android:id="@+id/search"
@@ -22,11 +22,8 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/circle_white_bg"
             android:scaleType="center"
-            android:visibility="gone"
-            android:src="@drawable/icon_remen_search" />
+            android:src="@drawable/icon_remen_search"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>
-
-
-

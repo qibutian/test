@@ -14,7 +14,10 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +31,15 @@ import com.means.foods.FoodsValueFix;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.CancelOrderEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.ReservationsDetailsActivity;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 import com.means.foods.view.pop.SharePop;
 import com.means.foods.view.pop.SharePop.ShareResultListener;
+
+import de.greenrobot.event.EventBus;
 
 public class MyReservationsListActivity extends FoodsBaseActivity {
 
@@ -47,11 +53,14 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 
 	NetJSONAdapter adapter;
 
+	int CANCEL = 1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myreservations_list);
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -95,14 +104,26 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 						+ JSONUtil.getString(data, "hour" + "") + " "
 						+ JSONUtil.getString(data, "num") + "人");
 
-				itemV.findViewById(R.id.cancel).setOnClickListener(
-						new OnClickListener() {
+				View cancelV = itemV.findViewById(R.id.cancel);
 
-							@Override
-							public void onClick(View arg0) {
-								cancleOrder(o.toString(), position);
-							}
-						});
+				cancelV.setEnabled(JSONUtil.getInt(data, "canCancel") == 1 ? true
+						: false);
+				cancelV.setBackgroundResource(JSONUtil
+						.getInt(data, "canCancel") == 1 ? R.drawable.reservat_oval
+						: R.drawable.btn_code_grey_n);
+
+				cancelV.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						Intent it = new Intent(self, CancelOerderActivity.class);
+						it.putExtra("order_id",
+								JSONUtil.getString(data, "order_id"));
+						it.putExtra("price",
+								JSONUtil.getString(data, "pay_money"));
+						startActivity(it);
+					}
+				});
 
 				itemV.findViewById(R.id.share).setOnClickListener(
 						new OnClickListener() {
@@ -147,21 +168,15 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 		adapter.showNextInDialog();
 	}
 
-	private void cancleOrder(String orderId, final int index) {
-		User user = User.getInstance();
-		DhNet net = new DhNet(API.ordercancle);
-		net.addParam("orderId", orderId);
-		net.addParam("token", user.getToken());
-		net.addParam("uid", user.getUid());
-		net.doPostInDialog(new NetTask(self) {
-
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					showToast("取消成功");
-					adapter.refresh();
-				}
-			}
-		});
+	public void onEventMainThread(CancelOrderEB myIndexEB) {
+		finish();
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
 }

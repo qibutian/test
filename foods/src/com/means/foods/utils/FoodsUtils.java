@@ -2,19 +2,27 @@ package com.means.foods.utils;
 
 import java.util.Random;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.bean.User;
+import com.means.foods.main.MainActivity;
+import com.means.foods.manage.SystemBarTintManager;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -274,7 +282,11 @@ public class FoodsUtils {
 	public static void wechatShare(int flag, Context context, String name,
 			String reason, String store_id) {
 		IWXAPI api = WXAPIFactory.createWXAPI(context, Constant.WX_APP_KEY);
-
+		if (!isWXAppInstalledAndSupported(context, api)) {
+			IocContainer.getShare().get(IDialog.class)
+					.showToastShort(context, "请先安装微信");
+			return;
+		}
 		api.registerApp(Constant.WX_APP_KEY);
 		WXWebpageObject webpage = new WXWebpageObject();
 		webpage.webpageUrl = "http://www.foodies.im/wap.php?g=Wap&c=Food&a=shop&mer_id=68&store_id="
@@ -295,6 +307,61 @@ public class FoodsUtils {
 		req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
 				: SendMessageToWX.Req.WXSceneTimeline;
 		api.sendReq(req);
+	}
+
+	private static boolean isWXAppInstalledAndSupported(Context context,
+			IWXAPI api) {
+		// LogOutput.d(TAG, "isWXAppInstalledAndSupported");
+		boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled()
+				&& api.isWXAppSupportAPI();
+		if (!sIsWXAppInstalledAndSupported) {
+
+		}
+
+		return sIsWXAppInstalledAndSupported;
+	}
+
+	/*
+	 * 设置状态栏背景状态
+	 */
+	public static void initSystemBar(Activity activity) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+			setTranslucentStatus(activity, true);
+
+		}
+
+		SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+
+		tintManager.setStatusBarTintEnabled(true);
+
+		// 使用颜色资源
+
+		tintManager.setStatusBarTintResource(R.color.white);
+
+	}
+
+	private static void setTranslucentStatus(Activity activity, boolean on) {
+
+		Window win = activity.getWindow();
+
+		WindowManager.LayoutParams winParams = win.getAttributes();
+
+		final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+
+		if (on) {
+
+			winParams.flags |= bits;
+
+		} else {
+
+			winParams.flags &= ~bits;
+
+		}
+
+		win.setAttributes(winParams);
+
 	}
 
 }

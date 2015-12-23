@@ -5,6 +5,7 @@ import com.means.foods.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,6 +47,7 @@ public class NomalDialog extends DialogImpl {
 			View toastV = LayoutInflater.from(context).inflate(
 					R.layout.toast_view, null);
 			ViewUtil.bindView(toastV.findViewById(R.id.text), msg);
+			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.setView(toastV);
 			toast.show();
 		}

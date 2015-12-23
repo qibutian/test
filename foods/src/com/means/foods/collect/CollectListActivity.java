@@ -1,123 +1,100 @@
-package com.means.foods.cate;
-
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
-import net.duohuo.dhroid.adapter.FieldMap;
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.ViewUtil;
+package com.means.foods.collect;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import net.duohuo.dhroid.adapter.FieldMap;
+import net.duohuo.dhroid.adapter.PSAdapter;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.means.foods.R;
-import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
-import com.means.foods.bean.User;
-import com.means.foods.hot.HotIndexFragment.MycollOnClick;
+import com.means.foods.cate.RestaurantDetailsActivity;
+import com.means.foods.cate.RestaurantListActivity.MycollOnClick;
 import com.means.foods.main.SearchActivity;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.utils.FoodsUtils.OnCallBack;
-import com.means.foods.view.RefreshListViewAndMore;
 
-/**
- * 餐厅列表
- * 
- * @author dell
- * 
- */
-public class RestaurantListActivity extends FoodsBaseActivity implements
+public class CollectListActivity extends FoodsBaseActivity implements
 		OnClickListener {
 
-	PtrFrameLayout mPtrFrame;
+	ListView listV;
 
-	RefreshListViewAndMore listV;
+	PSAdapter adapter;
 
-	LoadMoreListViewContainer loadMoreListV;
+	View bottomSearchV;
 
 	View headV;
 
 	LayoutInflater mLayoutInflater;
 
-	View bottomSearchV;
+	JSONObject jo;
 
-	ListView contentListV;
+	JSONArray jsa;
 
 	String cityId;
 
-	NetJSONAdapter adapter;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_restaurant_list);
+		setContentView(R.layout.activity_collect_list);
 	}
 
 	@Override
 	public void initView() {
-		setTitle("餐厅列表");
+		setTitle("我的收藏");
+		String joStr = getIntent().getStringExtra("jo");
+		try {
+			jo = new JSONObject(joStr);
+			jsa = JSONUtil.getJSONArray(jo, "data");
+
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		cityId = getIntent().getStringExtra("cityId");
-		mLayoutInflater = LayoutInflater.from(self);
-		listV = (RefreshListViewAndMore) findViewById(R.id.my_listview);
-		String url = API.restaurantList;
-		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
 		bottomSearchV = findViewById(R.id.search);
-		// 添加头部
-		listV.addHeadView(headV);
-		// 设置空的emptyView
-		listV.setEmptyView(mLayoutInflater.inflate(
-				R.layout.list_nomal_emptyview, null));
-		adapter = new NetJSONAdapter(url, self, R.layout.item_restaurant_list);
-		adapter.fromWhat("data");
-		// setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-		adapter.addparam("city_id ", cityId);
-		adapter.addparam("name", "");
-		adapter.addparam("uid", User.getInstance().getUid());
-		adapter.addField("city_name", R.id.name);
+		mLayoutInflater = LayoutInflater.from(self);
+		headV = mLayoutInflater.inflate(R.layout.head_hot_index, null);
+		listV = (ListView) findViewById(R.id.listview);
+		listV.addHeaderView(headV);
+		adapter = new PSAdapter(self, R.layout.item_restaurant_list);
+		adapter.addField("name", R.id.name);
 		adapter.addField(new FieldMap("tagline", R.id.des) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject json = (JSONObject) jo;
-				JSONArray jsa = JSONUtil.getJSONArray(json, "all_pic");
 				ImageView collectI = (ImageView) itemV
 						.findViewById(R.id.collect);
 				collectI.setImageResource(JSONUtil.getInt(json, "is_collect") == 0 ? R.drawable.unlike
 						: R.drawable.like);
-				if (jsa != null && jsa.length() != 0) {
-					try {
-						ViewUtil.bindNetImage((ImageView) itemV
-								.findViewById(R.id.pic), jsa.get(0).toString(),
-								"default");
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				ViewUtil.bindNetImage((ImageView) itemV.findViewById(R.id.pic),
+						JSONUtil.getString(json, "list_pic"), "default");
 				collectI.setOnClickListener(new MycollOnClick(json));
 				return o;
 			}
 		});
 		listV.setAdapter(adapter);
+		adapter.addAll(jsa);
 
-		loadMoreListV = listV.getLoadMoreListViewContainer();
-		contentListV = listV.getListView();
-		loadMoreListV.setOnScrollListener(new OnScrollListener() {
+		listV.setOnScrollListener(new OnScrollListener() {
 
 			@Override
 			public void onScrollStateChanged(AbsListView arg0, int arg1) {
@@ -134,9 +111,9 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 
 				if (y1 >= 0) {
 					bottomSearchV.setVisibility(View.GONE);
-					listV.showHeadView();
+					showHeadView();
 				} else {
-					listV.removeHeadView();
+					removeHeadView();
 					bottomSearchV.setVisibility(View.VISIBLE);
 				}
 
@@ -155,12 +132,12 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			}
 		});
 
-		contentListV.setOnItemClickListener(new OnItemClickListener() {
+		listV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				JSONObject jo = adapter.getTItem(position - 1);
+				JSONObject jo = (JSONObject) adapter.getItem(position - 1);
 				Intent it = new Intent(self, RestaurantDetailsActivity.class);
 				it.putExtra("store_id", JSONUtil.getString(jo, "store_id"));
 				startActivity(it);
@@ -220,6 +197,20 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 
 	}
 
+	public void removeHeadView() {
+		if (headV != null) {
+			headV.setVisibility(View.GONE);
+			headV.setPadding(0, -headV.getHeight(), 0, 0);
+		}
+	}
+
+	public void showHeadView() {
+		if (headV != null) {
+			headV.setVisibility(View.VISIBLE);
+			headV.setPadding(0, 0, 0, 0);
+		}
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -234,4 +225,5 @@ public class RestaurantListActivity extends FoodsBaseActivity implements
 			break;
 		}
 	}
+
 }
