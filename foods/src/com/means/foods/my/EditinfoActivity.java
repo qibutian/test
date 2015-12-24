@@ -2,6 +2,7 @@ package com.means.foods.my;
 
 import java.io.File;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -30,6 +31,7 @@ import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.api.Constant;
 import com.means.foods.base.FoodsBaseActivity;
+import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.User;
 import com.means.foods.main.MainActivity;
@@ -290,12 +292,13 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 			break;
 
 		case R.id.logingout:
+			EventBus.getDefault().post(new LoginEB());
+			ActivityTack.getInstanse().finishOthers(this);
 			User user = User.getInstance();
 			user.setLogin(false);
-			user.setIslogout(true);
 			user.setToken("");
 			user.setUid("");
-			it = new Intent(self, ReadyActivity.class);
+			it = new Intent(self, MainActivity.class);
 			startActivity(it);
 			finish();
 			break;
@@ -318,7 +321,7 @@ public class EditinfoActivity extends FoodsBaseActivity implements
 				hidenProgressDialog();
 				if (response.isSuccess()) {
 					sexT.setText("1".equals(sex) ? "男" : "女");
-					showToast("更换性别成功");  
+					showToast("更换性别成功");
 				}
 			}
 		});

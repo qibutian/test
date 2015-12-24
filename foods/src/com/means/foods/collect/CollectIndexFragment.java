@@ -28,6 +28,7 @@ import com.means.foods.api.API;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.User;
 import com.means.foods.cate.RestaurantListActivity;
+import com.means.foods.main.MainActivity;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 
@@ -65,6 +66,7 @@ public class CollectIndexFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		mainV = inflater.inflate(R.layout.fragment_cate_index, null);
+		EventBus.getDefault().register(this);
 		initView();
 		// TODO Auto-generated method stub
 		return mainV;
@@ -144,9 +146,19 @@ public class CollectIndexFragment extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-
+						MainActivity activity = (MainActivity) getActivity();
+						activity.setTab(0);
 					}
 				});
+	}
+
+	public void onEventMainThread(LoginEB loginEb) {
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
 }

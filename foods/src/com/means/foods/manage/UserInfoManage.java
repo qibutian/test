@@ -3,6 +3,8 @@ package com.means.foods.manage;
 import com.means.foods.bean.User;
 import com.means.foods.main.ReadyActivity;
 import com.means.foods.my.LoginActivity;
+import com.means.foods.view.dialog.LoginDialog;
+import com.means.foods.view.dialog.LoginDialog.OnResultListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,11 +27,20 @@ public class UserInfoManage {
 			final LoginCallBack loginCallBack) {
 		boolean islogin = User.getInstance().isLogin();
 		if (!islogin) {
-			IocContainer.getShare().get(IDialog.class)
-					.showToastShort(context, "");
-			ReadyActivity.loginCall = loginCallBack;
-			Intent it = new Intent(context, ReadyActivity.class);
-			context.startActivity(it);
+
+			LoginDialog dialog = new LoginDialog(context);
+			dialog.setOnResultListener(new OnResultListener() {
+
+				@Override
+				public void onResult() {
+					ReadyActivity.loginCall = loginCallBack;
+					Intent it = new Intent(context, ReadyActivity.class);
+					context.startActivity(it);
+				}
+			});
+
+			dialog.show();
+
 		} else {
 			if (loginCallBack != null) {
 				loginCallBack.onisLogin();

@@ -42,12 +42,13 @@ public class RegisterTwoActivity extends FoodsBaseActivity {
 	@Override
 	public void initView() {
 		phone = getIntent().getStringExtra("phone");
-
+		verificationCode = getIntent().getStringExtra("verificationCode");
 		setTitle("注册2/3");
-
-		mCountTimer = new CountTimer(60000, 1000);
 		codeED = (EditText) findViewById(R.id.code);
 		get_codeBtn = (Button) findViewById(R.id.get_code);
+		mCountTimer = new CountTimer(60000, 1000);
+		mCountTimer.start();
+		get_codeBtn.setEnabled(false);
 		get_codeBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -80,7 +81,7 @@ public class RegisterTwoActivity extends FoodsBaseActivity {
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -123,7 +124,7 @@ public class RegisterTwoActivity extends FoodsBaseActivity {
 			get_codeBtn.setText("重新发送");
 		}
 	}
-	
+
 	public void onEventMainThread(RegisterEB registerEb) {
 		finish();
 	}

@@ -67,10 +67,10 @@ public class LoginActivity extends FoodsBaseActivity implements
 		loginBtn.setOnClickListener(this);
 		registerT.setOnClickListener(this);
 		forget_passwordT.setOnClickListener(this);
-		if (User.getInstance().isIslogout()) {
-			System.out.println("112121");
-			ActivityTack.getInstanse().finishOthers(this);
-		}
+		// if (User.getInstance().isIslogout()) {
+		// System.out.println("112121");
+		// ActivityTack.getInstanse().finishOthers(this);
+		// }
 
 		System.out.println("User.getInstance().isIslogout():"
 				+ User.getInstance().isIslogout());

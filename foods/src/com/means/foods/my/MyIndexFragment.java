@@ -35,9 +35,11 @@ import android.widget.TextView;
 import com.means.foods.R;
 import com.means.foods.api.API;
 import com.means.foods.bean.CancelOrderEB;
+import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.MyIndexEB;
 import com.means.foods.bean.PaySuccessEB;
 import com.means.foods.bean.User;
+import com.means.foods.main.MainActivity;
 import com.means.foods.utils.FoodsUtils;
 import com.means.foods.view.RefreshListViewAndMore;
 import com.means.foods.view.RoundImageView;
@@ -105,20 +107,35 @@ public class MyIndexFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
+		System.out.println("hidden:" + hidden);
 		this.hidden = hidden;
 		if (!hidden) {
-			getMsgCount();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		getMsgCount();
 	}
 
 	private void initView() {
 		user = User.getInstance();
-
 		listV = (RefreshListViewAndMore) mainV.findViewById(R.id.my_listview);
 		listV.setOnLoadSuccess(this);
 		String url = API.orderList;
 		contentListV = listV.getListView();
 		headV = mLayoutInflater.inflate(R.layout.head_my_index, null);
+		headV.findViewById(R.id.explore).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						MainActivity activity = (MainActivity) getActivity();
+						activity.setTab(0);
+					}
+				});
 		listV.addHeadView(headV);
 		// 璁剧疆绌虹殑emptyView
 		adapter = new NetJSONAdapter(url, getActivity(),
@@ -188,7 +205,7 @@ public class MyIndexFragment extends Fragment implements OnClickListener,
 				.getColor(R.color.text_red)); // 背景颜色
 		badgeT.setTextSize(10); // 文本大小
 		getMyDetails();
-		getMsgCount();
+		// getMsgCount();
 	}
 
 	private void getMyDetails() {
@@ -239,6 +256,10 @@ public class MyIndexFragment extends Fragment implements OnClickListener,
 	public void loadSuccess(Response response) {
 		headV.findViewById(R.id.empty_view).setVisibility(
 				adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
+	}
+
+	public void onEventMainThread(LoginEB loginEb) {
+
 	}
 
 	// 更新个人信息

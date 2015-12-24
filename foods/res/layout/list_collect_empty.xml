@@ -14,7 +14,7 @@
         android:textColor="@color/text_66_black_light"
         android:textSize="@dimen/text_medium" />
 
-    <Button
+    <TextView
         android:id="@+id/explore"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -22,6 +22,7 @@
         android:layout_marginRight="60dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_brown_normal"
+        android:gravity="center"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:text="开始探索"

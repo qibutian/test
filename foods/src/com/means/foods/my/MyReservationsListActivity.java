@@ -90,6 +90,7 @@ public class MyReservationsListActivity extends FoodsBaseActivity {
 
 		adapter.addField("store_name", R.id.store_name);
 		adapter.addField(new FieldMap("order_id", R.id.order_id) {
+			
 
 			@Override
 			public Object fix(View itemV, final Integer position,

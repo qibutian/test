@@ -12,17 +12,32 @@
         android:orientation="horizontal"
         android:paddingTop="10dp" >
 
-        <TextView
-            android:id="@+id/show_type"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:background="@color/text_yellow"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:text="进度"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/show_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/text_yellow"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:text="进度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small" />
+
+            <ImageView
+                android:id="@+id/point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/red_point"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"

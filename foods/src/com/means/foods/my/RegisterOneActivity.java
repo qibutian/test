@@ -1,5 +1,11 @@
 package com.means.foods.my;
 
+import org.json.JSONObject;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.means.foods.R;
+import com.means.foods.api.API;
 import com.means.foods.base.FoodsBaseActivity;
 import com.means.foods.bean.LoginEB;
 import com.means.foods.bean.RegisterEB;
@@ -79,7 +86,7 @@ public class RegisterOneActivity extends FoodsBaseActivity {
 
 	// 验证手机号
 	private void VerifyPhone() {
-		String phone = phoneEt.getText().toString().trim();
+		final String phone = phoneEt.getText().toString().trim();
 		if (TextUtils.isEmpty(phone)) {
 			showToast("手机号不能为空");
 			return;
@@ -94,9 +101,26 @@ public class RegisterOneActivity extends FoodsBaseActivity {
 			return;
 		}
 
-		Intent it = new Intent(self, RegisterTwoActivity.class);
-		it.putExtra("phone", phone);
-		startActivity(it);
+		DhNet net = new DhNet(API.register_Captcha);
+		net.addParam("phone", phone);
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("验证码发送成功,请注意查收!");
+					// 出参： verificationCode
+					JSONObject jo = response.jSONFromData();
+					String verificationCode = JSONUtil.getString(jo,
+							"verificationCode");
+
+					Intent it = new Intent(self, RegisterTwoActivity.class);
+					it.putExtra("phone", phone);
+					it.putExtra("verificationCode", verificationCode);
+					startActivity(it);
+				}
+			}
+		});
 
 	}
 

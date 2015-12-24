@@ -69,7 +69,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="14dp"
                 android:layout_marginTop="11dp"
-                android:paddingRight="16dp"
+                android:paddingRight="14dp"
                 android:paddingTop="7dp" >
 
                 <ImageView
@@ -105,6 +105,7 @@
                 android:textSize="@dimen/text_medium" />
 
             <Button
+                android:id="@+id/explore"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"

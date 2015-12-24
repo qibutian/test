@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
-	private void setTab(final int index) {
+	public void setTab(final int index) {
 		User user = User.getInstance();
 		if (index == 2 || index == 3) {
 			if (!user.isLogin()) {
@@ -109,6 +109,7 @@ public class MainActivity extends FragmentActivity {
 
 							@Override
 							public void onisLogin() {
+								System.out.println("index");
 								setTab(index);
 
 							}
@@ -119,7 +120,6 @@ public class MainActivity extends FragmentActivity {
 
 							}
 						});
-				return;
 			}
 		}
 
@@ -149,7 +149,12 @@ public class MainActivity extends FragmentActivity {
 					break;
 
 				case 2:
-					switchContent(CollectIndexFragment.getInstance());
+					System.out.println("222222");
+					if (User.getInstance().isLogin()) {
+						switchContent(CollectIndexFragment.getInstance());
+					} else {
+						switchContent(EmptyFragment.getInstance());
+					}
 					imgI.setImageResource(R.drawable.icon_collect_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));
@@ -157,7 +162,12 @@ public class MainActivity extends FragmentActivity {
 					break;
 
 				case 3:
-					switchContent(MyIndexFragment.getInstance());
+					System.out.println("333333");
+					if (User.getInstance().isLogin()) {
+						switchContent(MyIndexFragment.getInstance());
+					} else {
+						switchContent(EmptyFragment.getInstance());
+					}
 					imgI.setImageResource(R.drawable.icon_person_f);
 					textT.setTextColor(getResources().getColor(
 							R.color.text_yellow));

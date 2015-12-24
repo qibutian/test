@@ -1,15 +1,22 @@
 package com.means.foods.my;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -55,7 +62,20 @@ public class MsgListActivity extends FoodsBaseActivity {
 		adapter.addField("title", R.id.title);
 		adapter.addField("content", R.id.content);
 		adapter.addField("creattime", R.id.date, "time");
-		adapter.addField("show_type", R.id.show_type);
+		adapter.addField(new FieldMap("show_type", R.id.show_type) {
+
+			@Override
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+
+				JSONObject data = (JSONObject) jo;
+
+				itemV.findViewById(R.id.point).setVisibility(
+						JSONUtil.getInt(data, "status") == 0 ? View.VISIBLE
+								: View.GONE);
+				// TODO Auto-generated method stub
+				return o;
+			}
+		});
 		listV.setAdapter(adapter);
 
 		contentListV.setOnItemClickListener(new OnItemClickListener() {
@@ -67,6 +87,31 @@ public class MsgListActivity extends FoodsBaseActivity {
 				JSONObject data = adapter.getTItem(position);
 				it.putExtra("jo", data.toString());
 				startActivity(it);
+				resetMsg(JSONUtil.getString(data, "msg_id"));
+				try {
+					data.put("status", 1);
+					adapter.notifyDataSetChanged();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void resetMsg(String msgId) {
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.resetMsg);
+		net.addParam("uid ", user.getUid());
+		net.addParam("token", user.getToken());
+		net.addParam("msgId", msgId);
+		net.doGet(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+
+				}
 			}
 		});
 	}

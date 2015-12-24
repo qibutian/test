@@ -106,5 +106,4 @@ public class API {
 
 	// 设置消息已读
 	public static String resetMsg = "http://www.foodies.im/wap.php?g=Wap&c=My&a=setMessageReadApi";
-
 }
