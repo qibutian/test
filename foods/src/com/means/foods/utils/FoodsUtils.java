@@ -361,7 +361,6 @@ public class FoodsUtils {
 		}
 
 		win.setAttributes(winParams);
-
 	}
 
 }
