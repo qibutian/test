@@ -212,8 +212,18 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 							"人均￥" + JSONUtil.getString(jo, "mean_money"));
 					ViewUtil.bindView(cuisineT,
 							JSONUtil.getString(jo, "cuisine"));
+
+					if (TextUtils.isEmpty(JSONUtil.getString(jo, "cuisine"))) {
+						cuisineT.setVisibility(View.GONE);
+					}
+
 					name = JSONUtil.getString(jo, "name");
 					reason = JSONUtil.getString(jo, "reason");
+
+					if (TextUtils.isEmpty(reason)) {
+						reasonT.setVisibility(View.GONE);
+					}
+
 					ViewUtil.bindView(nameT, name);
 					ViewUtil.bindView(reasonT, reason);
 					address = JSONUtil.getString(jo, "address");

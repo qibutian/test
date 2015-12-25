@@ -82,7 +82,6 @@
                         android:id="@+id/cuisine"
                         style="@style/text_66_blacklight_small"
                         android:layout_marginTop="14dp"
-                        android:text="精致套餐 摩登澳式"
                         android:textColor="@color/text_brown" />
 
                     <View
@@ -100,8 +99,7 @@
                     <TextView
                         android:id="@+id/reason"
                         style="@style/text_66_blacklight_small"
-                        android:layout_marginTop="12dp"
-                        android:text="Best fine dining in Melbourne	with un-precedented views." />
+                        android:layout_marginTop="12dp" />
 
                     <View
                         style="@style/line_horizontal"
