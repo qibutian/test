@@ -567,11 +567,13 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 			@Override
 			public void run() {
 				handler.sendEmptyMessage(0);
+				
 			}
 		}, 3 * 1000, 3 * 1000);
 	}
 
 	@Override
+	
 	public void onStop() {
 		super.onStop();
 		if (galleryTimer != null) {
@@ -579,6 +581,7 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		}
 	}
 
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -586,7 +589,6 @@ public class RestaurantDetailsActivity extends FoodsBaseActivity implements
 		if (galleryTimer != null) {
 			galleryTimer.cancel();
 		}
-
 	}
 
 	Handler handler = new Handler() {
